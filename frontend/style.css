@@ -1,0 +1,70 @@
+/* O asterisco seleciona TODOS os elementos da página de uma vez */
+* {
+    margin: 0; /* Remove a margem padrão que o navegador coloca */
+    padding: 0; /* Remove o espaçamento interno padrão */
+    box-sizing: border-box; /* Garante que bordas e padding não aumentem o tamanho total do elemento */
+}
+
+/* Estilo para o corpo inteiro do site */
+body {
+    font-family: 'Poppins', sans-serif; /* Define a fonte moderna para o texto comum */
+    background-color: #f7e02e; /* Aplica o amarelo do mockup no fundo de tudo */
+}
+
+/* Estiliza o cabeçalho (parte branca) */
+.main-header {
+    background-color: #ffffff; /* Define o fundo como branco puro */
+    padding: 15px 0; /* Dá um espaço de 15px em cima e embaixo */
+    border-bottom: 1px solid #ddd; /* Cria uma linha cinza bem fininha no fundo do cabeçalho */
+}
+
+/* Organiza o botão e o título dentro do cabeçalho */
+.header-container {
+    display: flex; /* Ativa o modo flexbox (coloca os itens um do lado do outro) */
+    justify-content: space-between; /* Empurra o botão pra esquerda e o título pra direita */
+    align-items: center; /* Centraliza os dois verticalmente na mesma linha */
+    width: 90%; /* Define que o conteúdo ocupa 90% da largura da tela */
+    margin: 0 auto; /* Centraliza esse bloco de 90% no meio do monitor */
+}
+
+/* Transforma o link em um botão amarelo arredondado */
+.back-button {
+    background-color: #ffcc00; /* Cor amarela mais forte para o botão */
+    color: black; /* Texto na cor preta */
+    text-decoration: none; /* Remove aquele sublinhado azul de link */
+    padding: 8px 15px; /* Espaço interno para o botão ganhar corpo */
+    border-radius: 20px; /* Arredonda as pontas do botão (efeito pílula) */
+    font-weight: bold; /* Deixa o texto em negrito */
+    font-size: 14px; /* Define o tamanho da letra */
+}
+
+/* Estilo para o título "Sobre Nós" */
+.page-title {
+    font-family: 'Crimson Pro', serif; /* Usa a fonte com serifa igual ao mockup */
+    font-size: 32px; /* Aumenta o tamanho da letra do título */
+    color: #333; /* Cor cinza bem escuro, quase preto */
+}
+
+/* Área amarela onde fica o card de texto */
+.content-area {
+    display: flex; /* Flexbox para centralizar o card no meio */
+    justify-content: center; /* Centraliza horizontalmente */
+    padding-top: 50px; /* Dá um espaço de 50px entre o cabeçalho e o card */
+}
+
+/* O quadrado branco que segura o poema */
+.text-block {
+    background-color: #ffffff; /* Fundo branco do card */
+    border: 3px solid #9966ff; /* A borda roxa/lilás do mockup */
+    border-radius: 30px; /* Arredonda bem os cantos do card */
+    padding: 40px; /* Espaço entre a borda roxa e o texto */
+    max-width: 600px; /* Garante que o card não fique largo demais em telas grandes */
+    text-align: center; /* Centraliza as linhas do poema */
+}
+
+/* Estilo do texto dentro do card */
+.text-block p {
+    font-size: 18px; /* Tamanho da letra para leitura confortável */
+    line-height: 1.5; /* Espaçamento entre as linhas para não ficar "espremido" */
+    color: #444; /* Cor do texto */
+}
