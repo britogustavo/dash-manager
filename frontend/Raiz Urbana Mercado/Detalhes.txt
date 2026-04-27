@@ -1,0 +1,299 @@
+Empresa fictícia para seu site: Raiz Urbana Mercado
+1) Conceito da marca
+Nome: Raiz Urbana Mercado
+Slogan: Frescor de verdade, perto de você.
+Ideia da empresa
+A Raiz Urbana Mercado é um mercado de bairro com proposta moderna, sustentável e acolhedora. Ela une o melhor de dois mundos:
+
+produtos frescos e selecionados
+experiência digital prática
+valorização de produtores locais
+entrega rápida e atendimento humanizado
+
+A marca transmite confiança, proximidade, qualidade e um estilo de vida mais saudável.
+Posicionamento
+
+Um mercado contemporâneo para pessoas que querem comprar bem, com praticidade, sem abrir mão da qualidade e da conexão com a comunidade local.
+
+
+2) Estudo de cores
+A identidade visual da Raiz Urbana Mercado deve comunicar:
+
+frescor
+saúde
+confiança
+modernidade
+proximidade
+
+Paleta principal
+Verde Folha – #2E7D32
+Significado: natureza, frescor, saúde, produtos orgânicos e confiança.
+Uso recomendado: botões principais, detalhes de destaque, ícones, chamadas para ação.
+Verde Claro – #A5D6A7
+Significado: leveza, bem-estar, acolhimento.
+Uso recomendado: fundos suaves, áreas informativas e banners.
+Amarelo Dourado – #FBC02D
+Significado: energia, otimismo, abundância e sensação de produto fresco.
+Uso recomendado: ofertas, selos promocionais, elementos de atenção.
+Bege Natural – #F5E9D3
+Significado: simplicidade, orgânico, artesanal, proximidade humana.
+Uso recomendado: fundo do site, áreas institucionais, seções “Sobre nós”.
+Cinza Grafite – #333333
+Significado: sofisticação, legibilidade e equilíbrio visual.
+Uso recomendado: textos, títulos e menus.
+Cores secundárias
+Branco – #FFFFFF
+Para manter limpeza visual e sensação de organização.
+Vermelho Tomate (uso pontual) – #D84315
+Para chamadas urgentes, promoção relâmpago ou poucos elementos de contraste.
+
+Psicologia da paleta
+Essa combinação funciona muito bem para mercados porque:
+
+o verde associa a alimentos frescos e saudáveis;
+o amarelo chama atenção sem parecer agressivo;
+o bege traz uma estética mais humana e artesanal;
+o grafite ajuda a manter o visual profissional e moderno.
+
+Sugestão prática para o site
+
+Header/Menu: branco + grafite
+Botões principais: verde folha
+Promoções: amarelo dourado
+Seções institucionais: bege natural
+Elementos de frescor (ícones/cards): verde claro
+
+
+3) Persona
+Vou criar uma persona principal e uma persona secundária, para seu site ficar mais estratégico.
+
+Persona principal: Mariana Souza
+
+Idade: 34 anos
+Profissão: analista de marketing
+Estado civil: casada, 1 filho
+Cidade: São Paulo
+Renda: classe média
+Estilo de vida: corrido, conectado, valoriza praticidade e alimentação equilibrada
+
+Objetivos
+
+Fazer compras de mercado com rapidez
+Encontrar produtos frescos e confiáveis
+Comprar em um lugar que entregue no prazo
+Ter acesso a promoções reais e produtos de boa qualidade
+
+Dores
+
+Falta de tempo para ir a mercados grandes
+Frustração com produtos de baixa qualidade no delivery
+Dificuldade de confiar em marcas desconhecidas
+Excesso de sites confusos ou pouco intuitivos
+
+O que ela valoriza
+
+Navegação simples
+Categorias bem organizadas
+Fotos bonitas e reais dos produtos
+Entrega rápida
+Sensação de compra segura
+Marca com propósito e transparência
+
+Como o site deve falar com ela
+Tom de voz:
+
+direto
+leve
+acolhedor
+confiável
+
+Exemplo de linguagem:
+
+“Produtos frescos, selecionados com cuidado, para facilitar sua rotina.”
+
+
+Persona secundária: Carlos Henrique
+
+Idade: 46 anos
+Profissão: empresário
+Estilo de vida: busca praticidade, compra para casa toda semana
+Foco: conveniência, bom preço e eficiência
+
+O que ele procura
+
+compras rápidas
+reposição semanal
+ofertas claras
+entrega sem complicação
+
+
+4) Logo
+Como você pediu a criação da empresa, aqui vai a proposta conceitual do logo.
+Nome no logo
+Raiz Urbana Mercado
+Conceito visual
+O logo deve unir:
+
+natureza
+cidade
+mercado
+proximidade
+
+Estrutura sugerida do logo
+Símbolo
+Um ícone que combine:
+
+uma folha (frescor/natural)
+uma sacola de compras (mercado)
+ou um broto dentro de um contorno geométrico urbano (mistura de orgânico + moderno)
+
+Tipografia
+
+Fonte sem serifa, moderna e amigável
+Sugestões de estilo:
+
+limpa
+arredondada
+forte, mas acessível
+
+
+
+Direção de design
+
+“Raiz Urbana” em destaque
+“Mercado” menor, como assinatura
+Ícone simples, reconhecível e fácil de usar em:
+
+site
+favicon
+Instagram
+sacolas
+uniforme
+aplicativo
+
+
+
+Descrição pronta do logo
+
+O logo da Raiz Urbana Mercado é composto por um símbolo minimalista que une uma folha e uma sacola de compras, representando frescor, praticidade e conexão com o consumo consciente. A tipografia é moderna e acolhedora, transmitindo confiança e proximidade. A paleta principal utiliza verde folha e bege natural, reforçando os valores de qualidade, saúde e pertencimento.
+
+Versões recomendadas
+
+Versão principal: verde + bege
+Versão monocromática: grafite
+Versão reduzida: apenas símbolo
+Versão para fundo escuro: branco + verde claro
+
+
+5) História da empresa (Sobre nós)
+Aqui está um texto pronto, já pensado para a seção “Sobre nós” do site:
+
+Sobre nós – versão institucional
+A Raiz Urbana Mercado nasceu com um propósito simples: tornar as compras do dia a dia mais práticas, frescas e humanas.
+Em meio à rotina acelerada das grandes cidades, percebemos que muitas pessoas queriam mais do que apenas conveniência — queriam qualidade, confiança e uma relação mais próxima com aquilo que consomem. Foi assim que surgiu a ideia de criar um mercado que unisse a praticidade da experiência digital com o cuidado de uma seleção feita de forma mais consciente.
+Na Raiz Urbana, acreditamos que comprar bem começa na origem. Por isso, valorizamos fornecedores responsáveis, produtores locais e produtos escolhidos com atenção à qualidade, ao sabor e ao bem-estar de cada cliente.
+Mais do que um mercado, queremos ser parte da rotina das pessoas, oferecendo alimentos, itens essenciais e experiências de compra que facilitem a vida sem abrir mão da proximidade e da confiança.
+Raiz Urbana Mercado: frescor de verdade, perto de você.
+
+Sobre nós – versão curta
+A Raiz Urbana Mercado nasceu para transformar a experiência de comprar no dia a dia. Unimos praticidade, frescor e confiança em um mercado moderno, humano e conectado com a cidade. Selecionamos produtos com cuidado, valorizamos fornecedores locais e acreditamos que uma boa compra começa na origem.
+
+6) Identidade verbal da marca
+Tom de voz
+A marca deve falar de forma:
+
+próxima
+moderna
+clara
+acolhedora
+confiável
+
+Exemplos de frases para o site
+
+Seu mercado de confiança, agora ainda mais perto.
+Frescor, praticidade e qualidade para sua rotina.
+Compre com facilidade, receba com confiança.
+Produtos selecionados para uma vida mais leve.
+
+
+7) Diferenciais da empresa
+Para enriquecer seu site, aqui estão diferenciais prontos da marca:
+
+seleção de produtos frescos e de qualidade
+parceria com produtores locais
+entrega rápida na região
+atendimento próximo e humanizado
+foco em praticidade sem perder o cuidado
+experiência digital simples e intuitiva
+
+
+8) Estrutura de conteúdo para o site
+Se você quiser montar o site, essa empresa já funciona muito bem com esta estrutura:
+Página inicial
+
+Banner principal com slogan
+Categorias em destaque
+Benefícios da marca
+Produtos em promoção
+Bloco “Sobre nós”
+Depoimentos
+CTA para compra
+
+Sobre nós
+
+História da empresa
+Missão
+Visão
+Valores
+
+Produtos/Categorias
+
+Hortifruti
+Mercearia
+Bebidas
+Padaria
+Orgânicos
+Higiene e limpeza
+
+Contato
+
+formulário
+WhatsApp
+endereço
+horário de atendimento
+
+
+9) Missão, visão e valores
+Missão
+Oferecer uma experiência de compra prática, confiável e acolhedora, com produtos de qualidade e foco no bem-estar das pessoas.
+Visão
+Ser referência como mercado de bairro moderno, conectando conveniência, frescor e relacionamento humano.
+Valores
+
+confiança
+qualidade
+proximidade
+praticidade
+responsabilidade
+respeito à comunidade local
+
+
+10) Resumo final pronto para uso
+Nome
+Raiz Urbana Mercado
+Slogan
+Frescor de verdade, perto de você.
+Cores
+
+Verde Folha #2E7D32
+Verde Claro #A5D6A7
+Amarelo Dourado #FBC02D
+Bege Natural #F5E9D3
+Cinza Grafite #333333
+
+Persona
+Mariana Souza, 34 anos, profissional urbana, rotina corrida, busca praticidade, frescor e confiança.
+Logo
+Símbolo com folha + sacola de compras, estilo minimalista, moderno e acolhedor.
+História
+Mercado moderno que conecta conveniência, frescor e relação humana, valorizando qualidade e produtores locais.

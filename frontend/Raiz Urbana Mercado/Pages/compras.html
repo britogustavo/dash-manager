@@ -1,0 +1,532 @@
+<!DOCTYPE html><!DOCTYPE htmlR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compras | Raiz Urbana Mercado</title>
+  <meta
+    name="description"
+    content="Página de compras da Raiz Urbana Mercado."
+  />
+  <link rel="stylesheet" href="../Styles/style.css" />
+  <link rel="icon" type="image/png" href="../Logos/Logo.png">
+  <link rel="shortcut icon" href="../Logos/Logo.png">
+  <link rel="apple-touch-icon" href="../Logos/Logo.png">
+
+</head>
+<body>
+  <header class="header">
+    <div class="container header-content">
+      <a href="index.html" class="logo">
+  <img
+    src="../Logos/Logo.png"
+    alt="Logo Raiz Urbana Mercado"
+    class="logo-image"
+  />
+  <div class="logo-text">
+    <strong>Raiz Urbana</strong>
+    <span>Mercado</span>
+  </div>
+</a>
+
+      <nav class="nav" id="nav">
+        <a href="index.html">Início</a>
+        <a href="compras.html">Compras</a>
+        <a href="index.html#sobre">Sobre</a>
+        <a href="index.html#contato">Contato</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-button" id="cart-toggle" aria-label="Abrir carrinho">
+          🛒 <span id="cart-count">0</span>
+        </button>
+
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  
+<!-- Carrinho -->
+<aside class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h3>Seu carrinho</h3>
+    <button class="close-cart" id="close-cart" aria-label="Fechar carrinho">✕</button>
+  </div>
+
+  <div class="cart-items" id="cart-items">
+    <p class="empty-cart">Seu carrinho está vazio.</p>
+  </div>
+
+  <div class="cart-footer">
+    <p><strong>Total:</strong> R$ <span id="cart-total">0,00</span></p>
+    <div class="cart-footer-buttons">
+      <button class="btn btn-secondary full-width" id="clear-cart">Limpar carrinho</button>
+      <button class="btn btn-primary full-width" id="checkout-btn">Finalizar compra</button>
+    </div>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Modal de checkout -->
+<div class="checkout-modal" id="checkout-modal">
+  <div class="checkout-box">
+    <div class="checkout-header">
+      <h3 id="checkout-title">Finalizar compra</h3>
+      <button id="close-checkout" aria-label="Fechar checkout">✕</button>
+    </div>
+
+    <form id="checkout-form" class="checkout-form">
+      <label for="cliente-nome">Nome completo</label>
+      <input type="text" id="cliente-nome" placeholder="Digite seu nome completo" required />
+
+      <label for="cliente-cpf">CPF</label>
+      <input type="text" id="cliente-cpf" placeholder="000.000.000-00" maxlength="14" required />
+
+      <label for="cliente-endereco">Endereço</label>
+      <input type="text" id="cliente-endereco" placeholder="Digite seu endereço" required />
+
+      <label for="cliente-pagamento">Forma de pagamento</label>
+      <select id="cliente-pagamento" required>
+        <option value="">Selecione</option>
+        <option value="Pix">Pix</option>
+        <option value="Cartão de crédito">Cartão de crédito</option>
+        <option value="Cartão de débito">Cartão de débito</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary full-width">Confirmar pedido</button>
+    </form>
+
+    <div class="invoice-box" id="invoice-box"></div>
+    <p class="checkout-message" id="checkout-message"></p>
+  </div>
+</div>
+
+
+  <main>
+    <section class="section products-section">
+      <div class="container">
+        <div class="section-title">
+          <p class="tag">Compras</p>
+          <h2>Escolha seus produtos</h2>
+          <p>Adicione os itens ao carrinho e acompanhe o total em tempo real.</p>
+        </div>
+
+        <!-- HORTIFRUTI -->
+        <div class="category-block">
+          <h3 class="category-title">Hortifruti</h3>
+          <div class="product-grid">
+            <div class="product-card">
+              <img src="../Images/banana.png" alt="Banana" />
+              <span class="product-badge">Hortifruti</span>
+              <h3>Banana</h3>
+              <p class="product-unit">Preço por kg</p>
+              <p class="price">R$ 6,90</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="banana"
+                data-name="Banana"
+                data-price="6.90"
+                data-image="../Images/banana.png"
+                data-unit="kg">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <div class="product-card">
+              <img src="../Images/maca.webp" alt="Maçã" />
+              <span class="product-badge">Hortifruti</span>
+              <h3>Maçã</h3>
+              <p class="product-unit">Preço por kg</p>
+              <p class="price">R$ 8,50</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="maca"
+                data-name="Maçã"
+                data-price="8.50"
+                data-image="../Images/maca.webp"
+                data-unit="kg">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <div class="product-card">
+              <img src="../Images/tomate.webp" alt="Tomate" />
+              <span class="product-badge">Hortifruti</span>
+              <h3>Tomate</h3>
+              <p class="product-unit">Preço por kg</p>
+              <p class="price">R$ 7,30</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="tomate"
+                data-name="Tomate"
+                data-price="7.30"
+                data-image="../Images/tomate.webp"
+                data-unit="kg">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <div class="product-card">
+              <img src="../Images/alface.png" alt="Alface" />
+              <span class="product-badge">Hortifruti</span>
+              <h3>Alface</h3>
+              <p class="product-unit">Preço por unidade</p>
+              <p class="price">R$ 3,90</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="alface"
+                data-name="Alface"
+                data-price="3.90"
+                data-image="../Images/alface.png"
+                data-unit="unidade">
+                Adicionar ao carrinho
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PADARIA -->
+<div class="category-block">
+  <h3 class="category-title">Padaria</h3>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="../Images/pao.webp" alt="Pão francês" />
+      <span class="product-badge">Padaria</span>
+      <h3>Pão francês</h3>
+      <p class="product-unit">Preço por kg</p>
+      <p class="price">R$ 12,00</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="pao"
+        data-name="Pão francês"
+        data-price="12.00"
+        data-image="../Images/pao.webp"
+        data-unit="kg"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/pao-forma.jpg" alt="Pão de forma" />
+      <span class="product-badge">Padaria</span>
+      <h3>Pão de forma</h3>
+      <p class="product-unit">Pacote 500g</p>
+      <p class="price">R$ 8,90</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="pao-forma"
+        data-name="Pão de forma 500g"
+        data-price="8.90"
+        data-image="../Images/pao-forma.jpg"
+        data-unit="pacote"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/bolo.jpeg" alt="Bolo simples" />
+      <span class="product-badge">Padaria</span>
+      <h3>Bolo simples</h3>
+      <p class="product-unit">Unidade</p>
+      <p class="price">R$ 14,90</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="bolo"
+        data-name="Bolo simples"
+        data-price="14.90"
+        data-image="../Images/bolo.jpeg"
+        data-unit="unidade"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/biscoito.png" alt="Biscoito amanteigado" />
+      <span class="product-badge">Padaria</span>
+      <h3>Biscoito amanteigado</h3>
+      <p class="product-unit">Pacote 300g</p>
+      <p class="price">R$ 7,50</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="biscoito"
+        data-name="Biscoito amanteigado 300g"
+        data-price="7.50"
+        data-image="../Images/biscoito.png"
+        data-unit="pacote"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+        <!-- LATICÍNIOS -->
+        <div class="category-block">
+          <h3 class="category-title">Laticínios</h3>
+          <div class="product-grid">
+            <div class="product-card">
+              <img src="../Images/leite.webp" alt="Leite integral" />
+              <span class="product-badge">Laticínios</span>
+              <h3>Leite integral</h3>
+              <p class="product-unit">Unidade 1L</p>
+              <p class="price">R$ 5,80</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="leite"
+                data-name="Leite integral 1L"
+                data-price="5.80"
+                data-image="../Images/leite.webp"
+                data-unit="unidade">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <div class="product-card">
+              <img src="../Images/iogurte.png" alt="Iogurte" />
+              <span class="product-badge">Laticínios</span>
+              <h3>Iogurte</h3>
+              <p class="product-unit">Unidade 170g</p>
+              <p class="price">R$ 4,50</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="iogurte"
+                data-name="Iogurte 170g"
+                data-price="4.50"
+                data-image="../Images/iogurte.png"
+                data-unit="unidade">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <div class="product-card">
+              <img src="../Images/queijo.png" alt="Queijo mussarela" />
+              <span class="product-badge">Laticínios</span>
+              <h3>Queijo mussarela</h3>
+              <p class="product-unit">Preço por kg</p>
+              <p class="price">R$ 39,90</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="queijo"
+                data-name="Queijo mussarela"
+                data-price="39.90"
+                data-image="../Images/queijo.png"
+                data-unit="kg">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <div class="product-card">
+              <img src="../Images/manteiga.png" alt="Manteiga" />
+              <span class="product-badge">Laticínios</span>
+              <h3>Manteiga</h3>
+              <p class="product-unit">Unidade 200g</p>
+              <p class="price">R$ 9,40</p>
+              <button class="btn btn-primary add-to-cart"
+                data-id="manteiga"
+                data-name="Manteiga 200g"
+                data-price="9.40"
+                data-image="../Images/manteiga.png"
+                data-unit="unidade">
+                Adicionar ao carrinho
+              </button>
+            </div>
+          </div>
+        </div>
+
+        
+<!-- MERCEARIA -->
+<div class="category-block">
+  <h3 class="category-title">Mercearia</h3>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="../Images/arroz.png" alt="Arroz" />
+      <span class="product-badge">Mercearia</span>
+      <h3>Arroz</h3>
+      <p class="product-unit">Pacote 5kg</p>
+      <p class="price">R$ 24,90</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="arroz"
+        data-name="Arroz 5kg"
+        data-price="24.90"
+        data-image="../Images/arroz.png"
+        data-unit="pacote"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/feijao.png" alt="Feijão" />
+      <span class="product-badge">Mercearia</span>
+      <h3>Feijão</h3>
+      <p class="product-unit">Pacote 1kg</p>
+      <p class="price">R$ 9,70</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="feijao"
+        data-name="Feijão 1kg"
+        data-price="9.70"
+        data-image="../Images/feijao.png"
+        data-unit="pacote"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/macarrao.png" alt="Macarrão" />
+      <span class="product-badge">Mercearia</span>
+      <h3>Macarrão</h3>
+      <p class="product-unit">Pacote 500g</p>
+      <p class="price">R$ 6,20</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="macarrao"
+        data-name="Macarrão 500g"
+        data-price="6.20"
+        data-image="../Images/macarrao.png"
+        data-unit="pacote"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/cafe.webp" alt="Café" />
+      <span class="product-badge">Mercearia</span>
+      <h3>Café</h3>
+      <p class="product-unit">Pacote 500g</p>
+      <p class="price">R$ 18,90</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="cafe"
+        data-name="Café 500g"
+        data-price="18.90"
+        data-image="../Images/cafe.webp"
+        data-unit="pacote"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+
+        <!-- BEBIDAS -->
+<div class="category-block">
+  <h3 class="category-title">Bebidas</h3>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="../Images/suco.png" alt="Suco de Laranja" />
+      <span class="product-badge">Bebidas</span>
+      <h3>Suco de Laranja</h3>
+      <p class="product-unit">Garrafa 1L</p>
+      <p class="price">R$ 8,90</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="suco-laranja"
+        data-name="Suco de Laranja 1L"
+        data-price="8.90"
+        data-image="../Images/suco.png"
+        data-unit="garrafa"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/refrigerante.webp" alt="Refrigerante" />
+      <span class="product-badge">Bebidas</span>
+      <h3>Refrigerante</h3>
+      <p class="product-unit">Garrafa 2L</p>
+      <p class="price">R$ 9,90</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="refrigerante"
+        data-name="Refrigerante 2L"
+        data-price="9.90"
+        data-image="../Images/refrigerante.webp"
+        data-unit="garrafa"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/cerveja.png" alt="Cerveja" />
+      <span class="product-badge">Bebidas</span>
+      <h3>Cerveja</h3>
+      <p class="product-unit">Lata 350ml</p>
+      <p class="price">R$ 4,99</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="cerveja"
+        data-name="Cerveja 350ml"
+        data-price="4.99"
+        data-image="../Images/cerveja.png"
+        data-unit="lata"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+
+    <div class="product-card">
+      <img src="../Images/agua.png" alt="Água mineral" />
+      <span class="product-badge">Bebidas</span>
+      <h3>Água mineral</h3>
+      <p class="product-unit">Garrafa 1,5L</p>
+      <p class="price">R$ 3,50</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-id="agua-mineral"
+        data-name="Água mineral 1,5L"
+        data-price="3.50"
+        data-image="../Images/agua.png"
+        data-unit="garrafa"
+      >
+        Adicionar ao carrinho
+      </button>
+    </div>
+  </div>
+</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <h3>Raiz Urbana Mercado</h3>
+        <p>Frescor de verdade, perto de você.</p>
+      </div>
+
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="compras.html">Compras</a></li>
+          <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@raizurbana.com.br">contato@raizurbana.com.br</a></li>
+          <li><a href="tel:+5511999999999">(11) 99999-9999</a></li>
+          <li>São Paulo - SP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© Raiz Urbana Mercado - Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="../Scripts/script.js"></script>
+</body>
+</html>

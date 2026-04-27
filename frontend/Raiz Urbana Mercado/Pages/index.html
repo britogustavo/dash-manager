@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raiz Urbana Mercado</title>
+  <meta
+    name="description"
+    content="Raiz Urbana Mercado: frescor, qualidade e proximidade para a sua rotina."
+  />
+  <link rel="stylesheet" href="../Styles/style.css" />
+  
+<link rel="icon" type="image/png" href="../Logos/Logo.png">
+<link rel="shortcut icon" href="../Logos/Logo.png">
+<link rel="apple-touch-icon" href="../Logos/Logo.png">
+
+</head>
+<body>
+  <header class="header">
+    <div class="container header-content">
+      
+<!-- Logo -->
+<a href="index.html" class="logo">
+  <img
+    src="../Logos/Logo.png"
+    alt="Logo Raiz Urbana Mercado"
+    class="logo-image"
+  />
+  <div class="logo-text">
+    <strong>Raiz Urbana</strong>
+    <span>Mercado</span>
+  </div>
+</a>
+
+
+      <nav class="nav" id="nav">
+        <a href="index.html">Início</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#qualidade">Qualidade</a>
+        <a href="compras.html">Compras</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-button" id="cart-toggle" aria-label="Abrir carrinho">
+          🛒 <span id="cart-count">0</span>
+        </button>
+
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  
+<!-- Carrinho -->
+<aside class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h3>Seu carrinho</h3>
+    <button class="close-cart" id="close-cart" aria-label="Fechar carrinho">✕</button>
+  </div>
+
+  <div class="cart-items" id="cart-items">
+    <p class="empty-cart">Seu carrinho está vazio.</p>
+  </div>
+
+  <div class="cart-footer">
+    <p><strong>Total:</strong> R$ <span id="cart-total">0,00</span></p>
+    <div class="cart-footer-buttons">
+      <button class="btn btn-secondary full-width" id="clear-cart">Limpar carrinho</button>
+      <button class="btn btn-primary full-width" id="checkout-btn">Finalizar compra</button>
+    </div>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Modal de checkout -->
+<div class="checkout-modal" id="checkout-modal">
+  <div class="checkout-box">
+    <div class="checkout-header">
+      <h3 id="checkout-title">Finalizar compra</h3>
+      <button id="close-checkout" aria-label="Fechar checkout">✕</button>
+    </div>
+
+    <form id="checkout-form" class="checkout-form">
+      <label for="cliente-nome">Nome completo</label>
+      <input type="text" id="cliente-nome" placeholder="Digite seu nome completo" required />
+
+      <label for="cliente-cpf">CPF</label>
+      <input type="text" id="cliente-cpf" placeholder="000.000.000-00" maxlength="14" required />
+
+      <label for="cliente-endereco">Endereço</label>
+      <input type="text" id="cliente-endereco" placeholder="Digite seu endereço" required />
+
+      <label for="cliente-pagamento">Forma de pagamento</label>
+      <select id="cliente-pagamento" required>
+        <option value="">Selecione</option>
+        <option value="Pix">Pix</option>
+        <option value="Cartão de crédito">Cartão de crédito</option>
+        <option value="Cartão de débito">Cartão de débito</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary full-width">Confirmar pedido</button>
+    </form>
+
+    <div class="invoice-box" id="invoice-box"></div>
+    <p class="checkout-message" id="checkout-message"></p>
+  </div>
+</div>
+
+
+  <main>
+    <!-- HERO / CARROSSEL -->
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="carousel">
+          
+<div class="slides">
+  <div class="slide active">
+    <img src="../Images/banner-frutas.jpg" alt="Produtos frescos do mercado" />
+    <div class="slide-content">
+      <p class="tag">Seleção do dia</p>
+      <h1>Frescor de verdade para a sua rotina</h1>
+      <p>
+        Conheça produtos selecionados com cuidado para um dia a dia
+        mais leve, prático e acolhedor.
+      </p>
+      <div class="slide-buttons">
+        <a href="../Pages/compras.html" class="btn btn-primary">Ir para compras</a>
+        <a href="#sobre" class="btn btn-secondary">Conheça a marca</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="../Images/banner-padaria.jpg" alt="Produtos de padaria e laticínios" />
+    <div class="slide-content">
+      <p class="tag">Qualidade</p>
+      <h1>Cuidado em cada escolha</h1>
+      <p>
+        Uma proposta que une proximidade, atendimento humano e mais
+        confiança para o seu dia a dia.
+      </p>
+      <div class="slide-buttons">
+        <a href="../Pages/compras.html" class="btn btn-primary">Ir para compras</a>
+        <a href="#sobre" class="btn btn-secondary">Conheça a marca</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="../Images/banner-mercearia.jpeg" alt="Bebidas e itens de mercado" />
+    <div class="slide-content">
+      <p class="tag">Praticidade</p>
+      <h1>Um mercado pensado para a vida urbana</h1>
+      <p>
+        Organização, conveniência e um toque humano para facilitar sua rotina.
+      </p>
+      <div class="slide-buttons">
+        <a href="../Pages/compras.html" class="btn btn-primary">Ir para compras</a>
+        <a href="#sobre" class="btn btn-secondary">Conheça a marca</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+          <button class="carousel-btn prev" id="prev-slide" aria-label="Slide anterior">❮</button>
+          <button class="carousel-btn next" id="next-slide" aria-label="Próximo slide">❯</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="sobre">
+      <div class="container about">
+        <div class="about-text">
+          <p class="tag">Sobre nós</p>
+          <h2>Uma marca criada para aproximar qualidade e confiança.</h2>
+          <p>
+            A Raiz Urbana Mercado nasceu com o propósito de tornar a experiência
+            do dia a dia mais prática, acolhedora e confiável.
+          </p>
+          <p>
+            Em meio à rotina acelerada da cidade, percebemos que muitas pessoas
+            queriam mais do que conveniência. Queriam qualidade, transparência e
+            uma relação mais próxima com aquilo que consomem.
+          </p>
+        </div>
+
+        <div class="about-box">
+          <div class="simple-box">
+            <h3>Nossos valores</h3>
+            <ul>
+              <li>Qualidade</li>
+              <li>Confiança</li>
+              <li>Proximidade</li>
+              <li>Responsabilidade</li>
+              <li>Praticidade</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="como-funciona">
+      <div class="container">
+        <div class="section-title">
+          <p class="tag">Como funciona</p>
+          <h2>Uma experiência simples e organizada</h2>
+          <p>
+            Mais do que praticidade: confiança em cada etapa da relação com a marca.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <h3>Selecionamos com critério</h3>
+            <p>
+              Priorizamos qualidade, origem e consistência em tudo o que faz
+              parte da nossa proposta.
+            </p>
+          </div>
+
+          <div class="step">
+            <span class="step-number">2</span>
+            <h3>Organizamos com cuidado</h3>
+            <p>
+              Cada detalhe da experiência é pensado para ser simples, clara e
+              acolhedora.
+            </p>
+          </div>
+
+          <div class="step">
+            <span class="step-number">3</span>
+            <h3>Atendemos com proximidade</h3>
+            <p>
+              Valorizamos relações humanas, escuta ativa e comunicação transparente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-green" id="qualidade">
+      <div class="container">
+        <div class="section-title">
+          <p class="tag">Qualidade</p>
+          <h2>Compromisso com origem, cuidado e responsabilidade</h2>
+          <p>
+            Acreditamos que escolhas melhores começam com mais atenção e mais
+            respeito pela origem.
+          </p>
+        </div>
+
+        <div class="cards three-cards">
+          <div class="card">
+            <div class="card-icon">🌾</div>
+            <h3>Origem responsável</h3>
+            <p>
+              Valorizamos fornecedores comprometidos com boas práticas e
+              qualidade.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🧺</div>
+            <h3>Seleção cuidadosa</h3>
+            <p>
+              Priorizamos itens escolhidos com atenção ao frescor e à confiança.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🏙️</div>
+            <h3>Relação com a comunidade</h3>
+            <p>
+              Queremos fortalecer uma rede mais próxima e conectada com o
+              cotidiano das pessoas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-section" id="contato">
+      <div class="container cta-box">
+        <div>
+          <p class="tag tag-light">Contato</p>
+          <h2>Quer comprar com mais proximidade e confiança?</h2>
+          <p>
+            A Raiz Urbana Mercado foi pensada para quem valoriza praticidade sem
+            abrir mão de cuidado e atendimento humano.
+          </p>
+        </div>
+
+        <div class="cta-buttons">
+          <a href="compras.html" class="btn btn-light">Ir para compras</a>
+          <a href="mailto:contato@raizurbana.com.br" class="btn btn-outline-light">
+            Fale com a equipe
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <h3>Raiz Urbana Mercado</h3>
+        <p>Frescor de verdade, perto de você.</p>
+      </div>
+
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="compras.html">Compras</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@raizurbana.com.br">contato@raizurbana.com.br</a></li>
+          <li><a href="tel:+5511999999999">(11) 99999-9999</a></li>
+          <li>São Paulo - SP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© Raiz Urbana Mercado - Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="../Scripts/script.js"></script>
+</body>
+</html>
