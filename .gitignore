@@ -1,0 +1,11 @@
+# VSCode
+.vscode/
+
+# Arquivos compilados C
+*.exe
+*.out
+*.o
+
+# Binários específicos
+backend/extracao
+backend/programa
