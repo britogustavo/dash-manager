@@ -18,7 +18,7 @@
         </div>
         
         <nav class="nav-menu">
-            <a href="pg_inicial.html" class="nav-item">
+            <a href="pg_inicial.html" class="nav_ativo">
                 <i class="fa-solid fa-border-all"></i> Dashboard
             </a>
             <a href="#" class="nav-item">
@@ -31,7 +31,7 @@
                 <i class="fa-regular fa-user"></i> Usuários
             </a>
             <!-- MENU ALERTAS ATIVO AQUI -->
-            <a href="#" class="nav-item active">
+            <a href="pg_alertas.html" class="nav-item">
                 <i class="fa-regular fa-bell"></i> Alertas
             </a>
             <a href="#" class="nav-item">
@@ -48,6 +48,59 @@
             <i class="fa-solid fa-chevron-down" style="margin-left: auto; font-size: 12px; color: var(--text-secondary);"></i>
         </div>
     </aside>
-    
-</body>
-</html>
+
+    <main class="main-content">
+        <header class="main-header">
+            <h1>Visão Geral do Sistema</h1>
+        </header>
+
+        <section class="container">
+            <div class="card">
+                <h2>CPU</h2>
+                <p>23%</p>
+                <p>Uso atual</p>
+            </div>
+            <div class="card">
+                <h2>Memória RAM</h2>
+                <p>45%</p>
+                <p>7.2 GB / 15.9 GB</p>
+            </div>
+            <div class="card">
+                <h2>Disco</h2>
+                <p>62%</p>
+                <p>465 GB / 932 GB</p>
+            </div>
+            <div class="card">
+                <h2>Uptime</h2>
+                <p>7d 14h 32m</p>
+                <p>Tempo de atividade</p>
+            </div>
+            <div class="card">
+                <h2>Temperatura</h2>
+                <p>58°C</p>
+                <p>CPU</p>
+            </div>
+        </section>
+
+        <section class="container_2">
+            <div class="card">
+                <h2>Rede</h2>
+                <p>Download:</p>
+                <p class="download"></p>
+                <p>Upload:</p>
+                <p class="upload"></p>
+            </div>
+
+            <div class="card">
+                <h2>Resumo do Sistema</h2>
+                <span class="resumo">Processos em Execução <p>142</p></span><br>
+                <span class="resumo">Usuários Conectados <p>5</p></span><br>
+                <span class="resumo">Sistema Operacional <p>Ubuntu 22.04.4 LTS</p></span><br>
+                <span class="resumo">Endereço IP <p>192.168.1.15</p></span><br>
+            </div>
+
+            <div class="card">
+                <h2>Último Alerta</h2>
+                <p>Temperatura da CPU</p>
+                <a href="pg_alertas.html" class="ver-alertas">Ver Alertas</a>
+            </div>
