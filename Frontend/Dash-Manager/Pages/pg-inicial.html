@@ -20,7 +20,7 @@
         </div>
         
         <nav class="nav-menu">
-            <a href="pg_inicial.html" class="nav_ativo">
+            <a href="pg-inicial.html" class="nav-item active">
                 <i class="fa-solid fa-border-all"></i> Dashboard
             </a>
             <a href="#" class="nav-item">
@@ -33,7 +33,7 @@
                 <i class="fa-regular fa-user"></i> Usuários
             </a>
             <!-- MENU ALERTAS ATIVO AQUI -->
-            <a href="pg_alertas.html" class="nav-item">
+            <a href="pg-alertas.html" class="nav-item">
                 <i class="fa-regular fa-bell"></i> Alertas
             </a>
             <a href="#" class="nav-item">
@@ -59,27 +59,27 @@
         <section class="container">
             <div class="card">
                 <h2>CPU</h2>
-                <p>23%</p>
+                <p><span id="cpu%">Carregando...</span>%</p>
                 <p>Uso atual</p>
             </div>
             <div class="card">
                 <h2>Memória RAM</h2>
-                <p>45%</p>
-                <p>7.2 GB / 15.9 GB</p>
+                <p><span id="ram%">Carregando...</span>%</p>
+                <p><span id="ramLivre">Carregando...</span> GB / <span id="ramTotal">Carregando...</span> GB</p>
             </div>
             <div class="card">
                 <h2>Disco</h2>
-                <p>62%</p>
-                <p>465 GB / 932 GB</p>
+                <p><span id="disco%">Carregando...</span>%</p>
+                <p><span id="discoLivre">Carregando</span> GB / <span id="discoTotal">Carregando...</span> GB</p>
             </div>
             <div class="card">
                 <h2>Uptime</h2>
-                <p>7d 14h 32m</p>
+                <p><span id="uptime">Carregando...</span></p>
                 <p>Tempo de atividade</p>
             </div>
             <div class="card">
                 <h2>Temperatura</h2>
-                <p>58°C</p>
+                <p><span id="temperatura">Carregando...</span></p>
                 <p>CPU</p>
             </div>
         </section>
@@ -88,22 +88,22 @@
             <div class="card">
                 <h2>Rede</h2>
                 <p>Download:</p>
-                <p class="download"></p>
+                <p><span id="download-Mbps">Carregando...</span></p>
                 <p>Upload:</p>
-                <p class="upload"></p>
+                <p><span id="upload-Mbps">Carregando...</span></p>
             </div>
 
             <div class="card">
                 <h2>Resumo do Sistema</h2>
-                <span class="resumo">Processos em Execução <p>142</p></span><br>
-                <span class="resumo">Usuários Conectados <p>5</p></span><br>
-                <span class="resumo">Sistema Operacional <p>Ubuntu 22.04.4 LTS</p></span><br>
-                <span class="resumo">Endereço IP <p>192.168.1.15</p></span><br>
+                <p>Processos em Execução <span id="procesos-exec">Carregando...</span></p>
+                <p>Usuários Conectados <span id="usuarios-conected">Carregando...</span></p>
+                <p>Sistema Operacional <span id="system">Carregando...</span></p>
+                <p>Endereço IP <span id="ip">Carregando...</span></p>
             </div>
 
             <div class="card">
                 <h2>Último Alerta</h2>
-                <p>Temperatura da CPU</p>
+                <p><span id="alert">Carregando...</span></p>
                 <a href="pg-alertas.html" class="ver-alertas">Ver Alertas</a>
             </div>
         </section>
