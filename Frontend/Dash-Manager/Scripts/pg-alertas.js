@@ -1,50 +1,24 @@
 // ==========================================
 // 1. JSON SIMULADO DO SERVIDOR C
 // ==========================================
-// Lista de processos e recursos sendo monitorados
-const dadosMonitoramento = [
-    {
-        id: 1,
-        titulo: "Temperatura da CPU",
-        mensagem: "A temperatura da CPU excedeu o limite máximo seguro, reduzindo o tempo de vida do equipamento.",
-        valor: 85, // => Vai gerar alerta (CRÍTICO)
-        unidade: "°C",
-        processo: "hardware_sensor",
-        hora: "10:28:17",
-        icone: "fa-temperature-half"
-    },
-    {
-        id: 2,
-        titulo: "Uso de Memória RAM",
-        mensagem: "O consumo de memória atingiu níveis preocupantes. Possível vazamento de memória detectado.",
-        valor: 92, // => Vai gerar alerta (CRÍTICO)
-        unidade: "%",
-        processo: "java_backend",
-        hora: "10:15:00",
-        icone: "fa-memory"
-    },
-    {
-        id: 3,
-        titulo: "Armazenamento do Disco",
-        mensagem: "Espaço em disco livre na partição /var está abaixo do recomendado.",
-        valor: 81, // => Vai gerar alerta (AVISO)
-        unidade: "%",
-        processo: "mysql_daemon",
-        hora: "09:45:22",
-        icone: "fa-hard-drive"
-    },
-    {
-        id: 4,
-        titulo: "Carga da CPU",
-        mensagem: "Processador operando com folga.",
-        valor: 45, // => NÃO VAI GERAR ALERTA (Abaixo de 80)
-        unidade: "%",
-        processo: "system",
-        hora: "09:30:10",
-        icone: "fa-microchip"
+==================================================
+COMO INTEGRAR COM O C EM TEMPO REAL:
+==================================================
+function buscarAlertasEmTempoReal() {
+    fetch('./backend/extracao.c')
+        .then(res => res.json())
+        .then(dados => {
+            const container = document.getElementById('alerts-grid');
+            container.innerHTML = '';
+            
+            const alertas = dados.filter(item => item.valor >= 80);
+            document.getElementById('badge-count').innerText = alertas.length;
+            
+            alertas.forEach(alerta => {
+                container.innerHTML += criarCardHTML(alerta);
+            });
+        });
     }
-];
-
 // ==========================================
 // 2. FUNÇÃO QUE CRIA O CARD DE ALERTA NO HTML
 // ==========================================
@@ -125,24 +99,7 @@ window.onload = () => {
     atualizarRelogio();
 };
 
-/* 
-==================================================
-COMO INTEGRAR COM O C EM TEMPO REAL:
-==================================================
-function buscarAlertasEmTempoReal() {
-    fetch('http://seu-servidor-c/api/processos')
-        .then(res => res.json())
-        .then(dados => {
-            const container = document.getElementById('alerts-grid');
-            container.innerHTML = '';
-            
-            const alertas = dados.filter(item => item.valor >= 80);
-            document.getElementById('badge-count').innerText = alertas.length;
-            
-            alertas.forEach(alerta => {
-                container.innerHTML += criarCardHTML(alerta);
-            });
-        });
-}
+
+
+
 // setInterval(buscarAlertasEmTempoReal, 5000);
-*/
