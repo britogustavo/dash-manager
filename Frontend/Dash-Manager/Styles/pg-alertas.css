@@ -2,107 +2,135 @@
    VARIÁVEIS E RESET (Cores atualizadas)
    ========================================= */
 :root {
-    /* Novas cores exatas baseadas na sua imagem */
-    --bg-main: #040814;      /* Fundo principal mais escuro */
-    --bg-sidebar: #040814;   /* Fundo do menu lateral igual ao fundo */
-    --bg-card: #0A1122;      /* Fundo dos cards levemente mais claro para dar destaque */
-    --border-color: #1A2438; /* Bordas um pouco mais escuras para combinar */
+    /* O :root é onde a gente guarda as variáveis (os apelidos das cores) pra usar no código todo */
+    --bg-main: #040814;      /* Cor do fundozão da tela */
+    --bg-sidebar: #040814;   /* Cor do menu lateral */
+    --bg-card: #0A1122;      /* Cor dos cards (um pouco mais clara pra dar destaque) */
+    --border-color: #1A2438; /* Cor das linhas que dividem os elementos */
     
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
+    --text-primary: #F8FAFC;   /* Cor do texto principal (quase branco) */
+    --text-secondary: #94A3B8; /* Cor de textos menos importantes (cinza) */
     
-    --blue: #3B82F6;
-    --yellow: #EAB308;
-    --green: #22C55E;
-    --danger: #EF4444;
+    --blue: #3B82F6;    /* Azul padrão para itens ativos e botões */
+    --yellow: #EAB308;  /* Amarelo para avisos (atenção!) */
+    --green: #22C55E;   /* Verde para indicar que tá tudo rodando ok */
+    --danger: #EF4444;  /* Vermelho para erros críticos */
     
-    /* Fundos com transparência para as Tags */
+    /* Cores de fundo transparentes para as etiquetas (tags) de alerta */
     --danger-bg: rgba(239, 68, 68, 0.15);
     --warning-bg: rgba(234, 179, 8, 0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+/* O '*' reseta as margens e paddings padrão que o navegador coloca sozinho */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; /* Garante que a borda não aumente o tamanho do elemento */
+    font-family: 'Inter', sans-serif; /* Define a fonte bonitona que você importou */
+}
 
 body {
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
+    background-color: var(--bg-main); /* Aplica o fundo escuro */
+    color: var(--text-primary);       /* Aplica a cor do texto */
+    display: flex;                    /* Faz a sidebar e o conteúdo ficarem um do lado do outro */
+    height: 100vh;                    /* Força o corpo a ocupar toda a altura da tela */
+    overflow: hidden;                 /* Evita que a página inteira role, só o conteúdo vai rolar */
 }
 
 /* =========================================
    SIDEBAR (MENU LATERAL)
    ========================================= */
 .sidebar {
-    width: 260px;
+    width: 260px;                     /* Largura fixa do menu lateral */
     background-color: var(--bg-sidebar);
-    border-right: 1px solid var(--border-color);
-    display: flex; flex-direction: column;
+    border-right: 1px solid var(--border-color); /* Linha fina separando o menu do conteúdo */
+    display: flex; 
+    flex-direction: column;           /* Empilha os itens (logo, menu, perfil) um em cima do outro */
 }
 
 .logo-container {
-    display: flex; align-items: center; gap: 12px;
-    padding: 30px 24px;
+    display: flex; 
+    align-items: center; 
+    gap: 12px;                        /* Espaço entre o ícone e o texto da logo */
+    padding: 30px 24px;               /* Respiro interno da logo */
 }
-.logo-icon i { color: var(--blue); font-size: 28px; }
-.logo-text h2 { font-size: 18px; font-weight: 600; }
-.logo-text p { font-size: 11px; color: var(--text-secondary); }
+.logo-icon i { color: var(--blue); font-size: 28px; } /* Estiliza o ícone da logo */
+.logo-text h2 { font-size: 18px; font-weight: 600; }  /* Estiliza o nome "DashManager" */
+.logo-text p { font-size: 11px; color: var(--text-secondary); } /* Estiliza o slogan */
 
-.nav-menu { padding: 0 16px; display: flex; flex-direction: column; gap: 4px; }
+.nav-menu { padding: 0 16px; display: flex; flex-direction: column; gap: 4px; } /* Lista de links */
 .nav-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 12px 16px; border-radius: 8px;
-    color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500;
+    display: flex; 
+    align-items: center; 
+    gap: 14px;
+    padding: 12px 16px; 
+    border-radius: 8px;               /* Arredonda os cantos dos itens do menu */
+    color: var(--text-secondary); 
+    text-decoration: none;            /* Tira o sublinhado azul padrão de links */
+    font-size: 14px; 
+    font-weight: 500;
 }
-.nav-item i { font-size: 16px; width: 20px; text-align: center; }
-.nav-item.active { background-color: #1A2844; color: var(--blue); }
-.nav-item:hover:not(.active) { background-color: rgba(255,255,255,0.05); }
+.nav-item i { font-size: 16px; width: 20px; text-align: center; } /* Alinha os ícones do menu */
+.nav-item.active { background-color: #1A2844; color: var(--blue); } /* Estilo do link quando clicado */
+.nav-item:hover:not(.active) { background-color: rgba(255,255,255,0.05); } /* Efeito de brilho ao passar o mouse */
 
 .user-profile {
-    margin-top: auto; padding: 20px 24px;
+    margin-top: auto;                 /* Empurra o perfil pro final da sidebar */
+    padding: 20px 24px;
     border-top: 1px solid var(--border-color);
-    display: flex; align-items: center; gap: 12px; font-size: 13px;
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
 }
-.user-profile span { display: block; color: var(--text-secondary); font-size: 11px; }
 
 /* =========================================
    HEADER & MAIN CONTENT
    ========================================= */
 .main-content {
-    flex: 1; padding: 30px 40px; overflow-y: auto; position: relative;
+    flex: 1;                          /* Faz essa parte ocupar todo o resto da largura da tela */
+    padding: 30px 40px; 
+    overflow-y: auto;                 /* Se o conteúdo for maior que a tela, cria a barra de rolagem aqui */
 }
 
-.header { display: flex; justify-content: space-between; align-items: flex-start; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; } /* Título de um lado, ações do outro */
 .page-title h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
-.page-title p { color: var(--text-secondary); font-size: 13px; }
 
 .header-actions { display: flex; align-items: center; gap: 20px; }
 .notification-bell {
-    position: relative; background: var(--bg-card); border: 1px solid var(--border-color);
-    width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
-}
-.badge-count {
-    position: absolute; top: -5px; right: -5px; background: var(--blue); color: #fff;
-    font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%;
+    position: relative; 
+    background: var(--bg-card); 
+    border: 1px solid var(--border-color);
+    width: 36px; height: 36px; 
+    border-radius: 8px; 
     display: flex; align-items: center; justify-content: center;
 }
-.server-selector {
-    background: var(--bg-card); border: 1px solid var(--border-color);
-    padding: 8px 16px; border-radius: 8px; font-size: 13px; display: flex; align-items: center; gap: 8px;
+.badge-count {
+    position: absolute;               /* Posiciona a bolinha vermelha em cima do sino */
+    top: -5px; right: -5px; 
+    background: var(--blue); 
+    color: #fff;
+    font-size: 10px; 
+    width: 16px; height: 16px; 
+    border-radius: 50%;               /* Faz a bolinha ser perfeitamente redonda */
+    display: flex; align-items: center; justify-content: center;
 }
 
 .last-update {
-    text-align: right; font-size: 11px; color: var(--text-secondary); margin-top: -15px; margin-bottom: 30px;
+    text-align: right; 
+    font-size: 11px; 
+    color: var(--text-secondary); 
+    margin-top: -15px; 
+    margin-bottom: 30px;
     display: flex; align-items: center; justify-content: flex-end; gap: 6px;
 }
-.dot { width: 6px; height: 6px; background-color: var(--green); border-radius: 50%; display: inline-block; }
+.dot { width: 6px; height: 6px; background-color: var(--green); border-radius: 50%; } /* Aquela bolinha verde de "online" */
 
 /* =========================================
-   GRID E CARDS DE ALERTAS (Estilo do Mockup)
+   GRID E CARDS DE ALERTAS
    ========================================= */
 .alerts-grid {
     display: grid;
+    /* Cria colunas automáticas que se ajustam (mínimo 350px cada) */
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
 }
@@ -114,28 +142,14 @@ body {
     padding: 24px; 
     display: flex; 
     flex-direction: column;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease; /* Animação suave ao passar o mouse */
 }
 
 .alert-card:hover {
-    transform: translateY(-3px);
-    border-color: #334155;
+    transform: translateY(-3px);      /* O card "sobe" um pouquinho quando o mouse passa em cima */
+    border-color: #334155;            /* A borda brilha levemente no hover */
 }
 
-/* Header do Card com o Ícone Grande */
-.alert-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.alert-icon-main {
-    width: 40px; height: 40px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center; font-size: 18px;
-}
-
-/* Tags iguais à tag "Crítico" do mockup */
 .alert-badge {
     display: inline-flex; align-items: center; gap: 6px;
     border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 600;
@@ -144,29 +158,23 @@ body {
 .alert-badge.critical {
     background-color: var(--danger-bg); 
     color: var(--danger);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    border: 1px solid rgba(239, 68, 68, 0.3); /* Borda vermelha clarinha */
 }
 
 .alert-badge.warning {
     background-color: var(--warning-bg); 
     color: var(--yellow);
-    border: 1px solid rgba(234, 179, 8, 0.3);
+    border: 1px solid rgba(234, 179, 8, 0.3); /* Borda amarela clarinha */
 }
 
-/* Textos do Alerta */
-.alert-card h4 { font-size: 16px; margin-bottom: 8px; font-weight: 600; }
-.alert-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
-
-/* Rodapé do Alerta (Data e Valor) */
 .alert-footer {
-    margin-top: auto;
+    margin-top: auto;                 /* Empurra as infos de tempo/valor pro final do card */
     padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Linha divisória muito discreta */
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
 }
 
-.alert-time { color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
-.alert-value { font-weight: 600; font-family: monospace; font-size: 14px; }
+.alert-value { font-weight: 600; font-family: monospace; font-size: 14px; } /* Fonte tipo código pros números */
