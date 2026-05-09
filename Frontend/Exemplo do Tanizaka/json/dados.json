@@ -1,0 +1,18 @@
+{
+    "memoria_ram": {
+        "total_mb": 8192,
+        "usada_mb": 6974,
+        "livre_mb": 1218
+    },
+    "disco": {
+        "total_gb": 512,
+        "usado_gb": 270,
+        "livre_gb": 242
+    },
+    "cpu": {
+        "temperatura": 63
+    },
+    "processos": 150,
+    "threads": 735,
+    "timestamp": "2026-04-16 20:23:20"
+}
