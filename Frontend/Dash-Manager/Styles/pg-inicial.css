@@ -88,14 +88,19 @@ body {
 .card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     font-size: 14px;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 90px 20px;
+    padding: 70px 20px;
     margin-right: 20px;
+    margin-top: 46px;
+}
+
+.card .title {
+    position: relative;
+    bottom: 40px;
 }
 
 .container_2 {
@@ -107,7 +112,7 @@ body {
 .card2 {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 20px;
     margin-right: 20px;
     padding: 100px 20px;
@@ -117,9 +122,16 @@ body {
     border-radius: 8px;
 }
 
+.card2 .title {
+    position: relative;
+    bottom: 70px;
+}
+
+
 .ver-alertas {
-    margin-top: auto;
-    align-self: center;
+    position: relative;
+    top: 80px;
+    align-self: flex-start;
     padding: 8px 32px;
     background-color: var(--blue);
     color: #fff;
