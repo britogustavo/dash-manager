@@ -399,7 +399,7 @@ void process_list(FILE *json) {
     }
 
     fprintf(json,
-            "\n  ],\n");
+            "\n  ]\n");
 
     closedir(dir);
 }
