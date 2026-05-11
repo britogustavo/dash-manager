@@ -8,7 +8,6 @@ O projeto foi desenvolvido para integrar os conhecimentos das disciplinas de:
 - Linguagem de Programação
 - Sistemas Operacionais
 
----
 
 # 📌 Objetivo
 
@@ -16,7 +15,6 @@ O DashManager simula uma empresa especializada em monitoramento de sistemas comp
 
 A proposta do sistema é coletar informações do sistema operacional em tempo real utilizando linguagem C e exibir essas informações em um dashboard web moderno e interativo.
 
----
 
 # 🚀 Tecnologias Utilizadas
 
@@ -31,7 +29,6 @@ A proposta do sistema é coletar informações do sistema operacional em tempo r
 - CSS3
 - JavaScript
 
----
 
 # 🧠 Conceitos de Sistemas Operacionais Utilizados
 
@@ -44,7 +41,6 @@ O projeto utiliza informações fornecidas diretamente pelo Linux através de:
 
 Esses diretórios fornecem métricas em tempo real sobre o funcionamento do sistema operacional.
 
----
 
 # 📊 Informações Monitoradas
 
@@ -60,7 +56,6 @@ O sistema realiza monitoramento de:
 - Quantidade de threads
 - Lista de processos
 
----
 
 # 📁 Estrutura do Projeto
 
@@ -105,7 +100,6 @@ dash_manager/
 └── README.md
 ```
 
----
 
 # ⚙️ Como Funciona
 
@@ -117,7 +111,6 @@ Após coletar os dados:
 - o frontend lê o JSON utilizando JavaScript
 - os dados são exibidos em tempo real no dashboard
 
----
 
 # 🔄 Fluxo do Sistema
 
@@ -135,7 +128,6 @@ JavaScript
 Dashboard Web
 ```
 
----
 
 # 🖥️ Métricas Extraídas
 
@@ -152,7 +144,6 @@ Permite calcular:
 - tempo de uso
 - porcentagem de utilização
 
----
 
 ## Memória RAM
 
@@ -166,8 +157,6 @@ Informações monitoradas:
 - memória total
 - memória utilizada
 - memória disponível
-
----
 
 ## Disco
 
@@ -183,7 +172,6 @@ Informações monitoradas:
 - espaço disponível
 - porcentagem de uso
 
----
 
 ## Rede
 
@@ -199,7 +187,6 @@ Informações monitoradas:
 - taxa de download
 - taxa de upload
 
----
 
 ## Temperatura
 
@@ -213,7 +200,6 @@ Permite monitorar:
 - temperatura do processador
 - zonas térmicas do sistema
 
----
 
 ## Uptime
 
@@ -226,7 +212,6 @@ Obtido através de:
 Mostra:
 - tempo em que o sistema permanece ligado
 
----
 
 ## Processos e Threads
 
@@ -242,7 +227,6 @@ Informações monitoradas:
 - estado
 - número de threads
 
----
 
 # 🧪 Exemplo de JSON Gerado
 
@@ -280,7 +264,6 @@ Informações monitoradas:
 }
 ```
 
----
 
 # ▶️ Como Executar
 
@@ -293,7 +276,6 @@ sudo apt update
 sudo apt install build-essential
 ```
 
----
 
 ## 2. Compilar o Projeto
 
@@ -303,7 +285,6 @@ Dentro da pasta Backend:
 gcc extracao.c -o monitor
 ```
 
----
 
 ## 3. Executar
 
@@ -319,7 +300,6 @@ dados.json
 
 a cada 5 segundos.
 
----
 
 # 🌐 Frontend
 
@@ -334,7 +314,6 @@ O dashboard possui:
 - atualização dinâmica
 - gráficos e cards de monitoramento
 
----
 
 # 📄 Páginas do Sistema
 
@@ -353,7 +332,6 @@ Usuários logados no sistema.
 ## Alertas
 Alertas de temperatura e uso excessivo.
 
----
 
 # 🏢 Proposta da Empresa
 
@@ -366,7 +344,6 @@ A ideia é fornecer:
 - análise de desempenho
 - gerenciamento de recursos
 
----
 
 # 📚 Aprendizados do Projeto
 
@@ -381,7 +358,6 @@ Durante o desenvolvimento foram aplicados conceitos de:
 - Linux
 - Monitoramento de sistemas
 
----
 
 # 👨‍💻 Desenvolvido por
 
