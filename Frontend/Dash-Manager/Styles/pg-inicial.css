@@ -37,7 +37,7 @@ body {
 }
 
 .sidebar {
-    width: 260px;
+    width: 300px;
     background-color: var(--bg-sidebar);
     border-right: 1px solid var(--border-color);
     display: flex; flex-direction: column;
@@ -48,6 +48,7 @@ body {
     padding: 30px 24px;
 }
 .logo-icon i { color: var(--blue); font-size: 28px; }
+.logo-icon img { width: 28px; height: 28px; }
 .logo-text h2 { font-size: 18px; font-weight: 600; }
 .logo-text p { font-size: 11px; color: var(--text-secondary); }
 
