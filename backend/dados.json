@@ -1,0 +1,164 @@
+{
+  "cpu": 0.06,
+  "memory": {
+    "total": 7794764,
+    "used": 592456,
+    "available": 7202308
+  },
+  "disk": {
+    "total": "1007G",
+    "used": "1.9G",
+    "available": "954G",
+    "usage_percent": "1%"
+  },
+  "temperature": -1.00,
+  "uptime": 2474,
+  "processes": 23,
+  "threads": 41,
+  "network": {
+    "rx": 6868,
+    "tx": 6868,
+    "rx_rate": 0,
+    "tx_rate": 0
+  },
+  "process_list": [
+    {
+      "pid": 1,
+      "name": "systemd",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 2,
+      "name": "init-systemd(Ub",
+      "threads": 2,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 6,
+      "name": "init",
+      "threads": 2,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 42,
+      "name": "systemd-journal",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 92,
+      "name": "systemd-udevd",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 106,
+      "name": "systemd-resolve",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 114,
+      "name": "systemd-timesyn",
+      "threads": 2,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 157,
+      "name": "cron",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 158,
+      "name": "dbus-daemon",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 165,
+      "name": "systemd-logind",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 185,
+      "name": "rsyslogd",
+      "threads": 4,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 188,
+      "name": "agetty",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 189,
+      "name": "unattended-upgr",
+      "threads": 2,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 290,
+      "name": "login",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 336,
+      "name": "systemd",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 339,
+      "name": "(sd-pam)",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 363,
+      "name": "bash",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 649,
+      "name": "polkitd",
+      "threads": 4,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 1814,
+      "name": "SessionLeader",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 1816,
+      "name": "Relay(1819)",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 1819,
+      "name": "bash",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 2877,
+      "name": "wsl-pro-service",
+      "threads": 9,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 3185,
+      "name": "monitor",
+      "threads": 1,
+      "state": "R (running)"
+    }
+  ],
+}
