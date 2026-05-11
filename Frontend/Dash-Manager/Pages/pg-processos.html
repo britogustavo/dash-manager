@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Processos | DashManager</title>
+
+  <!-- Fonte e Ícones (igual ao padrão do seu projeto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <link rel="stylesheet" href="../styles/pg-processos.css"/>
+</head>
+
+<body>
+  <!-- SIDEBAR (MENU LATERAL) -->
+  <aside class="sidebar">
+    <div class="logo-container">
+      <!-- Troque o caminho se necessário -->
+      <div class="logo-icon logo-img">
+        <img src="../assets/logo.png" alt="Logo DashManager">
+      </div>
+      <div class="logo-text">
+        <h2>DashManager</h2>
+        <p>Monitoramento Inteligente</p>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="../Pages/pg-inicial.html" class="nav-item">
+        <i class="fa-solid fa-border-all"></i> Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-square-check"></i> Recursos
+      </a>
+
+      <!-- ATIVO AQUI -->
+      <a href="../Pages/pg-processos.html" class="nav-item active">
+        <i class="fa-solid fa-microchip"></i> Processos
+      </a>
+
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-user"></i> Usuários
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-bell"></i> Alertas
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-gear"></i> Configurações
+      </a>
+    </nav>
+
+    <div class="user-profile">
+      <i class="fa-solid fa-gear"></i>
+      <div>
+        <strong>DashManager LTDA</strong>
+        <span>Plano Empresarial</span>
+      </div>
+      <i class="fa-solid fa-chevron-down" style="margin-left:auto;font-size:12px;color:var(--text-secondary);"></i>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="header">
+      <div class="page-title">
+        <h1>Processos</h1>
+        <p>Monitoramento detalhado de processos do servidor do site</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="notification-bell" title="Notificações">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge-count" id="badgeAlerts">0</span>
+        </div>
+
+        <button class="server-selector" id="serverSelectorBtn" type="button" aria-label="Selecionar servidor">
+          <i class="fa-solid fa-server"></i>
+          <span id="serverName">Servidor - Loja 01</span>
+          <span class="dot-status" id="serverStatusDot" title="Status"></span>
+          <i class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--text-secondary);"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="last-update">
+      <span class="dot"></span>
+      <span>Última atualização:</span>
+      <strong id="lastUpdate">--:--:--</strong>
+      <span class="sep">•</span>
+      <span id="dataSource">Fonte: ../data/processos.json</span>
+    </div>
+
+    <!-- KPI CARDS -->
+    <section class="kpi-grid" aria-label="Indicadores principais">
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon blue"><i class="fa-solid fa-list"></i></div>
+          <div class="kpi-meta">
+            <h3>Total de processos</h3>
+            <p>Somatório no host</p>
+          </div>
+        </div>
+        <div class="kpi-value">
+          <span id="kpiTotal">--</span>
+          <small class="kpi-sub">em execução: <strong id="kpiRunning">--</strong></small>
+        </div>
+        <div class="kpi-spark">
+          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkTotal"></svg>
+        </div>
+        <div class="kpi-progress">
+          <div class="bar"><div class="fill blue" id="barTotal" style="width:0%"></div></div>
+          <span class="hint">Capacidade (limite configurável)</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon yellow"><i class="fa-solid fa-gauge-high"></i></div>
+          <div class="kpi-meta">
+            <h3>CPU (Top processos)</h3>
+            <p>Uso combinado (Top N)</p>
+          </div>
+        </div>
+        <div class="kpi-value">
+          <span id="kpiCpuTop">--%</span>
+          <small class="kpi-sub">pico: <strong id="kpiCpuPeak">--%</strong></small>
+        </div>
+        <div class="kpi-spark">
+          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkCpu"></svg>
+        </div>
+        <div class="kpi-progress">
+          <div class="bar"><div class="fill yellow" id="barCpuTop" style="width:0%"></div></div>
+          <span class="hint">Atenção acima de 80%</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon green"><i class="fa-solid fa-memory"></i></div>
+          <div class="kpi-meta">
+            <h3>Memória (Top processos)</h3>
+            <p>RSS combinado (Top N)</p>
+          </div>
+        </div>
+        <div class="kpi-value">
+          <span id="kpiMemTop">--%</span>
+          <small class="kpi-sub">RSS: <strong id="kpiMemRss">--</strong></small>
+        </div>
+        <div class="kpi-spark">
+          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkMem"></svg>
+        </div>
+        <div class="kpi-progress">
+          <div class="bar"><div class="fill green" id="barMemTop" style="width:0%"></div></div>
+          <span class="hint">Atenção acima de 85%</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon blue2"><i class="fa-solid fa-code-branch"></i></div>
+          <div class="kpi-meta">
+            <h3>Threads</h3>
+            <p>Total no host</p>
+          </div>
+        </div>
+        <div class="kpi-value">
+          <span id="kpiThreads">--</span>
+          <small class="kpi-sub">média por proc: <strong id="kpiThreadsAvg">--</strong></small>
+        </div>
+        <div class="kpi-spark">
+          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkThreads"></svg>
+        </div>
+        <div class="kpi-progress">
+          <div class="bar"><div class="fill blue2" id="barThreads" style="width:0%"></div></div>
+          <span class="hint">Picos podem indicar leak</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="kpi-meta">
+            <h3>Anomalias</h3>
+            <p>Processos críticos</p>
+          </div>
+        </div>
+        <div class="kpi-value">
+          <span id="kpiAnomalias">--</span>
+          <small class="kpi-sub">zumbis: <strong id="kpiZombie">--</strong></small>
+        </div>
+        <div class="kpi-spark">
+          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkAnom"></svg>
+        </div>
+        <div class="kpi-progress">
+          <div class="bar"><div class="fill danger" id="barAnom" style="width:0%"></div></div>
+          <span class="hint">Alertar ao detectar zumbi/stop</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- GRID ABAIXO (igual “cards + card lateral” do mockup) -->
+    <section class="lower-grid">
+      <!-- CARD: TOP POR CPU / RAM -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-ranking-star"></i>
+            <h3>Top processos (CPU / RAM)</h3>
+          </div>
+          <div class="card-actions">
+            <button class="chip" id="btnTopCpu" type="button" data-mode="cpu"><i class="fa-solid fa-fire"></i> CPU</button>
+            <button class="chip outline" id="btnTopMem" type="button" data-mode="mem"><i class="fa-solid fa-droplet"></i> RAM</button>
+          </div>
+        </div>
+
+        <div class="mini-table" id="topTable">
+          <!-- JS injeta -->
+        </div>
+
+        <div class="card-footer">
+          <span class="muted">Dica: priorize processos do web server, banco e cache.</span>
+        </div>
+      </article>
+
+      <!-- CARD: RESUMO DO SERVIDOR + SERVIÇOS CRÍTICOS -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-circle-nodes"></i>
+            <h3>Resumo do servidor</h3>
+          </div>
+          <button class="ghost" id="btnRefresh" type="button" title="Atualizar agora">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+
+        <div class="kv-grid">
+          <div class="kv"><span>Hostname</span><strong id="kvHost">--</strong></div>
+          <div class="kv"><span>S.O.</span><strong id="kvOs">--</strong></div>
+          <div class="kv"><span>IP</span><strong id="kvIp">--</strong></div>
+          <div class="kv"><span>Uptime</span><strong id="kvUptime">--</strong></div>
+          <div class="kv"><span>Load avg</span><strong id="kvLoad">--</strong></div>
+          <div class="kv"><span>Web</span><strong id="kvWeb">--</strong></div>
+          <div class="kv"><span>DB</span><strong id="kvDb">--</strong></div>
+          <div class="kv"><span>Cache</span><strong id="kvCache">--</strong></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h4 class="subsection-title">Serviços críticos (health)</h4>
+        <div class="service-list" id="servicesList">
+          <!-- JS injeta -->
+        </div>
+      </article>
+
+      <!-- CARD: ÚLTIMO ALERTA (igual do mockup) -->
+      <article class="card alert-card-like">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-bell"></i>
+            <h3>Último alerta</h3>
+          </div>
+        </div>
+
+        <div class="alert-badge critical" id="lastAlertBadge" style="display:none;">
+          <i class="fa-solid fa-circle"></i>
+          <span id="lastAlertSeverity">Crítico</span>
+        </div>
+
+        <h4 class="alert-title" id="lastAlertTitle">Sem alertas</h4>
+        <p class="alert-desc" id="lastAlertDesc">
+          Nenhum evento crítico registrado nas últimas leituras.
+        </p>
+
+        <div class="alert-meta">
+          <div class="meta-item"><i class="fa-regular fa-clock"></i> <span id="lastAlertTime">--</span></div>
+          <div class="meta-item"><i class="fa-solid fa-hashtag"></i> <span id="lastAlertPid">PID: --</span></div>
+        </div>
+
+        <a class="btn-link" href="#" role="button">
+          Ver todos os alertas <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+    </section>
+
+    <!-- TABELA PRINCIPAL -->
+    <section class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">
+          <h3>Processos do servidor</h3>
+          <p>Busca, filtro por estado e ordenação. Ideal para acompanhar o servidor do site.</p>
+        </div>
+
+        <div class="table-controls">
+          <div class="control">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="searchInput" type="text" placeholder="Buscar por PID, nome, usuário, comando..." />
+          </div>
+
+          <select id="stateFilter" class="select">
+            <option value="all">Todos os estados</option>
+            <option value="R">R (Running)</option>
+            <option value="S">S (Sleeping)</option>
+            <option value="D">D (Disk sleep)</option>
+            <option value="T">T (Stopped)</option>
+            <option value="Z">Z (Zombie)</option>
+          </select>
+
+          <select id="serviceFilter" class="select">
+            <option value="all">Todos (serviços)</option>
+            <option value="web">Web server</option>
+            <option value="db">Banco</option>
+            <option value="cache">Cache</option>
+            <option value="other">Outros</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-scroll">
+          <table class="data-table" id="procTable">
+            <thead>
+              <tr>
+                <th data-key="pid">PID</th>
+                <th data-key="name">Processo</th>
+                <th data-key="user">Usuário</th>
+                <th data-key="state">Estado</th>
+                <th data-key="cpu">CPU%</th>
+                <th data-key="mem">MEM%</th>
+                <th data-key="rss">RSS</th>
+                <th data-key="threads">Threads</th>
+                <th data-key="etime">Uptime</th>
+                <th data-key="cmd">Comando</th>
+              </tr>
+            </thead>
+            <tbody id="procTbody">
+              <tr><td colspan="10" class="loading">Carregando dados...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <div class="pagination" id="pagination"></div>
+          <div class="rows-info">
+            <span id="rowsInfo">--</span>
+            <span class="sep">•</span>
+            <span>Atualiza automaticamente</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 DashManager. Todos os direitos reservados.</span>
+    </footer>
+  </main>
+
+  <script defer src="../scripts/pg-processos.js"></script>
+</body>
+</html>
