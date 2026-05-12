@@ -1,6 +1,6 @@
 :root {
     /* Novas cores exatas baseadas na sua imagem */
-    --bg-main: #040814;      /* Fundo principal mais escuro */
+    --bg-main: #050b1c;      /* Fundo principal mais escuro */
     --bg-sidebar: #040814;   /* Fundo do menu lateral igual ao fundo */
     --bg-card: #0A1122;      /* Fundo dos cards levemente mais claro para dar destaque */
     --border-color: #1A2438; /* Bordas um pouco mais escuras para combinar */
@@ -37,10 +37,39 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 233.5px;
     background-color: var(--bg-sidebar);
     border-right: 1px solid var(--border-color);
     display: flex; flex-direction: column;
+}
+
+.top-bar {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.linha {
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.atualizacao {
+
+    color: #94a3b8;
+
+    font-size: 14px;
+
+    white-space: nowrap;
 }
 
 .logo-container {
@@ -96,7 +125,6 @@ body {
     border-radius: 8px;
     padding: 70px 20px;
     margin-right: 20px;
-    margin-top: 46px;
 }
 
 .card .title {
