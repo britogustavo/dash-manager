@@ -73,23 +73,28 @@ async function atualizarDados() {
         document.getElementById("temperatura")
             .innerText =
             dados.temperature == -1
-            ? "Indisponível"
+            ? "N/A"
             : dados.temperature.toFixed(1) + "°C";
 
         ////////////////// REDE //////////////////
-        const downloadMbps =
-            (dados.network.rx_rate / 1024 / 1024).toFixed(2);
+        const downloadKBps =
+            (dados.network.rx_rate / 1024).toFixed(2);
 
-        const uploadMbps =
-            (dados.network.tx_rate / 1024 / 1024).toFixed(2);
+        const uploadKBps =
+            (dados.network.tx_rate / 1024).toFixed(2);
 
         document.getElementById("download-Mbps")
             .innerText =
-            downloadMbps + " MB/s";
+            downloadKBps;
 
         document.getElementById("upload-Mbps")
             .innerText =
-            uploadMbps + " MB/s";
+            uploadKBps;
+
+        //////////////HORA ATUAL//////////////////
+        document.getElementById("horaAtual")
+            .innerText =
+            dados.current_time;
 
         ////////////////// PROCESSOS //////////////////
         document.getElementById("procesos-exec")
@@ -111,6 +116,28 @@ async function atualizarDados() {
             .innerText =
             "127.0.0.1";
 
+        ////////////////// BAR //////////////////
+        document.getElementById("cpuBar")
+            .style.width =
+            dados.cpu + "%";
+
+        const porcentagemRam =
+            (dados.memory.used / dados.memory.total) * 100;
+
+        document.getElementById("ramBar")
+            .style.width =
+            porcentagemRam + "%";
+
+        const porcentagemDisco =
+            parseFloat(dados.disk.usage_percent);
+
+        document.getElementById("diskBar")
+            .style.width =
+            porcentagemDisco + "%";    
+
+        document.getElementById("tempBar")
+            .style.width =
+            dados.temperature + "%";
         ////////////////// ALERTA //////////////////
         let alerta =
             "Sistema funcionando normalmente";

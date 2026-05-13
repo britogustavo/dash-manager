@@ -18,10 +18,6 @@
     --warning-bg: rgba(234, 179, 8, 0.15);
 }
 
-
-
-
-
 * { margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -116,6 +112,7 @@ body {
 }
   
 .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -128,9 +125,75 @@ body {
 }
 
 .card .title {
+    font-size: 16px;
     position: relative;
     bottom: 40px;
 }
+
+div .fa-solid{
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: 4px;
+}
+
+div .fa-microchip{
+    background: rgba(0, 132, 255, 0.15);
+    color: #3b82f6;
+    cursor: pointer;
+}
+
+.fa-memory{
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    cursor: pointer;
+}
+
+.fa-hard-drive{
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+    cursor: pointer;
+}
+
+.fa-clock{
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.fa-temperature-half{
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    cursor: pointer;
+}
+
+.mini-chart{
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    width: 90px;
+    height: 40px;
+}
+
+.mini-chart .blur-blue{
+    filter: drop-shadow(0 0 3px #3b82f6);
+}
+
+.mini-chart .blur-green{
+    filter: drop-shadow(0 0 3px #22c55e);
+}
+
+.mini-chart .blur-yellow{
+    filter: drop-shadow(0 0 3px #eab308);
+}
+
+.mini-chart .blur-grey{
+    filter: drop-shadow(0 0 3px #94a3b8);
+}
+
+.mini-chart .blur-red{
+    filter: drop-shadow(0 0 3px #ef4444);
+}
+
 
 .container_2 {
     display: grid;
@@ -144,7 +207,7 @@ body {
     align-items: flex-start;
     margin-top: 20px;
     margin-right: 20px;
-    padding: 100px 20px;
+    padding: 40px 20px;
     font-size: 14px;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -153,9 +216,38 @@ body {
 
 .card2 .title {
     position: relative;
-    bottom: 70px;
+    bottom: 10px;
 }
 
+.value{
+    font-family: Bebas Neue, sans-serif;
+    font-size: 28px;
+}
+
+.sub-title{
+    position: relative;
+    font-size: 12px;
+    color: var(--text-secondary);
+    top: 6px;
+}
+
+.fa-tower-broadcast{
+    background: rgba(0, 132, 255, 0.15);
+    color: #3b82f6;
+    cursor: pointer;
+}
+
+.fa-table-list{
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.fa-triangle-exclamation{
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    cursor: pointer;
+}
 
 .ver-alertas {
     position: relative;
@@ -170,8 +262,103 @@ body {
 }
 
 .direitos {
-    margin-top: 60px;
+    margin-top: 28px;
     text-align: center;
     font-size: 12px;
     color: var(--text-secondary);
+}
+
+.progress-bar {
+    position: relative;
+    top: 40px;
+    width: 100%;
+    height: 10px;
+    background: #1e293b;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-blue {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #3b82f6,
+        #2563eb
+    );
+
+    transition: width 0.5s ease;
+}
+
+.progress-green {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #22c55e,
+        #16a34a
+    );
+
+    transition: width 0.5s ease;
+}
+
+.progress-yellow {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #eab308,
+        #ca8a04
+    );
+
+    transition: width 0.5s ease;
+}
+
+.progress-red {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #ef4444,
+        #dc2626
+    );
+
+    transition: width 0.5s ease;
+}
+
+.network-item {
+    width: 100%;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 12px;
+}
+
+.network-item .rede-blue {
+    flex-shrink: 0;
+    color:#4588f5;
+    position: relative;
+}
+
+.rede-green {
+    flex-shrink: 0;
+    color:#22c55e;
+    position: relative;
+}
+
+.network-item span, .span span {
+    font-family: Bebas Neue, sans-serif;
+    margin-left: 8px;
+    font-size: 28px;
 }

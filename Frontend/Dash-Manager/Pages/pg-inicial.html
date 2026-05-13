@@ -8,6 +8,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/pg-inicial.css">
     <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- SIDEBAR (MENU LATERAL) -->
@@ -63,7 +66,7 @@
         
             <p class="atualizacao">
                 Última atualização:
-                <span id="horaAtualizacao">
+                <span id="horaAtual">
                     10:30:45
                 </span>
             </p>
@@ -72,43 +75,137 @@
 
         <section class="container">
             <div class="card">
-                <h2 class="title">CPU</h2>
-                <p><span id="cpuPercentual">Carregando...</span></p>
-                <p>Uso atual</p>
+                <h2 class="title"><i class="fa-solid fa-microchip"></i> CPU</h2>
+                <p><span class="value" id="cpuPercentual">Carregando...</span></p> 
+
+                <svg class="mini-chart" viewBox="0 0 100 40">
+                    <polyline class="blur-blue" fill="none" stroke="#3b82f6" stroke-width="3" points="
+                            0,25
+                            10,20
+                            20,28
+                            30,10
+                            40,22
+                            50,18
+                            60,30
+                            70,15
+                            80,24
+                            90,12
+                            100,20
+                        " />
+                </svg>
+
+                <p class="sub-title">Uso atual</p>
+                
+                <div class="progress-bar">
+                    <div class="progress-blue" id="cpuBar"></div>
+                </div>
             </div>
             <div class="card">
-                <h2 class="title">Memória RAM</h2>
-                <p><span id="ramPercentual">Carregando...</span>%</p>
-                <p><span id="ramLivre">Carregando...</span> GB / <span id="ramTotal">Carregando...</span> GB</p>
+                <h2 class="title"><i class="fa-solid fa-memory"></i>Memória RAM</h2>
+                <p class="value"><span class="value" id="ramPercentual">Carregando...</span>%</p>
+                <svg class="mini-chart" viewBox="0 0 100 40">
+                    <polyline class="blur-green" fill="none" stroke="#22c55e" stroke-width="3" points="
+                            0,20
+                            10,10
+                            20,28
+                            30,06
+                            40,26
+                            50,12
+                            60,32
+                            70,8
+                            80,24
+                            90,4
+                            100,20
+                        " />
+                </svg>
+                <p class="sub-title"><span id="ramLivre">Carregando...</span> GB / <span id="ramTotal">Carregando...</span> GB</p>
+
+                <div class="progress-bar">
+                    <div class="progress-green" id="ramBar"></div>
+                </div>
             </div>
             <div class="card">
-                <h2 class="title">Disco</h2>
-                <p><span id="discoPercentual">Carregando...</span></p>
-                <p><span id="discoLivre">Carregando</span> GB / <span id="discoTotal">Carregando...</span> GB</p>
+                <h2 class="title"><i class="fa-solid fa-hard-drive"></i>Disco</h2>
+                <p><span class="value" id="discoPercentual">Carregando...</span></p>
+                <svg class="mini-chart" viewBox="0 0 100 40">
+                    <polyline class="blur-yellow" fill="none" stroke="#eab308" stroke-width="3" points="
+                            0,25
+                            10,18
+                            20,24
+                            30,2
+                            40,20
+                            50,7
+                            60,28
+                            70,14
+                            80,22
+                            90,10
+                            100,18
+                        " />
+                </svg>
+                <p class="sub-title"><span id="discoLivre">Carregando</span> GB / <span id="discoTotal">Carregando...</span> GB</p>
+
+                <div class="progress-bar">
+                    <div class="progress-yellow" id="diskBar"></div>
+                </div>
             </div>
             <div class="card">
-                <h2 class="title">Uptime</h2>
-                <p><span id="uptime">Carregando...</span></p>
-                <p>Tempo de atividade</p>
+                <h2 class="title"><i class="fa-solid fa-clock"></i>Uptime</h2>
+                <p><span class="value" id="uptime">Carregando...</span></p>
+                <svg class="mini-chart" viewBox="0 0 100 40">
+                    <polyline class="blur-grey" fill="none" stroke="#94a3b8" stroke-width="3" points="
+                            10,20
+                            20,28
+                            30,10
+                            40,22
+                            50,18
+                            60,30
+                            70,15
+                            80,24
+                            90,12
+                            100,20
+                        " />
+                </svg>
+                <p class="sub-title">Tempo de atividade</p>
             </div>
             <div class="card">
-                <h2 class="title">Temperatura</h2>
-                <p><span id="temperatura">Carregando...</span></p>
-                <p>CPU</p>
+                <h2 class="title"><i class="fa-solid fa-temperature-half"></i>Temperatura</h2>
+                <p><span class="value" id="temperatura">Carregando...</span></p>
+                <svg class="mini-chart" viewBox="0 0 100 40">
+                    <polyline class="blur-red" fill="none" stroke="#ef4444" stroke-width="3" points="
+                            0,25
+                            10,30
+                            20,8
+                            30,10
+                            40,22
+                            50,18
+                            60,40
+                            70,15
+                            80,24
+                            90,12
+                            100,30
+                        " />
+                </svg>
+                <p class="sub-title">CPU</p>
+
+                <div class="progress-bar">
+                    <div class="progress-red" id="tempBar"></div>
+                </div>
             </div>
         </section>
 
         <section class="container_2">
             <div class="card2">
-                <h2 class="title">Rede</h2>
-                <p>Download:</p>
-                <p><span id="download-Mbps">Carregando...</span></p>
-                <p>Upload:</p>
-                <p><span id="upload-Mbps">Carregando...</span></p>
+                <h2 class="title"><i class="fa-solid fa-tower-broadcast"></i>Rede</h2>
+                <div class="network-item">
+                <p class="rede-blue"><i class="fa-solid fa-arrow-down-long">  Download: </i></p>
+                <p><span id="download-Mbps">Carregando...</span> Kbps</p></div>
+
+                <div class="span"><p class="rede-green"><i class="fa-solid fa-arrow-up-long">  Upload: </i></p>
+                <p><span id="upload-Mbps">Carregando...</span> Kbps</p></div>
             </div>
 
             <div class="card2">
-                <h2 class="title">Resumo do Sistema</h2>
+                <h2 class="title"><i class="fa-solid fa-table-list"></i>Resumo do Sistema</h2>
                 <p>Processos em Execução <span id="procesos-exec">Carregando...</span></p>
                 <p>Usuários Conectados <span id="usuarios-conected">Carregando...</span></p>
                 <p>Sistema Operacional <span id="system">Carregando...</span></p>
@@ -116,7 +213,7 @@
             </div>
 
             <div class="card2">
-                <h2 class="title">Último Alerta</h2>
+                <h2 class="title"><i class="fa-solid fa-triangle-exclamation"></i>Último Alerta</h2>
                 <p><span id="alert">Carregando...</span></p>
                 <a href="pg-alertas.html" class="ver-alertas">Ver Alertas</a>
             </div>
