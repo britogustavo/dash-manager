@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
+#include <time.h>
 
 //////////////// CPU //////////////////
 void read_cpu(long *idle, long *total) {
@@ -55,6 +56,20 @@ float cpu_usage(long prev_idle,
     return 100.0 *
            (total_diff - idle_diff) /
            total_diff;
+}
+
+//////////////// CURRENT TIME //////////////////
+void current_time(char *buffer) {
+
+    time_t now = time(NULL);
+
+    struct tm *t =
+        localtime(&now);
+
+    strftime(buffer,
+             64,
+             "%H:%M:%S",
+             t);
 }
 
 //////////////// MEMORY //////////////////
@@ -137,7 +152,7 @@ void network(long *rx,
         char iface[50];
 
         sscanf(line,
-               "%[^:]: %ld %*s %*s %*s %*s %*s %*s %*s %ld",
+               " %[^:]: %ld %*s %*s %*s %*s %*s %*s %*s %ld",
                iface,
                rx,
                tx);
@@ -467,6 +482,11 @@ int main() {
         ////////////////// UPTIME //////////////////
         long up = uptime();
 
+        //////////////// CURRENT TIME //////////////////
+        char currentTime[64];
+
+        current_time(currentTime);
+
         ////////////////// PROCESS / THREADS //////////////////
         int processes =
             process_count();
@@ -530,6 +550,12 @@ int main() {
         fprintf(json,
                 "  \"processes\": %d,\n",
                 processes);
+
+
+        //////////////// CURRENT TIME //////////////////
+        fprintf(json,
+                "  \"current_time\": \"%s\",\n",
+                currentTime);
 
         ////////////////// THREAD COUNT //////////////////
         fprintf(json,
