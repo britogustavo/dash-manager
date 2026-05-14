@@ -3,7 +3,7 @@ async function atualizarDados() {
     try {
 
         const resposta =
-            await fetch("http://127.0.0.1:8000/metricas", {
+            await fetch("http://54.233.247.111:8000/metricas", {
     cache: "no-store"
 });
 
@@ -104,9 +104,8 @@ async function atualizarDados() {
             dados.processes;
 
         ////////////////// USUÁRIOS //////////////////
-        document.getElementById("usuarios-conected")
-            .innerText =
-            "1";
+        document.getElementById("usuarios")
+          .innerText = data.usuarios_online;
 
         ////////////////// SISTEMA //////////////////
         document.getElementById("system")

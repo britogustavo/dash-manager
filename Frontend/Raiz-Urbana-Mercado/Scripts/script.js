@@ -434,6 +434,15 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCart();
   });
 
+  // HEARTBEAT PARA MONITORAMENTO
+  setInterval(() => {
+
+    fetch("http://54.233.247.111:8000/ping", {
+      method: "POST"
+    });
+
+  }, 10000);
+
   // INICIALIZAÇÃO
   renderCart();
   updateCartCount();
