@@ -104,8 +104,15 @@ async function atualizarDados() {
             dados.processes;
 
         ////////////////// USUÁRIOS //////////////////
-        document.getElementById("usuarios")
-          .innerText = data.usuarios_online;
+        const respostaUsuarios =
+            await fetch("http://54.233.247.111:8000/usuarios-online");
+
+        const dadosUsuarios =
+            await respostaUsuarios.json();
+
+        document.getElementById("usuarios-conectados")
+            .innerText =
+            dadosUsuarios.usuarios_online;
 
         ////////////////// SISTEMA //////////////////
         document.getElementById("system")
