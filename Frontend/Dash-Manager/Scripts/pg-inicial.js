@@ -3,7 +3,9 @@ async function atualizarDados() {
     try {
 
         const resposta =
-            await fetch("../../../Backend/dados.json?ts=" + new Date().getTime());
+            await fetch("http://127.0.0.1:8000/metricas", {
+    cache: "no-store"
+});
 
         if (!resposta.ok) {
             throw new Error("Erro HTTP: " + resposta.status);
