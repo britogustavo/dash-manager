@@ -5,47 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Processos | DashManager</title>
 
-  <!-- Fonte e Ícones (igual ao padrão do seu projeto) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <link rel="stylesheet" href="../styles/pg-processos.css"/>
+  <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico">
 </head>
 
 <body>
-  <!-- SIDEBAR (MENU LATERAL) -->
+  <!-- SIDEBAR (PADRÃO DA PÁGINA INICIAL) -->
   <aside class="sidebar">
     <div class="logo-container">
-      <!-- Troque o caminho se necessário -->
-      <div class="logo-icon logo-img">
-        <img src="../assets/logo.png" alt="Logo DashManager">
+      <div class="logo-icon">
+        <img src="../Images/dash-manager-logo.png" alt="Logo-DashManager">
       </div>
       <div class="logo-text">
-        <h2>DashManager</h2>
+        <h1>DashManager</h1>
         <p>Monitoramento Inteligente</p>
       </div>
     </div>
 
     <nav class="nav-menu">
-      <a href="../Pages/pg-inicial.html" class="nav-item">
+      <a href="pg-inicial.html" class="nav-item">
         <i class="fa-solid fa-border-all"></i> Dashboard
       </a>
       <a href="#" class="nav-item">
         <i class="fa-regular fa-square-check"></i> Recursos
       </a>
-
-      <!-- ATIVO AQUI -->
-      <a href="../Pages/pg-processos.html" class="nav-item active">
+      <a href="pg-processos.html" class="nav-item active">
         <i class="fa-solid fa-microchip"></i> Processos
       </a>
-
       <a href="#" class="nav-item">
         <i class="fa-regular fa-user"></i> Usuários
       </a>
-      <a href="#" class="nav-item">
+      <a href="pg-alertas.html" class="nav-item">
         <i class="fa-regular fa-bell"></i> Alertas
       </a>
       <a href="#" class="nav-item">
@@ -68,24 +63,11 @@
     <header class="header">
       <div class="page-title">
         <h1>Processos</h1>
-        <p>Monitoramento detalhado de processos do servidor do site</p>
-      </div>
-
-      <div class="header-actions">
-        <div class="notification-bell" title="Notificações">
-          <i class="fa-regular fa-bell"></i>
-          <span class="badge-count" id="badgeAlerts">0</span>
-        </div>
-
-        <button class="server-selector" id="serverSelectorBtn" type="button" aria-label="Selecionar servidor">
-          <i class="fa-solid fa-server"></i>
-          <span id="serverName">Servidor - Loja 01</span>
-          <span class="dot-status" id="serverStatusDot" title="Status"></span>
-          <i class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--text-secondary);"></i>
-        </button>
+        <p>Monitoramento de processos do servidor do site (com PID e consumo).</p>
       </div>
     </header>
 
+    <!-- MANTÉM APENAS A ÚLTIMA ATUALIZAÇÃO (SEM SINO/SEM SERVIDOR) -->
     <div class="last-update">
       <span class="dot"></span>
       <span>Última atualização:</span>
@@ -94,7 +76,7 @@
       <span id="dataSource">Fonte: ../data/processos.json</span>
     </div>
 
-    <!-- KPI CARDS -->
+    <!-- KPI CARDS (SEM REPETIÇÃO) -->
     <section class="kpi-grid" aria-label="Indicadores principais">
       <article class="kpi-card">
         <div class="kpi-top">
@@ -108,9 +90,6 @@
           <span id="kpiTotal">--</span>
           <small class="kpi-sub">em execução: <strong id="kpiRunning">--</strong></small>
         </div>
-        <div class="kpi-spark">
-          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkTotal"></svg>
-        </div>
         <div class="kpi-progress">
           <div class="bar"><div class="fill blue" id="barTotal" style="width:0%"></div></div>
           <span class="hint">Capacidade (limite configurável)</span>
@@ -121,16 +100,13 @@
         <div class="kpi-top">
           <div class="kpi-icon yellow"><i class="fa-solid fa-gauge-high"></i></div>
           <div class="kpi-meta">
-            <h3>CPU (Top processos)</h3>
-            <p>Uso combinado (Top N)</p>
+            <h3>Top CPU (processo)</h3>
+            <p>Maior consumo de CPU</p>
           </div>
         </div>
         <div class="kpi-value">
           <span id="kpiCpuTop">--%</span>
-          <small class="kpi-sub">pico: <strong id="kpiCpuPeak">--%</strong></small>
-        </div>
-        <div class="kpi-spark">
-          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkCpu"></svg>
+          <small class="kpi-sub">PID: <strong id="kpiCpuPid">--</strong></small>
         </div>
         <div class="kpi-progress">
           <div class="bar"><div class="fill yellow" id="barCpuTop" style="width:0%"></div></div>
@@ -142,16 +118,13 @@
         <div class="kpi-top">
           <div class="kpi-icon green"><i class="fa-solid fa-memory"></i></div>
           <div class="kpi-meta">
-            <h3>Memória (Top processos)</h3>
-            <p>RSS combinado (Top N)</p>
+            <h3>Top Memória (processo)</h3>
+            <p>Maior consumo de RAM (RSS)</p>
           </div>
         </div>
         <div class="kpi-value">
           <span id="kpiMemTop">--%</span>
-          <small class="kpi-sub">RSS: <strong id="kpiMemRss">--</strong></small>
-        </div>
-        <div class="kpi-spark">
-          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkMem"></svg>
+          <small class="kpi-sub">PID: <strong id="kpiMemPid">--</strong> • RSS: <strong id="kpiMemRss">--</strong></small>
         </div>
         <div class="kpi-progress">
           <div class="bar"><div class="fill green" id="barMemTop" style="width:0%"></div></div>
@@ -171,9 +144,6 @@
           <span id="kpiThreads">--</span>
           <small class="kpi-sub">média por proc: <strong id="kpiThreadsAvg">--</strong></small>
         </div>
-        <div class="kpi-spark">
-          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkThreads"></svg>
-        </div>
         <div class="kpi-progress">
           <div class="bar"><div class="fill blue2" id="barThreads" style="width:0%"></div></div>
           <span class="hint">Picos podem indicar leak</span>
@@ -185,15 +155,12 @@
           <div class="kpi-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
           <div class="kpi-meta">
             <h3>Anomalias</h3>
-            <p>Processos críticos</p>
+            <p>Zumbis / parados / críticos</p>
           </div>
         </div>
         <div class="kpi-value">
           <span id="kpiAnomalias">--</span>
           <small class="kpi-sub">zumbis: <strong id="kpiZombie">--</strong></small>
-        </div>
-        <div class="kpi-spark">
-          <svg class="sparkline" viewBox="0 0 120 36" preserveAspectRatio="none" id="sparkAnom"></svg>
         </div>
         <div class="kpi-progress">
           <div class="bar"><div class="fill danger" id="barAnom" style="width:0%"></div></div>
@@ -202,9 +169,8 @@
       </article>
     </section>
 
-    <!-- GRID ABAIXO (igual “cards + card lateral” do mockup) -->
+    <!-- GRID INFERIOR (mantém porque é útil e não repetitivo) -->
     <section class="lower-grid">
-      <!-- CARD: TOP POR CPU / RAM -->
       <article class="card">
         <div class="card-header">
           <div class="card-title">
@@ -212,21 +178,18 @@
             <h3>Top processos (CPU / RAM)</h3>
           </div>
           <div class="card-actions">
-            <button class="chip" id="btnTopCpu" type="button" data-mode="cpu"><i class="fa-solid fa-fire"></i> CPU</button>
-            <button class="chip outline" id="btnTopMem" type="button" data-mode="mem"><i class="fa-solid fa-droplet"></i> RAM</button>
+            <button class="chip" id="btnTopCpu" type="button"><i class="fa-solid fa-fire"></i> CPU</button>
+            <button class="chip outline" id="btnTopMem" type="button"><i class="fa-solid fa-droplet"></i> RAM</button>
           </div>
         </div>
 
-        <div class="mini-table" id="topTable">
-          <!-- JS injeta -->
-        </div>
+        <div class="mini-table" id="topTable"></div>
 
         <div class="card-footer">
           <span class="muted">Dica: priorize processos do web server, banco e cache.</span>
         </div>
       </article>
 
-      <!-- CARD: RESUMO DO SERVIDOR + SERVIÇOS CRÍTICOS -->
       <article class="card">
         <div class="card-header">
           <div class="card-title">
@@ -252,12 +215,9 @@
         <div class="divider"></div>
 
         <h4 class="subsection-title">Serviços críticos (health)</h4>
-        <div class="service-list" id="servicesList">
-          <!-- JS injeta -->
-        </div>
+        <div class="service-list" id="servicesList"></div>
       </article>
 
-      <!-- CARD: ÚLTIMO ALERTA (igual do mockup) -->
       <article class="card alert-card-like">
         <div class="card-header">
           <div class="card-title">
@@ -272,22 +232,20 @@
         </div>
 
         <h4 class="alert-title" id="lastAlertTitle">Sem alertas</h4>
-        <p class="alert-desc" id="lastAlertDesc">
-          Nenhum evento crítico registrado nas últimas leituras.
-        </p>
+        <p class="alert-desc" id="lastAlertDesc">Nenhum evento crítico registrado nas últimas leituras.</p>
 
         <div class="alert-meta">
           <div class="meta-item"><i class="fa-regular fa-clock"></i> <span id="lastAlertTime">--</span></div>
           <div class="meta-item"><i class="fa-solid fa-hashtag"></i> <span id="lastAlertPid">PID: --</span></div>
         </div>
 
-        <a class="btn-link" href="#" role="button">
+        <a class="btn-link" href="pg-alertas.html" role="button">
           Ver todos os alertas <i class="fa-solid fa-arrow-right"></i>
         </a>
       </article>
     </section>
 
-    <!-- TABELA PRINCIPAL -->
+    <!-- TABELA PRINCIPAL (mantém — é o melhor lugar para PID detalhado) -->
     <section class="table-wrap">
       <div class="table-header">
         <div class="table-title">
@@ -359,6 +317,6 @@
     </footer>
   </main>
 
-  <script defer src="../scripts/pg-processos.js"></script>
+  <script defer src="../Scripts/pg-processos.js"></script>
 </body>
 </html>
