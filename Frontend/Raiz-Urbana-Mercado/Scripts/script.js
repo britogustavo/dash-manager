@@ -1,3 +1,5 @@
+alert("JS DO CLIENTE CARREGOU");
+
 document.addEventListener("DOMContentLoaded", () => {
   // MENU MOBILE
   const menuBtn = document.getElementById("menu-btn");
