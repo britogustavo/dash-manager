@@ -14,13 +14,16 @@ app.add_middleware(
 
 usuarios_online = {}
 
+TIMEOUT = timedelta(seconds=30)
+
+
 @app.get("/")
 def root():
     return {"message": "API funcionando"}
 
+
 @app.get("/metricas")
 def metricas():
-
     with open('../dados.json', 'r') as f:
         dados = json.load(f)
 
@@ -30,12 +33,15 @@ def metricas():
 # HEARTBEAT
 @app.post("/ping")
 async def ping(request: Request):
-
     ip = request.client.host
+    agora = datetime.now()
 
-    usuarios_online[ip] = datetime.now()
+    usuarios_online[ip] = agora
 
-    return {"status": "online"}
+    return {
+        "status": "online",
+        "usuarios_online": len(usuarios_online)
+    }
 
 
 # USUÁRIOS ONLINE
@@ -44,9 +50,15 @@ def get_online():
 
     agora = datetime.now()
 
-    ativos = [
+    # 🔥 remove inativos de verdade
+    inativos = [
         ip for ip, tempo in usuarios_online.items()
-        if agora - tempo < timedelta(seconds=30)
+        if agora - tempo > TIMEOUT
     ]
 
-    return {"usuarios_online": len(ativos)}
+    for ip in inativos:
+        usuarios_online.pop(ip, None)
+
+    return {
+        "usuarios_online": len(usuarios_online)
+    }

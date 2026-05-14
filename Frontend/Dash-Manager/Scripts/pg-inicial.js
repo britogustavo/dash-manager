@@ -117,12 +117,12 @@ async function atualizarDados() {
         ////////////////// SISTEMA //////////////////
         document.getElementById("system")
             .innerText =
-            "Linux";
+            "Ubuntu 26.04 LTS";
 
         ////////////////// IP //////////////////
         document.getElementById("ip")
             .innerText =
-            "127.0.0.1";
+            "54.233.247.111";
 
         ////////////////// BAR //////////////////
         document.getElementById("cpuBar")
