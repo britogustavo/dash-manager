@@ -88,9 +88,9 @@ body {
 .nav-item:hover:not(.active) { background-color: rgba(255,255,255,0.05); }
 
 .user-profile {
-    margin-top: auto; padding: 20px 24px;
+    margin-top: auto; padding: 20px 8px;
     border-top: 1px solid var(--border-color);
-    display: flex; align-items: center; gap: 12px; font-size: 13px;
+    display: flex; align-items: center; gap: 8px; font-size: 13px;
 }
 .user-profile span { display: block; color: var(--text-secondary); font-size: 11px; }
 
@@ -197,7 +197,7 @@ div .fa-microchip{
 
 .container_2 {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1.3fr 2.7fr 1.3fr;
 
 }
 
@@ -207,7 +207,7 @@ div .fa-microchip{
     align-items: flex-start;
     margin-top: 20px;
     margin-right: 20px;
-    padding: 40px 20px;
+    padding: 30px 20px;
     font-size: 14px;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -217,6 +217,10 @@ div .fa-microchip{
 .card2 .title {
     position: relative;
     bottom: 10px;
+}
+
+.card2 .resum-list p {
+    color: var(--text-secondary);
 }
 
 .value{
@@ -251,8 +255,8 @@ div .fa-microchip{
 
 .ver-alertas {
     position: relative;
-    top: 80px;
-    align-self: flex-start;
+    top: 120px;
+    align-self: center;
     padding: 8px 32px;
     background-color: var(--blue);
     color: #fff;
@@ -260,6 +264,7 @@ div .fa-microchip{
     border-radius: 4px;
     font-size: 13px;
 }
+
 
 .direitos {
     margin-top: 28px;
@@ -361,4 +366,24 @@ div .fa-microchip{
     font-family: Bebas Neue, sans-serif;
     margin-left: 8px;
     font-size: 28px;
+}
+
+.resum-list {
+    width: 100%;
+    padding: 10px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 12px;
+}
+
+.resum-list p {
+    justify-content: space-between;
+    display: flex;
+}
+
+section .card2 .alerta {
+    position: relative;
+    top: 50px;
+    display: flex; 
+    text-align: center;
+
 }

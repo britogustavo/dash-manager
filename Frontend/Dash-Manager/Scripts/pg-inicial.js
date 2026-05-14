@@ -3,7 +3,9 @@ async function atualizarDados() {
     try {
 
         const resposta =
-            await fetch("../../../Backend/dados.json?ts=" + new Date().getTime());
+            await fetch("http://54.233.247.111:8000/metricas", {
+    cache: "no-store"
+});
 
         if (!resposta.ok) {
             throw new Error("Erro HTTP: " + resposta.status);
@@ -102,19 +104,25 @@ async function atualizarDados() {
             dados.processes;
 
         ////////////////// USUÁRIOS //////////////////
-        document.getElementById("usuarios-conected")
+        const respostaUsuarios =
+            await fetch("http://54.233.247.111:8000/usuarios-online");
+
+        const dadosUsuarios =
+            await respostaUsuarios.json();
+
+        document.getElementById("usuarios-conectados")
             .innerText =
-            "1";
+            dadosUsuarios.usuarios_online;
 
         ////////////////// SISTEMA //////////////////
         document.getElementById("system")
             .innerText =
-            "Linux";
+            "Ubuntu 26.04 LTS";
 
         ////////////////// IP //////////////////
         document.getElementById("ip")
             .innerText =
-            "127.0.0.1";
+            "54.233.247.111";
 
         ////////////////// BAR //////////////////
         document.getElementById("cpuBar")
