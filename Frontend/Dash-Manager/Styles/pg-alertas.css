@@ -3,7 +3,7 @@
    ========================================= */
 :root {
     /* O :root é onde a gente guarda as variáveis (os apelidos das cores) pra usar no código todo */
-    --bg-main: #040814;      /* Cor do fundozão da tela */
+    --bg-main: #050b1c;      /* Cor do fundozão da tela */
     --bg-sidebar: #040814;   /* Cor do menu lateral */
     --bg-card: #0A1122;      /* Cor dos cards (um pouco mais clara pra dar destaque) */
     --border-color: #1A2438; /* Cor das linhas que dividem os elementos */
