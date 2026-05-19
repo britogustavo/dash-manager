@@ -59,20 +59,24 @@ body {
    SIDEBAR
    ========================================= */
 .sidebar {
-    width: 233.5px;
-    background-color: var(--bg-sidebar);
-    border-right: 1px solid var(--border-color);
-    display: flex; flex-direction: column;
+  width: 233.5px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .logo-container {
-    display: flex; align-items: center; gap: 12px;
-    padding: 30px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 24px;
 }
-.logo-icon i { color: var(--blue); font-size: 28px; }
-.logo-icon img { width: 28px; height: 28px; cursor: pointer; }
-.logo-text h1 { font-size: 18px; font-weight: 600; }
-.logo-text p { font-size: 11px; color: var(--text-secondary); }
+
+.logo-icon img { width: 28px; height: 28px; display: block; cursor: pointer; }
+
+.logo-text h1 { font-size: 18px; font-weight: 600; line-height: 1.1; }
+.logo-text p { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
 .nav-menu {
   padding: 0 16px;

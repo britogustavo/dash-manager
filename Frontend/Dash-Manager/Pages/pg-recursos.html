@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Recursos | DashManager</title>
+
+  <!-- Fonts + Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../Styles/pg-recursos.css" />
+  <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico" />
+</head>
+
+<body>
+  <!-- SIDEBAR (PADRÃO) -->
+  <aside class="sidebar">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <img src="../Images/dash-manager-logo.png" alt="Logo DashManager" />
+      </div>
+      <div class="logo-text">
+        <h1>DashManager</h1>
+        <p>Monitoramento Inteligente</p>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="pg-inicial.html" class="nav-item">
+        <i class="fa-solid fa-border-all"></i> Dashboard
+      </a>
+
+      <a href="pg-recursos.html" class="nav-item active">
+        <i class="fa-regular fa-square-check"></i> Recursos
+      </a>
+
+      <a href="pg-processos.html" class="nav-item">
+        <i class="fa-solid fa-microchip"></i> Processos
+      </a>
+
+      <a href="pg-usuarios.html" class="nav-item">
+        <i class="fa-regular fa-user"></i> Usuários
+      </a>
+
+      <a href="pg-alertas.html" class="nav-item">
+        <i class="fa-regular fa-bell"></i> Alertas
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="header">
+      <div class="page-title">
+        <h1>Recursos</h1>
+        <p>Detalhamento avançado dos recursos do servidor em tempo real.</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="server-selector" title="Servidor monitorado">
+          <span class="dot-status"></span>
+          <i class="fa-solid fa-server"></i>
+          <span>Servidor - Loja 01</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="last-update">
+      <span class="dot"></span>
+      <span>Última atualização:</span>
+      <strong id="horaAtual">--:--:--</strong>
+      <span class="sep">•</span>
+      <span>Fonte: API de métricas</span>
+    </div>
+
+    <!-- GRID DE DETALHES -->
+    <section class="details-grid" aria-label="Detalhes avançados de recursos">
+
+      <!-- CPU -->
+      <article class="resource-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-microchip"></i>
+            <h3>CPU detalhada</h3>
+          </div>
+          <span class="period">Tempo real</span>
+        </div>
+
+        <div class="resource-main">
+          <div>
+            <span class="metric-label">Uso atual</span>
+            <strong class="metric-value" id="cpuUso">--%</strong>
+          </div>
+
+          <div class="resource-status" id="cpuStatus">
+            <span class="status-dot"></span>
+            <span>Normal</span>
+          </div>
+        </div>
+
+        <div class="chart-wrap line-chart">
+          <canvas id="cpuLineChart"></canvas>
+        </div>
+
+        <div class="advanced-grid">
+          <div class="advanced-item">
+            <span>Média (janela)</span>
+            <strong id="cpuMedia">--%</strong>
+          </div>
+          <div class="advanced-item">
+            <span>Pico (janela)</span>
+            <strong id="cpuPico">--%</strong>
+          </div>
+          <div class="advanced-item">
+            <span>Limite atenção</span>
+            <strong>80%</strong>
+          </div>
+          <div class="advanced-item">
+            <span>Limite crítico</span>
+            <strong>90%</strong>
+          </div>
+        </div>
+      </article>
+
+      <!-- RAM -->
+      <article class="resource-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-memory"></i>
+            <h3>Memória RAM</h3>
+          </div>
+          <span class="period">Distribuição</span>
+        </div>
+
+        <div class="split-layout">
+          <div class="chart-wrap doughnut-chart">
+            <canvas id="ramPieChart"></canvas>
+          </div>
+
+          <div class="metric-list">
+            <div class="metric-row">
+              <span>Total</span>
+              <strong id="ramTotal">-- GB</strong>
+            </div>
+            <div class="metric-row">
+              <span>Usada</span>
+              <strong id="ramUsada">-- GB</strong>
+            </div>
+            <div class="metric-row">
+              <span>Disponível</span>
+              <strong id="ramLivre">-- GB</strong>
+            </div>
+            <div class="metric-row">
+              <span>Uso percentual</span>
+              <strong id="ramPercentual">--%</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="bar-detail">
+          <div class="bar">
+            <div class="fill green" id="ramBar" style="width:0%"></div>
+          </div>
+          <span>Consumo de memória física</span>
+        </div>
+      </article>
+
+      <!-- DISCO -->
+      <article class="resource-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-hard-drive"></i>
+            <h3>Armazenamento</h3>
+          </div>
+          <span class="period">Capacidade</span>
+        </div>
+
+        <div class="split-layout">
+          <div class="chart-wrap doughnut-chart">
+            <canvas id="diskPieChart"></canvas>
+          </div>
+
+          <div class="metric-list">
+            <div class="metric-row">
+              <span>Total</span>
+              <strong id="discoTotal">--</strong>
+            </div>
+            <div class="metric-row">
+              <span>Disponível</span>
+              <strong id="discoLivre">--</strong>
+            </div>
+            <div class="metric-row">
+              <span>Uso atual</span>
+              <strong id="discoUso">--%</strong>
+            </div>
+            <div class="metric-row">
+              <span>Estado</span>
+              <strong id="discoStatus">--</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="disk-details">
+          <div class="disk-row">
+            <span>Uso</span>
+            <div class="bar">
+              <div class="fill yellow" id="diskBarPrincipal" style="width:0%"></div>
+            </div>
+            <strong id="diskPrincipalPercent">--%</strong>
+          </div>
+
+          <div class="disk-row">
+            <span>Folga operacional</span>
+            <div class="bar">
+              <div class="fill blue" id="diskBarReserva" style="width:0%"></div>
+            </div>
+            <strong id="diskReservaPercent">--%</strong>
+          </div>
+        </div>
+      </article>
+
+      <!-- REDE -->
+      <article class="resource-card network-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-tower-broadcast"></i>
+            <h3>Rede</h3>
+          </div>
+          <span class="period">Tráfego</span>
+        </div>
+
+        <div class="network-metrics">
+          <div class="network-box download">
+            <i class="fa-solid fa-arrow-down-long"></i>
+            <span>Download</span>
+            <strong id="downloadValor">-- Kbps</strong>
+          </div>
+
+          <div class="network-box upload">
+            <i class="fa-solid fa-arrow-up-long"></i>
+            <span>Upload</span>
+            <strong id="uploadValor">-- Kbps</strong>
+          </div>
+        </div>
+
+        <div class="chart-wrap line-chart">
+          <canvas id="networkLineChart"></canvas>
+        </div>
+
+        <div class="advanced-grid">
+          <div class="advanced-item">
+            <span>Download médio</span>
+            <strong id="downloadMedia">-- Kbps</strong>
+          </div>
+          <div class="advanced-item">
+            <span>Upload médio</span>
+            <strong id="uploadMedia">-- Kbps</strong>
+          </div>
+          <div class="advanced-item">
+            <span>Pico download</span>
+            <strong id="downloadPico">-- Kbps</strong>
+          </div>
+          <div class="advanced-item">
+            <span>Pico upload</span>
+            <strong id="uploadPico">-- Kbps</strong>
+          </div>
+        </div>
+      </article>
+
+      <!-- TEMPERATURA -->
+      <article class="resource-card">
+        <div class="card-header">
+          <div class="card-title danger-title">
+            <i class="fa-solid fa-temperature-half"></i>
+            <h3>Temperatura</h3>
+          </div>
+          <span class="period">Sensor CPU</span>
+        </div>
+
+        <div class="temperature-layout">
+          <div class="temperature-value">
+            <span>Temperatura atual</span>
+            <strong id="temperaturaAtual">--°C</strong>
+            <small id="temperaturaStatus">Aguardando leitura</small>
+          </div>
+
+          <div class="chart-wrap doughnut-chart small-doughnut">
+            <canvas id="tempPieChart"></canvas>
+          </div>
+        </div>
+
+        <div class="threshold-list">
+          <div class="threshold-item ok">
+            <span>Normal</span>
+            <strong>até 70°C</strong>
+          </div>
+          <div class="threshold-item warn">
+            <span>Atenção</span>
+            <strong>70°C a 80°C</strong>
+          </div>
+          <div class="threshold-item bad">
+            <span>Crítico</span>
+            <strong>acima de 80°C</strong>
+          </div>
+        </div>
+      </article>
+
+      <!-- SAÚDE -->
+      <article class="resource-card health-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h3>Saúde dos recursos</h3>
+          </div>
+          <span class="period">Diagnóstico</span>
+        </div>
+
+        <div class="health-score">
+          <span>Score operacional</span>
+          <strong id="healthScore">--%</strong>
+          <small id="healthStatus">Aguardando métricas</small>
+        </div>
+
+        <div class="health-list">
+          <div class="health-row">
+            <div>
+              <i class="fa-solid fa-microchip"></i>
+              <span>CPU</span>
+            </div>
+            <strong id="healthCpu">--</strong>
+          </div>
+
+          <div class="health-row">
+            <div>
+              <i class="fa-solid fa-memory"></i>
+              <span>Memória</span>
+            </div>
+            <strong id="healthRam">--</strong>
+          </div>
+
+          <div class="health-row">
+            <div>
+              <i class="fa-solid fa-hard-drive"></i>
+              <span>Disco</span>
+            </div>
+            <strong id="healthDisk">--</strong>
+          </div>
+
+          <div class="health-row">
+            <div>
+              <i class="fa-solid fa-temperature-half"></i>
+              <span>Temperatura</span>
+            </div>
+            <strong id="healthTemp">--</strong>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 DashManager. Todos os direitos reservados.</span>
+    </footer>
+  </main>
+
+  <!-- Chart.js + JS da página -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../Scripts/pg-recursos.js"></script>
+</body>
+</html>
