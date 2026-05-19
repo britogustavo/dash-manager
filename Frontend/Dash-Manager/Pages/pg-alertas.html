@@ -1,116 +1,146 @@
-<!-- Avisa ao navegador que este arquivo usa a versão mais moderna do HTML (HTML5) -->
-<!DOCTYPE html> 
-
-<!-- Abre o documento HTML e define que o idioma principal do conteúdo é o Português do Brasil -->
+<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <!-- Define a codificação de caracteres para UTF-8, garantindo que acentos e símbolos apareçam certo -->
-    <meta charset="UTF-8">
-    
-    <!-- Configura a escala da página para que o layout se ajuste corretamente em celulares e tablets (Responsividade) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Título da página que aparece na aba do navegador -->
-    <title>DashManager - Alertas</title>
-    
-    <!-- Importa a fonte "Inter" do Google Fonts para deixar o visual do dashboard profissional -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Importa a biblioteca Font Awesome para podermos usar ícones (ícones de sino, servidor, etc.) -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Conecta o arquivo CSS externo que contém toda a estilização visual desta página de alertas -->
-    <link rel="stylesheet" href="../styles/pg-alertas.css">
-    <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Alertas | DashManager</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="../Styles/pg-alertas.css" />
+  <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico" />
 </head>
 
 <body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <img src="../Images/dash-manager-logo.png" alt="Logo-DashManager" />
+      </div>
 
-    <!-- ASIDE: Define a barra lateral (Sidebar) do sistema, que contém a logo e o menu -->
-    <aside class="sidebar">
-        <!-- Container que agrupa o ícone e o nome do software no topo da barra lateral -->
-        <div class="logo-container">
-            <!-- Ícone de gráfico de pizza representando a logo -->
-            <div class="logo-icon"><img src="../Images/dash-manager-logo.png" alt="Logo-DashManager"></div>
-            <div class="logo-text">
-                <h2>DashManager</h2>
-                <p>Monitoramento Inteligente</p>
-            </div>
-        </div>
-        
-        <!-- NAV: Bloco de navegação principal com os links para as outras páginas do sistema -->
-        <nav class="nav-menu">
-            <a href="pg-inicial.html" class="nav-item">
-                <i class="fa-solid fa-border-all"></i> Dashboard
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-regular fa-square-check"></i> Recursos
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-microchip"></i> Processos
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-regular fa-user"></i> Usuários
-            </a>
-            <!-- Link de Alertas marcado com a classe 'active' para indicar que o usuário está nesta página -->
-            <a href="#" class="nav-item active">
-                <i class="fa-regular fa-bell"></i> Alertas
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-gear"></i> Configurações
-            </a>
-        </nav>
+      <div class="logo-text">
+        <h1>DashManager</h1>
+        <p>Monitoramento Inteligente</p>
+      </div>
+    </div>
 
-        <!-- Rodapé da barra lateral com informações do perfil da empresa usuária -->
-        <div class="user-profile">
-            <i class="fa-solid fa-gear"></i>
-            <div>
-                <strong>DashManager LTDA</strong>
-                <span>Plano Empresarial</span>
-            </div>
-            <!-- Ícone de seta para baixo indicando um possível menu de opções do usuário -->
-            <i class="fa-solid fa-chevron-down" style="margin-left: auto; font-size: 12px; color: var(--text-secondary);"></i>
-        </div>
-    </aside>
+    <nav class="nav-menu">
+      <a href="pg-inicial.html" class="nav-item">
+        <i class="fa-solid fa-border-all"></i>
+        Dashboard
+      </a>
 
-    <!-- MAIN: Área principal onde o conteúdo real da página (alertas) vai ser exibido -->
-    <main class="main-content">
-        
-        <!-- HEADER: Cabeçalho interno da área de conteúdo -->
-        <header class="header">
-            <div class="page-title">
-                <h1>Central de Alertas</h1>
-                <p>Monitoramento de anomalias (Apenas registros de uso igual ou superior a 80%)</p>
-            </div>
-            
-            <!-- Lado direito do cabeçalho com notificações e seleção de servidor -->
-            <div class="header-actions">
-                <div class="notification-bell">
-                    <i class="fa-regular fa-bell"></i>
-                    <!-- SPAN com ID: Será preenchido pelo JavaScript com a quantidade de alertas novos -->
-                    <span class="badge-count" id="badge-count">0</span>
-                </div>
-                <div class="server-selector">
-                    <i class="fa-solid fa-server"></i> Servidor - Loja 01 
-                    <i class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 8px;"></i>
-                </div>
-            </div>
-        </header>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-square-check"></i>
+        Recursos
+      </a>
 
-        <!-- Div que mostra o horário da última atualização dos dados, atualizada via JS -->
-        <div class="last-update">
-            Última verificação: <span id="hora-atual">10:30:45</span> <span class="dot"></span>
+      <a href="pg-processos.html" class="nav-item">
+        <i class="fa-solid fa-microchip"></i>
+        Processos
+      </a>
+
+      <a href="pg-usuarios.html" class="nav-item">
+        <i class="fa-regular fa-user"></i>
+        Usuários
+      </a>
+
+      <a href="pg-alertas.html" class="nav-item active">
+        <i class="fa-regular fa-bell"></i>
+        Alertas
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="header">
+      <div class="page-title">
+        <h1>Central de Alertas</h1>
+        <p>Monitoramento de anomalias com registros de uso igual ou superior a 80%.</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="notification-bell" title="Alertas ativos">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge-count" id="badge-count">0</span>
         </div>
 
-        <!-- DIV VAZIA com ID: O JavaScript vai usar esse espaço para "injetar" os cards de alerta automaticamente -->
-        <div class="alerts-grid" id="alerts-grid">
-            <!-- Os cards de alerta serão gerados aqui dinamicamente -->
+        <div class="server-selector">
+          <span class="dot-status"></span>
+          <i class="fa-solid fa-server"></i>
+          <span>Servidor - Loja 01</span>
         </div>
-    </main>
+      </div>
+    </header>
 
-    <!-- SCRIPT: Importa a lógica em JavaScript para fazer os alertas aparecerem e a hora atualizar em tempo real -->
-    <script src="../scripts/pg-alertas.js"></script>
+    <div class="last-update">
+      <span class="dot"></span>
+      <span>Última verificação:</span>
+      <strong id="hora-atual">--:--:--</strong>
+      <span class="sep">•</span>
+      <span>Fonte: API de métricas</span>
+    </div>
+
+    <!-- ALERTAS ATIVOS -->
+    <section class="alerts-section" aria-label="Alertas ativos">
+      <div class="section-header">
+        <div>
+          <h2>Alertas ativos</h2>
+          <p>Eventos detectados em tempo real conforme os limites configurados.</p>
+        </div>
+      </div>
+
+      <div class="alerts-grid" id="alerts-grid">
+        <p class="empty-state">Carregando alertas...</p>
+      </div>
+    </section>
+
+    <!-- GRID INFERIOR -->
+    <section class="lower-grid">
+      <article class="card chart-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Uso em tempo real</h3>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="rt-chart" height="90"></canvas>
+        </div>
+
+        <div class="card-footer">
+          <span class="muted">Exibe CPU, memória e disco nos últimos registros coletados.</span>
+        </div>
+      </article>
+
+      <article class="card history-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <h3>Histórico de alertas</h3>
+          </div>
+        </div>
+
+        <div class="alert-history" id="alert-history">
+          <p class="empty-state">Nenhum alerta registrado ainda.</p>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 DashManager. Todos os direitos reservados.</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../Scripts/pg-alertas.js"></script>
 </body>
-
 </html>

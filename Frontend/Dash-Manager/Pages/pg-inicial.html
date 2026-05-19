@@ -1,227 +1,346 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/pg-inicial.css">
-    <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dashboard | DashManager</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="../Styles/pg-inicial.css" />
+  <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico" />
 </head>
+
 <body>
-    <!-- SIDEBAR (MENU LATERAL) -->
-    <aside class="sidebar">
-        <div class="logo-container">
-            <div class="logo-icon"><img src="../Images/dash-manager-logo.png" alt="Logo-DashManager"></div>
-            <div class="logo-text">
-                <h1>DashManager</h1>
-                <p>Monitoramento Inteligente</p>
-            </div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <img src="../Images/dash-manager-logo.png" alt="Logo-DashManager" />
+      </div>
+
+      <div class="logo-text">
+        <h1>DashManager</h1>
+        <p>Monitoramento Inteligente</p>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="pg-inicial.html" class="nav-item active">
+        <i class="fa-solid fa-border-all"></i>
+        Dashboard
+      </a>
+
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-square-check"></i>
+        Recursos
+      </a>
+
+      <a href="pg-processos.html" class="nav-item">
+        <i class="fa-solid fa-microchip"></i>
+        Processos
+      </a>
+
+      <a href="pg-usuarios.html" class="nav-item">
+        <i class="fa-regular fa-user"></i>
+        Usuários
+      </a>
+
+      <a href="pg-alertas.html" class="nav-item">
+        <i class="fa-regular fa-bell"></i>
+        Alertas
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="header">
+      <div class="page-title">
+        <h1>Visão Geral do Sistema</h1>
+        <p>Monitoramento em tempo real dos principais recursos do servidor.</p>
+      </div>
+    </header>
+
+    <div class="last-update">
+      <span class="dot"></span>
+      <span>Última atualização:</span>
+      <strong id="horaAtual">--:--:--</strong>
+      <span class="sep">•</span>
+      <span>Fonte: API de métricas</span>
+    </div>
+
+    <!-- KPI CARDS -->
+    <section class="kpi-grid" aria-label="Indicadores principais">
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon blue">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>CPU</h3>
+            <p>Uso atual do processador</p>
+          </div>
         </div>
-        
-        <nav class="nav-menu">
-            <a href="pg-inicial.html" class="nav-item active">
-                <i class="fa-solid fa-border-all"></i> Dashboard
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-regular fa-square-check"></i> Recursos
-            </a>
-            <a href="pg-processos.html" class="nav-item">
-                <i class="fa-solid fa-microchip"></i> Processos
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-regular fa-user"></i> Usuários
-            </a>
-            <!-- MENU ALERTAS ATIVO AQUI -->
-            <a href="pg-alertas.html" class="nav-item">
-                <i class="fa-regular fa-bell"></i> Alertas
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-gear"></i> Configurações
-            </a>
-        </nav>
 
-        <div class="user-profile">
-            <i class="fa-solid fa-gear"></i>
-            <div>
-                <strong>DashManager LTDA</strong>
-                <span>Plano Empresarial</span>
-            </div>
-            <i class="fa-solid fa-chevron-down" style="margin-left: auto; font-size: 12px; color: var(--text-secondary);"></i>
-        </div>
-    </aside>
-
-    <main class="main-content">
-        <header class="main-header">
-            <h1>Visão Geral do Sistema</h1>
-        </header>
-
-        <div class="top-bar">
-        
-            <div class="linha"></div>
-        
-            <p class="atualizacao">
-                Última atualização:
-                <span id="horaAtual">
-                    10:30:45
-                </span>
-            </p>
-        
+        <div class="kpi-value">
+          <span id="cpuPercentual">Carregando...</span>
+          <small class="kpi-sub">Uso atual</small>
         </div>
 
-        <section class="container">
-            <div class="card">
-                <h2 class="title"><i class="fa-solid fa-microchip"></i> CPU</h2>
-                <p><span class="value" id="cpuPercentual">Carregando...</span></p> 
+        <div class="mini-chart-wrap">
+          <svg class="mini-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <polyline id="cpuChartLine" class="chart-line blue-line" fill="none" points="0,30 20,30 40,30 60,30 80,30 100,30"></polyline>
+          </svg>
+        </div>
 
-                <svg class="mini-chart" viewBox="0 0 100 40">
-                    <polyline class="blur-blue" fill="none" stroke="#3b82f6" stroke-width="3" points="
-                            0,25
-                            10,20
-                            20,28
-                            30,10
-                            40,22
-                            50,18
-                            60,30
-                            70,15
-                            80,24
-                            90,12
-                            100,20
-                        " />
-                </svg>
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill blue" id="cpuBar" style="width:0%"></div>
+          </div>
+          <span class="hint">Atenção acima de 90%</span>
+        </div>
+      </article>
 
-                <p class="sub-title">Uso atual</p>
-                
-                <div class="progress-bar">
-                    <div class="progress-blue" id="cpuBar"></div>
-                </div>
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon green">
+            <i class="fa-solid fa-memory"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Memória RAM</h3>
+            <p>Consumo de memória</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span><span id="ramPercentual">Carregando...</span>%</span>
+          <small class="kpi-sub">
+            <strong id="ramLivre">--</strong> GB / <strong id="ramTotal">--</strong> GB
+          </small>
+        </div>
+
+        <div class="mini-chart-wrap">
+          <svg class="mini-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <polyline id="ramChartLine" class="chart-line green-line" fill="none" points="0,30 20,30 40,30 60,30 80,30 100,30"></polyline>
+          </svg>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill green" id="ramBar" style="width:0%"></div>
+          </div>
+          <span class="hint">Atenção acima de 90%</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon yellow">
+            <i class="fa-solid fa-hard-drive"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Disco</h3>
+            <p>Uso de armazenamento</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="discoPercentual">Carregando...</span>
+          <small class="kpi-sub">
+            <strong id="discoLivre">--</strong> GB / <strong id="discoTotal">--</strong> GB
+          </small>
+        </div>
+
+        <div class="mini-chart-wrap">
+          <svg class="mini-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <polyline id="diskChartLine" class="chart-line yellow-line" fill="none" points="0,30 20,30 40,30 60,30 80,30 100,30"></polyline>
+          </svg>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill yellow" id="diskBar" style="width:0%"></div>
+          </div>
+          <span class="hint">Atenção acima de 80%</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon blue2">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Uptime</h3>
+            <p>Tempo de atividade</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="uptime">Carregando...</span>
+          <small class="kpi-sub">Servidor em operação</small>
+        </div>
+
+        <div class="mini-chart-wrap">
+          <svg class="mini-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <polyline class="chart-line muted-line" fill="none" points="0,25 10,20 20,28 30,10 40,22 50,18 60,30 70,15 80,24 90,12 100,20"></polyline>
+          </svg>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill blue2" style="width:100%"></div>
+          </div>
+          <span class="hint">Atualizado automaticamente</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon danger">
+            <i class="fa-solid fa-temperature-half"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Temperatura</h3>
+            <p>Sensor da CPU</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="temperatura">Carregando...</span>
+          <small class="kpi-sub">CPU</small>
+        </div>
+
+        <div class="mini-chart-wrap">
+          <svg class="mini-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <polyline id="tempChartLine" class="chart-line red-line" fill="none" points="0,30 20,30 40,30 60,30 80,30 100,30"></polyline>
+          </svg>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill danger" id="tempBar" style="width:0%"></div>
+          </div>
+          <span class="hint">Atenção acima de 80°C</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- GRID INFERIOR -->
+    <section class="lower-grid">
+      <article class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-tower-broadcast"></i>
+            <h3>Rede</h3>
+          </div>
+        </div>
+
+        <div class="network-list">
+          <div class="network-item">
+            <div class="network-left">
+              <i class="fa-solid fa-arrow-down-long blue-text"></i>
+              <div>
+                <strong>Download</strong>
+                <span>Taxa de recebimento</span>
+              </div>
             </div>
-            <div class="card">
-                <h2 class="title"><i class="fa-solid fa-memory"></i>Memória RAM</h2>
-                <p class="value"><span class="value" id="ramPercentual">Carregando...</span>%</p>
-                <svg class="mini-chart" viewBox="0 0 100 40">
-                    <polyline class="blur-green" fill="none" stroke="#22c55e" stroke-width="3" points="
-                            0,20
-                            10,10
-                            20,28
-                            30,06
-                            40,26
-                            50,12
-                            60,32
-                            70,8
-                            80,24
-                            90,4
-                            100,20
-                        " />
-                </svg>
-                <p class="sub-title"><span id="ramLivre">Carregando...</span> GB / <span id="ramTotal">Carregando...</span> GB</p>
 
-                <div class="progress-bar">
-                    <div class="progress-green" id="ramBar"></div>
-                </div>
+            <div class="network-value">
+              <strong id="download-Mbps">Carregando...</strong>
+              <span>Kbps</span>
             </div>
-            <div class="card">
-                <h2 class="title"><i class="fa-solid fa-hard-drive"></i>Disco</h2>
-                <p><span class="value" id="discoPercentual">Carregando...</span></p>
-                <svg class="mini-chart" viewBox="0 0 100 40">
-                    <polyline class="blur-yellow" fill="none" stroke="#eab308" stroke-width="3" points="
-                            0,25
-                            10,18
-                            20,24
-                            30,2
-                            40,20
-                            50,7
-                            60,28
-                            70,14
-                            80,22
-                            90,10
-                            100,18
-                        " />
-                </svg>
-                <p class="sub-title"><span id="discoLivre">Carregando</span> GB / <span id="discoTotal">Carregando...</span> GB</p>
+          </div>
 
-                <div class="progress-bar">
-                    <div class="progress-yellow" id="diskBar"></div>
-                </div>
-            </div>
-            <div class="card">
-                <h2 class="title"><i class="fa-solid fa-clock"></i>Uptime</h2>
-                <p><span class="value" id="uptime">Carregando...</span></p>
-                <svg class="mini-chart" viewBox="0 0 100 40">
-                    <polyline class="blur-grey" fill="none" stroke="#94a3b8" stroke-width="3" points="
-                            10,20
-                            20,28
-                            30,10
-                            40,22
-                            50,18
-                            60,30
-                            70,15
-                            80,24
-                            90,12
-                            100,20
-                        " />
-                </svg>
-                <p class="sub-title">Tempo de atividade</p>
-            </div>
-            <div class="card">
-                <h2 class="title"><i class="fa-solid fa-temperature-half"></i>Temperatura</h2>
-                <p><span class="value" id="temperatura">Carregando...</span></p>
-                <svg class="mini-chart" viewBox="0 0 100 40">
-                    <polyline class="blur-red" fill="none" stroke="#ef4444" stroke-width="3" points="
-                            0,25
-                            10,30
-                            20,8
-                            30,10
-                            40,22
-                            50,18
-                            60,40
-                            70,15
-                            80,24
-                            90,12
-                            100,30
-                        " />
-                </svg>
-                <p class="sub-title">CPU</p>
-
-                <div class="progress-bar">
-                    <div class="progress-red" id="tempBar"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="container_2">
-            <div class="card2">
-                <h2 class="title"><i class="fa-solid fa-tower-broadcast"></i>Rede</h2>
-                <div class="network-item">
-                <p class="rede-blue"><i class="fa-solid fa-arrow-down-long">  Download: </i></p>
-                <p><span id="download-Mbps">Carregando...</span> Kbps</p></div>
-
-                <div class="span"><p class="rede-green"><i class="fa-solid fa-arrow-up-long">  Upload: </i></p>
-                <p><span id="upload-Mbps">Carregando...</span> Kbps</p></div>
+          <div class="network-item">
+            <div class="network-left">
+              <i class="fa-solid fa-arrow-up-long green-text"></i>
+              <div>
+                <strong>Upload</strong>
+                <span>Taxa de envio</span>
+              </div>
             </div>
 
-            <div class="card2">
-                <h2 class="title"><i class="fa-solid fa-table-list"></i>Resumo do Sistema</h2>
-                <div class="resum-list"><p>Processos em Execução <span id="procesos-exec">Carregando...</span></p></div>
-
-                <div class="resum-list"><p>Usuários Conectados <span id="usuarios-conectados">Carregando...</span></p></div>
-                
-                <div class="resum-list"><p>Sistema Operacional <span id="system">Carregando...</span></p></div>
-                
-                <div class="resum-list"><p>Endereço IP <span id="ip">Carregando...</span></p></div>
+            <div class="network-value">
+              <strong id="upload-Mbps">Carregando...</strong>
+              <span>Kbps</span>
             </div>
+          </div>
+        </div>
+      </article>
 
-            <div class="card2">
-                <h2 class="title"><i class="fa-solid fa-triangle-exclamation"></i>Último Alerta</h2>
-                <p class="alerta"><span id="alert">Carregando...</span></p>
-                <a href="pg-alertas.html" class="ver-alertas">Ver Alertas</a>
-            </div>
-        </section>
-        <p class="direitos">© 2026 DashManager. Todos os direitos reservados.</p>
-    </main>
-    <script src="../Scripts/pg-inicial.js"></script>
+      <article class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-table-list"></i>
+            <h3>Resumo do Sistema</h3>
+          </div>
+        </div>
+
+        <div class="kv-grid">
+          <div class="kv">
+            <span>Processos em execução</span>
+            <strong id="procesos-exec">Carregando...</strong>
+          </div>
+
+          <div class="kv">
+            <span>Usuários conectados</span>
+            <strong id="usuarios-conectados">Carregando...</strong>
+          </div>
+
+          <div class="kv">
+            <span>Sistema operacional</span>
+            <strong id="system">Carregando...</strong>
+          </div>
+
+          <div class="kv">
+            <span>Endereço IP</span>
+            <strong id="ip">Carregando...</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="card alert-card-like">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-bell"></i>
+            <h3>Último Alerta</h3>
+          </div>
+        </div>
+
+        <div class="alert-badge" id="alertBadge">
+          <i class="fa-solid fa-circle"></i>
+          <span>Status</span>
+        </div>
+
+        <h4 class="alert-title" id="alert">Carregando...</h4>
+        <p class="alert-desc">
+          O alerta é calculado com base nas métricas recebidas da API.
+        </p>
+
+        <a href="pg-alertas.html" class="btn-link">
+          Ver todos os alertas
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 DashManager. Todos os direitos reservados.</span>
+    </footer>
+  </main>
+
+  <script defer src="../Scripts/pg-inicial.js"></script>
 </body>
+</html>

@@ -3,213 +3,246 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DashManager | Usuários</title>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <title>Usuários | DashManager</title>
 
-  <!-- Google Fonts – Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Estilos globais (mesmo arquivo usado no dashboard) -->
-  <!-- <link rel="stylesheet" href="../styles/global.css" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- Estilos específicos desta página -->
-  <link rel="stylesheet" href="../styles/pg-usuarios.css" />
+  <link rel="stylesheet" href="../Styles/pg-usuarios.css" />
+  <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico" />
 </head>
+
 <body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <img src="../Images/dash-manager-logo.png" alt="Logo DashManager" />
+      </div>
 
-  <!-- ===================== SIDEBAR ===================== -->
-  <aside class="sidebar" id="sidebar">
-
-    <div class="sidebar-logo">
-      <i class="fa-solid fa-gauge-high"></i>
-      <span>DashManager</span>
+      <div class="logo-text">
+        <h1>DashManager</h1>
+        <p>Monitoramento Inteligente</p>
+      </div>
     </div>
 
-    <nav class="sidebar-nav">
-      <p class="nav-label">Principal</p>
+    <nav class="nav-menu">
+      <a href="pg-inicial.html" class="nav-item">
+        <i class="fa-solid fa-border-all"></i>
+        Dashboard
+      </a>
 
-      <a href="index.html" class="nav-item">
-        <i class="fa-solid fa-house"></i>
-        <span>Dashboard</span>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-square-check"></i>
+        Recursos
+      </a>
+
+      <a href="pg-processos.html" class="nav-item">
+        <i class="fa-solid fa-microchip"></i>
+        Processos
       </a>
 
       <a href="pg-usuarios.html" class="nav-item active">
-        <i class="fa-solid fa-users"></i>
-        <span>Usuários</span>
+        <i class="fa-regular fa-user"></i>
+        Usuários
       </a>
 
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-chart-bar"></i>
-        <span>Relatórios</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notificações</span>
-        <span class="badge">3</span>
-      </a>
-
-      <p class="nav-label">Sistema</p>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-gear"></i>
-        <span>Configurações</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span>Permissões</span>
+      <a href="pg-alertas.html" class="nav-item">
+        <i class="fa-regular fa-bell"></i>
+        Alertas
       </a>
     </nav>
-
-    <div class="sidebar-footer">
-      <div class="user-avatar">AD</div>
-      <div class="user-info">
-        <span class="user-name">Admin</span>
-        <span class="user-role">Administrador</span>
-      </div>
-      <a href="#" class="logout-btn" title="Sair">
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </a>
-    </div>
-
   </aside>
 
-  <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+  <!-- MAIN -->
   <main class="main-content">
-
-    <!-- Topbar -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="toggle-sidebar" id="toggleSidebar" title="Recolher menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="breadcrumb">
-          <span>DashManager</span>
-          <i class="fa-solid fa-chevron-right"></i>
-          <span class="current">Usuários</span>
-        </div>
-      </div>
-      <div class="topbar-right">
-        <button class="icon-btn" title="Buscar">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-        <button class="icon-btn" title="Notificações">
-          <i class="fa-solid fa-bell"></i>
-        </button>
+    <header class="header">
+      <div class="page-title">
+        <h1>Usuários</h1>
+        <p>Monitoramento de usuários, sessões e processos relacionados ao servidor.</p>
       </div>
     </header>
 
-    <!-- Cabeçalho da página -->
-    <section class="page-header">
-      <div>
-        <h1 class="page-title">Usuários</h1>
-        <p class="page-subtitle">Gerencie e monitore todos os usuários da plataforma.</p>
-      </div>
-      <button class="btn-primary">
-        <i class="fa-solid fa-plus"></i>
-        Novo Usuário
-      </button>
-    </section>
+    <div class="last-update">
+      <span class="dot"></span>
+      <span>Última atualização:</span>
+      <strong id="lastUpdate">--:--:--</strong>
+      <span class="sep">•</span>
+      <span>Fonte: ../../../Backend/dados.json</span>
+    </div>
 
-    <!-- Cards de resumo -->
-    <section class="cards-grid">
-
-      <div class="card">
-        <div class="card-icon card-icon--blue">
-          <i class="fa-solid fa-users"></i>
-        </div>
-        <div class="card-info">
-          <span class="card-label">Total de Usuários</span>
-          <span class="card-value" id="totalUsuarios">—</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon card-icon--green">
-          <i class="fa-solid fa-circle-check"></i>
-        </div>
-        <div class="card-info">
-          <span class="card-label">Online Agora</span>
-          <span class="card-value" id="usuariosOnline">—</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon card-icon--red">
-          <i class="fa-solid fa-circle-xmark"></i>
-        </div>
-        <div class="card-info">
-          <span class="card-label">Offline</span>
-          <span class="card-value" id="usuariosOffline">—</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon card-icon--yellow">
-          <i class="fa-solid fa-user-shield"></i>
-        </div>
-        <div class="card-info">
-          <span class="card-label">Administradores</span>
-          <span class="card-value" id="totalAdmins">—</span>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Tabela de usuários -->
-    <section class="table-section">
-
-      <div class="table-header">
-        <h2 class="table-title">
-          <i class="fa-solid fa-list-ul"></i>
-          Lista de Usuários
-        </h2>
-        <div class="table-controls">
-          <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="Buscar usuário..." />
+    <!-- KPI CARDS -->
+    <section class="kpi-grid" aria-label="Indicadores principais de usuários">
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon blue">
+            <i class="fa-solid fa-users"></i>
           </div>
-          <select class="filter-select" id="filterStatus">
-            <option value="todos">Todos</option>
+
+          <div class="kpi-meta">
+            <h3>Total de registros</h3>
+            <p>Itens monitorados</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="totalUsuarios">—</span>
+          <small class="kpi-sub">baseado na lista carregada</small>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill blue" id="barTotalUsuarios" style="width:0%"></div>
+          </div>
+          <span class="hint">Atualizado automaticamente</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon green">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Online agora</h3>
+            <p>Estado em execução</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="usuariosOnline">—</span>
+          <small class="kpi-sub">status online</small>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill green" id="barUsuariosOnline" style="width:0%"></div>
+          </div>
+          <span class="hint">Processos em estado ativo</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon danger">
+            <i class="fa-solid fa-circle-xmark"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Offline</h3>
+            <p>Estado inativo ou aguardando</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="usuariosOffline">—</span>
+          <small class="kpi-sub">status offline</small>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill danger" id="barUsuariosOffline" style="width:0%"></div>
+          </div>
+          <span class="hint">Registros fora do estado ativo</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon yellow">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+
+          <div class="kpi-meta">
+            <h3>Administradores</h3>
+            <p>Perfis administrativos</p>
+          </div>
+        </div>
+
+        <div class="kpi-value">
+          <span id="totalAdmins">—</span>
+          <small class="kpi-sub">registros com perfil admin</small>
+        </div>
+
+        <div class="kpi-progress">
+          <div class="bar">
+            <div class="fill yellow" id="barTotalAdmins" style="width:0%"></div>
+          </div>
+          <span class="hint">Permissões administrativas</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- TABELA DE USUÁRIOS -->
+    <section class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">
+          <h3>Lista de usuários</h3>
+          <p>Busca e filtro por status dos registros monitorados.</p>
+        </div>
+
+        <div class="table-controls">
+          <div class="control">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Buscar usuário, e-mail, cargo ou status..."
+            />
+          </div>
+
+          <select id="filterStatus" class="select">
+            <option value="todos">Todos os status</option>
             <option value="online">Online</option>
             <option value="offline">Offline</option>
           </select>
         </div>
       </div>
 
-      <div class="table-wrapper">
-        <table class="users-table" id="usersTable">
-          <thead>
-            <tr>
-              <th>Usuário</th>
-              <th>E-mail</th>
-              <th>Cargo</th>
-              <th>Status</th>
-              <th>Último acesso</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="usersTableBody">
-            <!-- preenchido via JS -->
-          </tbody>
-        </table>
-      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table class="data-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>Usuário</th>
+                <th>E-mail / Identificador</th>
+                <th>Cargo / Detalhe</th>
+                <th>Status</th>
+                <th>Último acesso</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
 
-      <div class="table-footer">
-        <span id="tableInfo">Carregando…</span>
-      </div>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="6" class="loading">
+                  Carregando usuários...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
+        <div class="table-footer">
+          <div class="rows-info">
+            <span id="tableInfo">Carregando...</span>
+            <span class="sep">•</span>
+            <span>Atualiza automaticamente</span>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <footer class="footer">
+      <span>© 2026 DashManager. Todos os direitos reservados.</span>
+    </footer>
   </main>
 
-  <!-- Script da página -->
-  <script src="../Scripts/pg-usuarios.js"></script>
-
+  <script defer src="../Scripts/pg-usuarios.js"></script>
 </body>
 </html>
