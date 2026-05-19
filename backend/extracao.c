@@ -381,6 +381,7 @@ void process_list(FILE *json) {
             int threads = 0;
 
             char state[64] = "Unknown";
+            char user[64] = "root";
 
             char line[256];
 
@@ -399,6 +400,96 @@ void process_list(FILE *json) {
 
             fclose(status_file);
 
+            ////////////////// CMDLINE //////////////////
+            char cmd_path[256];
+
+            snprintf(cmd_path,
+                     sizeof(cmd_path),
+                     "/proc/%s/cmdline",
+                     entry->d_name);
+
+            FILE *cmd_file =
+                fopen(cmd_path, "r");
+
+            char cmdline[512] = "--";
+
+            if (cmd_file != NULL) {
+
+                size_t len =
+                    fread(cmdline,
+                          1,
+                          sizeof(cmdline) - 1,
+                          cmd_file);
+
+                fclose(cmd_file);
+
+                if (len > 0) {
+
+                    for (size_t i = 0; i < len; i++) {
+
+                        if (cmdline[i] == '\0') {
+                            cmdline[i] = ' ';
+                        }
+                    }
+
+                    cmdline[len] = '\0';
+                }
+            }
+
+            ////////////////// PROCESS UPTIME //////////////////
+            char stat_path[256];
+
+            snprintf(stat_path,
+                     sizeof(stat_path),
+                     "/proc/%s/stat",
+                     entry->d_name);
+
+            FILE *stat_file =
+                fopen(stat_path, "r");
+
+            long unsigned starttime = 0;
+
+            if (stat_file != NULL) {
+
+                char buffer[2048];
+
+                fgets(buffer,
+                      sizeof(buffer),
+                      stat_file);
+
+                fclose(stat_file);
+
+                char *token =
+                    strtok(buffer, " ");
+
+                int field = 1;
+
+                while (token != NULL) {
+
+                    if (field == 22) {
+
+                        starttime =
+                            strtoul(token,
+                                    NULL,
+                                    10);
+
+                        break;
+                    }
+
+                    token = strtok(NULL, " ");
+                    field++;
+                }
+            }
+
+            long hz =
+                sysconf(_SC_CLK_TCK);
+
+            long process_seconds =
+                uptime() - (starttime / hz);
+
+            if (process_seconds < 0)
+                process_seconds = 0;
+
             ////////////////// JSON //////////////////
             if (!first)
                 fprintf(json, ",\n");
@@ -407,13 +498,22 @@ void process_list(FILE *json) {
                     "    {\n"
                     "      \"pid\": %d,\n"
                     "      \"name\": \"%s\",\n"
+                    "      \"user\": \"%s\",\n"
                     "      \"threads\": %d,\n"
-                    "      \"state\": \"%s\"\n"
+                    "      \"state\": \"%s\",\n"
+                    "      \"cpu\": 0,\n"
+                    "      \"mem\": 0,\n"
+                    "      \"rss\": \"--\",\n"
+                    "      \"etime\": \"%lds\",\n"
+                    "      \"cmd\": \"%s\"\n"
                     "    }",
                     pid,
                     name,
+                    user,
                     threads,
-                    state);
+                    state,
+                    process_seconds,
+                    cmdline);
 
             first = 0;
         }

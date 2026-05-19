@@ -1,9 +1,9 @@
 {
-  "cpu": 0.09,
+  "cpu": 0.01,
   "memory": {
-    "total": 7794768,
-    "used": 543812,
-    "available": 7250956
+    "total": 7794760,
+    "used": 537328,
+    "available": 7257432
   },
   "disk": {
     "total": "1007G",
@@ -12,13 +12,13 @@
     "usage_percent": "1%"
   },
   "temperature": -1.00,
-  "uptime": 95,
-  "processes": 22,
-  "current_time": "18:28:20",
-  "threads": 36,
+  "uptime": 29,
+  "processes": 23,
+  "current_time": "19:06:36",
+  "threads": 37,
   "network": {
-    "rx": 23237,
-    "tx": 6134,
+    "rx": 10491,
+    "tx": 4472,
     "rx_rate": 0,
     "tx_rate": 0
   },
@@ -26,134 +26,278 @@
     {
       "pid": 1,
       "name": "systemd",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "27s",
+      "cmd": "/sbin/init "
     },
     {
       "pid": 2,
       "name": "init-systemd(Ub",
+      "user": "root",
       "threads": 2,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "27s",
+      "cmd": "/init "
     },
     {
       "pid": 6,
       "name": "init",
+      "user": "root",
       "threads": 2,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "27s",
+      "cmd": "plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate "
     },
     {
       "pid": 42,
       "name": "systemd-journal",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "26s",
+      "cmd": "/usr/lib/systemd/systemd-journald "
     },
     {
-      "pid": 92,
+      "pid": 91,
       "name": "systemd-udevd",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "26s",
+      "cmd": "/usr/lib/systemd/systemd-udevd "
     },
     {
-      "pid": 166,
+      "pid": 164,
       "name": "systemd-resolve",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/lib/systemd/systemd-resolved "
     },
     {
-      "pid": 173,
+      "pid": 165,
       "name": "systemd-timesyn",
+      "user": "root",
       "threads": 2,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/lib/systemd/systemd-timesyncd "
+    },
+    {
+      "pid": 174,
+      "name": "cron",
+      "user": "root",
+      "threads": 1,
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/sbin/cron -f -P "
+    },
+    {
+      "pid": 175,
+      "name": "dbus-daemon",
+      "user": "root",
+      "threads": 1,
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "@dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only "
     },
     {
       "pid": 182,
-      "name": "cron",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 183,
-      "name": "dbus-daemon",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 200,
       "name": "systemd-logind",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/lib/systemd/systemd-logind "
     },
     {
-      "pid": 208,
+      "pid": 184,
       "name": "wsl-pro-service",
+      "user": "root",
       "threads": 8,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/libexec/wsl-pro-service "
     },
     {
-      "pid": 216,
+      "pid": 203,
       "name": "rsyslogd",
+      "user": "root",
       "threads": 4,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/sbin/rsyslogd -n -iNONE "
     },
     {
-      "pid": 241,
+      "pid": 205,
       "name": "agetty",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/sbin/agetty -o -p -- \u --noclear - linux "
     },
     {
-      "pid": 247,
+      "pid": 214,
       "name": "unattended-upgr",
+      "user": "root",
       "threads": 2,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "25s",
+      "cmd": "/usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal "
     },
     {
-      "pid": 390,
-      "name": "login",
+      "pid": 266,
+      "name": "systemd-timedat",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "24s",
+      "cmd": "/usr/lib/systemd/systemd-timedated "
     },
     {
-      "pid": 438,
-      "name": "systemd",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 441,
-      "name": "(sd-pam)",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 467,
-      "name": "bash",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 612,
+      "pid": 311,
       "name": "SessionLeader",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "23s",
+      "cmd": "/init "
     },
     {
-      "pid": 613,
-      "name": "Relay(614)",
+      "pid": 312,
+      "name": "Relay(314)",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "23s",
+      "cmd": "/init "
     },
     {
-      "pid": 614,
+      "pid": 314,
       "name": "bash",
+      "user": "root",
       "threads": 1,
-      "state": "S (sleeping)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "23s",
+      "cmd": "-bash "
     },
     {
-      "pid": 638,
-      "name": "monitor",
+      "pid": 315,
+      "name": "login",
+      "user": "root",
       "threads": 1,
-      "state": "R (running)"
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "23s",
+      "cmd": "/bin/login -f       "
+    },
+    {
+      "pid": 360,
+      "name": "systemd",
+      "user": "root",
+      "threads": 1,
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "22s",
+      "cmd": "/usr/lib/systemd/systemd --user "
+    },
+    {
+      "pid": 361,
+      "name": "(sd-pam)",
+      "user": "root",
+      "threads": 1,
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "22s",
+      "cmd": "(sd-pam) "
+    },
+    {
+      "pid": 383,
+      "name": "bash",
+      "user": "root",
+      "threads": 1,
+      "state": "S (sleeping)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "22s",
+      "cmd": "-bash "
+    },
+    {
+      "pid": 427,
+      "name": "monitor",
+      "user": "root",
+      "threads": 1,
+      "state": "R (running)",
+      "cpu": 0,
+      "mem": 0,
+      "rss": "--",
+      "etime": "5s",
+      "cmd": "./monitor "
     }
   ]
 }

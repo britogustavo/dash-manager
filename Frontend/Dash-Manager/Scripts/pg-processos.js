@@ -1,198 +1,628 @@
+/* =========================================
+   PG-PROCESSOS.JS — DashManager
+   Corrigido e integrado com sua API real
+   ========================================= */
+
+"use strict";
+
+/* ================================
+   CONFIG
+   ================================ */
+const API_URL = "http://54.233.247.111:8000/metricas";
+const INTERVALO = 5000;
+
+/* ================================
+   HELPERS
+   ================================ */
+function getEl(id) {
+  return document.getElementById(id);
+}
+
+function setText(id, value) {
+  const el = getEl(id);
+
+  if (el) {
+    el.innerText = value;
+  }
+}
+
+function formatNumber(value, casas = 1) {
+  const n = Number(value);
+
+  if (Number.isNaN(n)) {
+    return "--";
+  }
+
+  return n.toFixed(casas);
+}
+
+function stateLetter(stateStr) {
+  const s = String(stateStr || "").trim();
+
+  return s ? s.charAt(0).toUpperCase() : "-";
+}
+
+function setBar(id, value, max = 100) {
+  const el = getEl(id);
+
+  if (!el) {
+    return;
+  }
+
+  const pct =
+    Math.min(100, (Number(value) / max) * 100);
+
+  el.style.width = pct + "%";
+}
+
+/* ================================
+   SERVIÇOS
+   ================================ */
+function detectarServico(nome) {
+
+  const n = String(nome || "").toLowerCase();
+
+  if (
+    n.includes("nginx") ||
+    n.includes("apache") ||
+    n.includes("httpd")
+  ) {
+    return "web";
+  }
+
+  if (
+    n.includes("mysql") ||
+    n.includes("postgres") ||
+    n.includes("mariadb")
+  ) {
+    return "db";
+  }
+
+  if (
+    n.includes("redis") ||
+    n.includes("memcached")
+  ) {
+    return "cache";
+  }
+
+  return "other";
+}
+
+/* ================================
+   HEALTH DOS SERVIÇOS
+   ================================ */
+function renderizarServicos(lista) {
+
+  const container = getEl("servicesList");
+
+  if (!container) {
+    return;
+  }
+
+  const web =
+    lista.some(p =>
+      detectarServico(p.name) === "web"
+    );
+
+  const db =
+    lista.some(p =>
+      detectarServico(p.name) === "db"
+    );
+
+  const cache =
+    lista.some(p =>
+      detectarServico(p.name) === "cache"
+    );
+
+  container.innerHTML = `
+    <div class="service-item">
+      <span>Web Server</span>
+      <strong class="${web ? "ok" : "fail"}">
+        ${web ? "Online" : "Offline"}
+      </strong>
+    </div>
+
+    <div class="service-item">
+      <span>Banco de Dados</span>
+      <strong class="${db ? "ok" : "fail"}">
+        ${db ? "Online" : "Offline"}
+      </strong>
+    </div>
+
+    <div class="service-item">
+      <span>Cache</span>
+      <strong class="${cache ? "ok" : "fail"}">
+        ${cache ? "Online" : "Offline"}
+      </strong>
+    </div>
+  `;
+
+  setText("kvWeb", web ? "Online" : "Offline");
+  setText("kvDb", db ? "Online" : "Offline");
+  setText("kvCache", cache ? "Online" : "Offline");
+}
+
+/* ================================
+   ALERTAS
+   ================================ */
+function atualizarAlertas(lista) {
+
+  const zombies =
+    lista.filter(p =>
+      stateLetter(p.state) === "Z"
+    ).length;
+
+  const stopped =
+    lista.filter(p =>
+      stateLetter(p.state) === "T"
+    ).length;
+
+  const badge =
+    getEl("lastAlertBadge");
+
+  const severity =
+    getEl("lastAlertSeverity");
+
+  const title =
+    getEl("lastAlertTitle");
+
+  const desc =
+    getEl("lastAlertDesc");
+
+  const time =
+    getEl("lastAlertTime");
+
+  const pid =
+    getEl("lastAlertPid");
+
+  const hora =
+    new Date().toLocaleTimeString("pt-BR", {
+      hour12: false
+    });
+
+  if (
+    zombies > 0
+  ) {
+
+    badge.style.display = "inline-flex";
+
+    badge.classList.remove("warning");
+    badge.classList.add("critical");
+
+    severity.innerText = "Crítico";
+
+    title.innerText =
+      "Processo zumbi detectado";
+
+    desc.innerText =
+      `Há ${zombies} processo(s) em estado Z.`;
+
+    time.innerText = hora;
+
+    pid.innerText = "PID: --";
+
+    return;
+  }
+
+  if (
+    stopped > 0
+  ) {
+
+    badge.style.display = "inline-flex";
+
+    badge.classList.remove("critical");
+    badge.classList.add("warning");
+
+    severity.innerText = "Atenção";
+
+    title.innerText =
+      "Processo parado detectado";
+
+    desc.innerText =
+      `Há ${stopped} processo(s) em estado T.`;
+
+    time.innerText = hora;
+
+    pid.innerText = "PID: --";
+
+    return;
+  }
+
+  badge.style.display = "none";
+
+  title.innerText =
+    "Sem alertas";
+
+  desc.innerText =
+    "Nenhum evento crítico registrado.";
+
+  time.innerText = "--";
+
+  pid.innerText = "PID: --";
+}
+
+/* ================================
+   TOP PROCESSOS
+   ================================ */
+function renderizarTop(lista) {
+
+  const topTable =
+    getEl("topTable");
+
+  if (!topTable) {
+    return;
+  }
+
+  const top =
+    [...lista]
+      .sort((a, b) =>
+        (b.threads || 0) -
+        (a.threads || 0)
+      )
+      .slice(0, 8);
+
+  if (!top.length) {
+
+    topTable.innerHTML =
+      `<div class="muted">
+        Sem dados de processos.
+      </div>`;
+
+    return;
+  }
+
+  topTable.innerHTML =
+    top.map(p => {
+
+      const pid =
+        p.pid ?? "--";
+
+      const name =
+        p.name ?? "--";
+
+      const threads =
+        p.threads ?? 0;
+
+      const state =
+        stateLetter(p.state);
+
+      return `
+        <div class="mini-row">
+
+          <div class="mini-proc">
+            <strong>${name}</strong>
+
+            <span>
+              PID ${pid} • Estado ${state}
+            </span>
+          </div>
+
+          <div class="mini-badge">
+            ${state}
+          </div>
+
+          <div class="mini-num">
+            ${threads} th
+          </div>
+
+        </div>
+      `;
+    }).join("");
+}
+
+/* ================================
+   TABELA
+   ================================ */
+function renderizarTabela(lista) {
+
+  const tbody =
+    getEl("procTbody");
+
+  if (!tbody) {
+    return;
+  }
+
+  if (!lista.length) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="10" class="loading">
+          Sem processos.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  tbody.innerHTML =
+    lista.map(p => {
+
+      const pid =
+        p.pid ?? "--";
+
+      const name =
+        p.name ?? "--";
+
+      const threads =
+        p.threads ?? 0;
+
+      const state =
+        stateLetter(p.state);
+
+      const fullState =
+        p.state ?? "--";
+
+      return `
+        <tr>
+
+          <td>${pid}</td>
+
+          <td>${name}</td>
+
+          <td>root</td>
+
+          <td>
+            <span class="state-pill ${state.toLowerCase()}">
+              ${state}
+            </span>
+          </td>
+
+          <td>--</td>
+
+          <td>--</td>
+
+          <td>--</td>
+
+          <td>${threads}</td>
+
+          <td>--</td>
+
+          <td class="cmd">
+            ${fullState}
+          </td>
+
+        </tr>
+      `;
+    }).join("");
+
+  setText(
+    "rowsInfo",
+    `${lista.length} processos carregados`
+  );
+}
+
+/* ================================
+   PRINCIPAL
+   ================================ */
 async function atualizarProcessos() {
+
   try {
-    const resposta = await fetch("http://54.233.247.111:8000/metricas" + new Date().getTime());
+
+    const resposta =
+      await fetch(API_URL, {
+        cache: "no-store"
+      });
 
     if (!resposta.ok) {
-      throw new Error("Erro HTTP: " + resposta.status);
+      throw new Error(
+        "Erro HTTP: " + resposta.status
+      );
     }
 
-    const dados = await resposta.json();
+    const dados =
+      await resposta.json();
 
-    // ===== Última atualização =====
-    const agora = new Date();
-    const hora = agora.toLocaleTimeString("pt-BR", { hour12: false });
-    const lastUpdateEl = document.getElementById("lastUpdate");
-    if (lastUpdateEl) lastUpdateEl.innerText = hora;
+    /* ================================
+       HORA
+       ================================ */
+    const hora =
+      new Date().toLocaleTimeString(
+        "pt-BR",
+        {
+          hour12: false
+        }
+      );
 
-    const dataSourceEl = document.getElementById("dataSource");
-    if (dataSourceEl) dataSourceEl.innerText = "Fonte: ../../../Backend/dados.json";
+    setText("lastUpdate", hora);
 
-    // ===== Process list (seguro) =====
-    const lista = Array.isArray(dados.process_list) ? dados.process_list : [];
+    setText(
+      "dataSource",
+      "Fonte: API FastAPI"
+    );
 
-    // Helpers para estados: seu JSON pode vir "S (sleeping)" então pegamos a letra
-    const stateLetter = (stateStr) => {
-      const s = String(stateStr || "").trim();
-      return s ? s.charAt(0).toUpperCase() : "-";
-    };
+    /* ================================
+       LISTA
+       ================================ */
+    const lista =
+      Array.isArray(dados.process_list)
+        ? dados.process_list
+        : [];
 
-    // ===== KPIs =====
-    // total processos no host (se existir, usa; senão, usa tamanho da lista)
-    const totalProcs = (typeof dados.processes === "number") ? dados.processes : lista.length;
-    const totalThreads = (typeof dados.threads === "number") ? dados.threads : 0;
+    /* ================================
+       KPIS
+       ================================ */
+    const totalProcessos =
+      dados.processes || lista.length;
 
-    const running = lista.filter(p => stateLetter(p.state) === "R").length;
-    const zombies = lista.filter(p => stateLetter(p.state) === "Z").length;
+    const totalThreads =
+      dados.threads || 0;
 
-    // IDs do seu HTML de processos atual:
-    // kpiTotal, kpiRunning, kpiThreads, kpiThreadsAvg, kpiAnomalias, kpiZombie
-    const kpiTotal = document.getElementById("kpiTotal");
-    if (kpiTotal) kpiTotal.innerText = totalProcs;
+    const running =
+      lista.filter(p =>
+        stateLetter(p.state) === "R"
+      ).length;
 
-    const kpiRunning = document.getElementById("kpiRunning");
-    if (kpiRunning) kpiRunning.innerText = running;
+    const zombies =
+      lista.filter(p =>
+        stateLetter(p.state) === "Z"
+      ).length;
 
-    const kpiThreads = document.getElementById("kpiThreads");
-    if (kpiThreads) kpiThreads.innerText = totalThreads;
+    const stopped =
+      lista.filter(p =>
+        stateLetter(p.state) === "T"
+      ).length;
 
-    const kpiThreadsAvg = document.getElementById("kpiThreadsAvg");
-    if (kpiThreadsAvg) {
-      const avg = totalProcs > 0 ? (totalThreads / totalProcs) : 0;
-      kpiThreadsAvg.innerText = avg.toFixed(1);
+    const anomalies =
+      zombies + stopped;
+
+    setText(
+      "kpiTotal",
+      totalProcessos
+    );
+
+    setText(
+      "kpiRunning",
+      running
+    );
+
+    setText(
+      "kpiThreads",
+      totalThreads
+    );
+
+    setText(
+      "kpiThreadsAvg",
+      totalProcessos > 0
+        ? (totalThreads / totalProcessos).toFixed(1)
+        : "0"
+    );
+
+    setText(
+      "kpiAnomalias",
+      anomalies
+    );
+
+    setText(
+      "kpiZombie",
+      zombies
+    );
+
+    /* ================================
+       BARRAS
+       ================================ */
+    setBar(
+      "barTotal",
+      totalProcessos,
+      300
+    );
+
+    setBar(
+      "barThreads",
+      totalThreads,
+      5000
+    );
+
+    setBar(
+      "barAnom",
+      anomalies,
+      10
+    );
+
+    /* ================================
+       RESUMO
+       ================================ */
+    setText(
+      "kvHost",
+      "AWS Ubuntu Server"
+    );
+
+    setText(
+      "kvOs",
+      "Ubuntu Linux"
+    );
+
+    setText(
+      "kvIp",
+      "54.233.247.111"
+    );
+
+    const up =
+      Number(dados.uptime || 0);
+
+    const dias =
+      Math.floor(up / 86400);
+
+    const horas =
+      Math.floor((up % 86400) / 3600);
+
+    const minutos =
+      Math.floor((up % 3600) / 60);
+
+    let uptimeTexto =
+      `${horas}h ${minutos}m`;
+
+    if (dias > 0) {
+      uptimeTexto =
+        `${dias}d ${horas}h ${minutos}m`;
     }
 
-    // Anomalias: aqui usamos zumbis como “crítico” e processos parados como “warning”
-    const stopped = lista.filter(p => stateLetter(p.state) === "T").length;
-    const anomalies = zombies + stopped;
+    setText(
+      "kvUptime",
+      uptimeTexto
+    );
 
-    const kpiAnom = document.getElementById("kpiAnomalias");
-    if (kpiAnom) kpiAnom.innerText = anomalies;
+    setText(
+      "kvLoad",
+      formatNumber(dados.cpu, 1) + "%"
+    );
 
-    const kpiZombie = document.getElementById("kpiZombie");
-    if (kpiZombie) kpiZombie.innerText = zombies;
+    /* ================================
+       RENDERIZAÇÕES
+       ================================ */
+    renderizarServicos(lista);
 
-    // ===== Barras (se existirem no HTML) =====
-    const barTotal = document.getElementById("barTotal");
-    if (barTotal) {
-      const ref = 300; // referência se você não tiver limite
-      barTotal.style.width = Math.min(100, (totalProcs / ref) * 100) + "%";
-    }
+    atualizarAlertas(lista);
 
-    const barThreads = document.getElementById("barThreads");
-    if (barThreads) {
-      const ref = 5000;
-      barThreads.style.width = Math.min(100, (totalThreads / ref) * 100) + "%";
-    }
+    renderizarTop(lista);
 
-    const barAnom = document.getElementById("barAnom");
-    if (barAnom) {
-      barAnom.style.width = Math.min(100, (anomalies / 10) * 100) + "%";
-    }
-
-    // ===== “Top processos (CPU / RAM)” -> como não há CPU/MEM por processo no JSON,
-    // a melhor métrica disponível é: TOP por THREADS (mostrando PID).
-    // Vamos preencher a mini-table (topTable) com base em threads.
-    const topTable = document.getElementById("topTable");
-    if (topTable) {
-      const top = [...lista]
-        .sort((a, b) => (b.threads || 0) - (a.threads || 0))
-        .slice(0, 8);
-
-      if (!top.length) {
-        topTable.innerHTML = `<div class="muted">Sem dados de processos.</div>`;
-      } else {
-        topTable.innerHTML = top.map(p => {
-          const pid = p.pid ?? "--";
-          const name = p.name ?? "(desconhecido)";
-          const th = p.threads ?? 0;
-          const st = stateLetter(p.state);
-
-          return `
-            <div class="mini-row">
-              <div class="mini-proc">
-                <strong title="${name}">${name}</strong>
-                <span>PID ${pid} • Estado ${st}</span>
-              </div>
-              <div class="mini-badge">${st}</div>
-              <div class="mini-num">${th} th</div>
-              <div class="mini-num">--</div>
-            </div>
-          `;
-        }).join("");
-      }
-    }
-
-    // ===== Tabela principal =====
-    const tbody = document.getElementById("procTbody");
-    if (tbody) {
-      if (!lista.length) {
-        tbody.innerHTML = `<tr><td colspan="10" class="loading">Sem processos para exibir.</td></tr>`;
-      } else {
-        // preencher colunas que existem; CPU/MEM/RSS/etime/cmd não existem no JSON atual
-        tbody.innerHTML = lista.map(p => {
-          const pid = p.pid ?? "--";
-          const name = p.name ?? "(desconhecido)";
-          const threads = p.threads ?? 0;
-          const st = stateLetter(p.state);
-          const stateText = p.state ?? "--";
-
-          return `
-            <tr>
-              <td>${pid}</td>
-              <td>${name}</td>
-              <td>--</td>
-              <td><span class="state-pill ${st.toLowerCase()}">${st}</span></td>
-              <td>--</td>
-              <td>--</td>
-              <td>--</td>
-              <td>${threads}</td>
-              <td>--</td>
-              <td class="cmd" title="${stateText}">${stateText}</td>
-            </tr>
-          `;
-        }).join("");
-      }
-    }
-
-    // ===== Último alerta (se existir bloco no HTML) =====
-    // Se houver zumbis -> crítico; se houver stopped -> warning; senão sem alertas
-    const lastAlertTitle = document.getElementById("lastAlertTitle");
-    const lastAlertDesc = document.getElementById("lastAlertDesc");
-    const lastAlertTime = document.getElementById("lastAlertTime");
-    const lastAlertPid = document.getElementById("lastAlertPid");
-    const lastAlertBadge = document.getElementById("lastAlertBadge");
-    const lastAlertSeverity = document.getElementById("lastAlertSeverity");
-
-    if (lastAlertTitle && lastAlertDesc && lastAlertTime && lastAlertPid && lastAlertBadge && lastAlertSeverity) {
-      if (zombies > 0) {
-        lastAlertBadge.style.display = "inline-flex";
-        lastAlertBadge.classList.add("critical");
-        lastAlertBadge.classList.remove("warning");
-        lastAlertSeverity.innerText = "Crítico";
-        lastAlertTitle.innerText = "Processo zumbi detectado";
-        lastAlertDesc.innerText = `Há ${zombies} processo(s) em estado Z.`;
-        lastAlertTime.innerText = hora;
-        lastAlertPid.innerText = "PID: --";
-      } else if (stopped > 0) {
-        lastAlertBadge.style.display = "inline-flex";
-        lastAlertBadge.classList.add("warning");
-        lastAlertBadge.classList.remove("critical");
-        lastAlertSeverity.innerText = "Atenção";
-        lastAlertTitle.innerText = "Processo parado detectado";
-        lastAlertDesc.innerText = `Há ${stopped} processo(s) em estado T.`;
-        lastAlertTime.innerText = hora;
-        lastAlertPid.innerText = "PID: --";
-      } else {
-        lastAlertBadge.style.display = "none";
-        lastAlertTitle.innerText = "Sem alertas";
-        lastAlertDesc.innerText = "Nenhum evento crítico registrado nas últimas leituras.";
-        lastAlertTime.innerText = "--";
-        lastAlertPid.innerText = "PID: --";
-      }
-    }
+    renderizarTabela(lista);
 
   } catch (erro) {
-    console.error("Erro ao atualizar processos:", erro);
 
-    const tbody = document.getElementById("procTbody");
+    console.error(
+      "Erro ao atualizar processos:",
+      erro
+    );
+
+    const tbody =
+      getEl("procTbody");
+
     if (tbody) {
-      tbody.innerHTML = `<tr><td colspan="10" class="loading">
-        Não foi possível carregar ../../../Backend/dados.json. Verifique servidor local e caminho.
-      </td></tr>`;
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="10" class="loading">
+            Não foi possível carregar os dados da API.
+          </td>
+        </tr>
+      `;
     }
   }
 }
 
-// Atualiza a cada 5s (igual ao seu padrão)
-setInterval(atualizarProcessos, 5000);
-atualizarProcessos();
+/* ================================
+   BOTÃO REFRESH
+   ================================ */
+document
+  .getElementById("btnRefresh")
+  ?.addEventListener(
+    "click",
+    atualizarProcessos
+  );
+
+/* ================================
+   INIT
+   ================================ */
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    atualizarProcessos();
+
+    setInterval(
+      atualizarProcessos,
+      INTERVALO
+    );
+  }
+);
