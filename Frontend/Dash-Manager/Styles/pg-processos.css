@@ -165,6 +165,20 @@ body {
   filter: blur(0.2px);
 }
 
+/* Scrollbar (igual pg-recursos.css) */
+.main-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: rgba(148,163,184,0.18);
+  border-radius: 999px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.03);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
