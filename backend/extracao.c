@@ -125,7 +125,7 @@ void disk(char *total,
     char mount[64];
 
     fscanf(fp,
-           "%s %s %s %s %s %s",
+           "%63s %31s %31s %31s %15s %63s",
            filesystem,
            total,
            used,
@@ -320,7 +320,7 @@ int thread_count() {
 }
 
 //////////////// PROCESS LIST //////////////////
-void process_list(FILE *json, long total_mem_kb) {
+void process_list(FILE *json) {
 
     FILE *ps =
         popen("ps -eo pid,user,%cpu,%mem,rss,state,etimes,comm,args --sort=-%cpu", "r");
@@ -331,25 +331,36 @@ void process_list(FILE *json, long total_mem_kb) {
     fprintf(json,
             "  \"process_list\": [\n");
 
-    char line[2048];
+    char line[4096];
 
     fgets(line, sizeof(line), ps);
 
     int first = 1;
 
-    while (fgets(line, sizeof(line), ps)) {
+    while (fgets(line,
+                 sizeof(line),
+                 ps)) {
 
         int pid;
+
         char user[64];
+
         float cpu;
         float mem;
-        long rss;
-        char state[16];
-        long etimes;
-        char comm[128];
-        char args[1024];
 
-        memset(args, 0, sizeof(args));
+        long rss;
+
+        char state[16];
+
+        long etimes;
+
+        char comm[128];
+
+        char args[2048];
+
+        memset(args,
+               0,
+               sizeof(args));
 
         int parsed =
             sscanf(line,
@@ -366,6 +377,38 @@ void process_list(FILE *json, long total_mem_kb) {
 
         if (parsed < 8)
             continue;
+
+        ////////////////// THREADS //////////////////
+        int proc_threads = 1;
+
+        char status_path[512];
+
+        snprintf(status_path,
+                 sizeof(status_path),
+                 "/proc/%d/status",
+                 pid);
+
+        FILE *status_file =
+            fopen(status_path, "r");
+
+        if (status_file != NULL) {
+
+            char status_line[256];
+
+            while (fgets(status_line,
+                         sizeof(status_line),
+                         status_file)) {
+
+                if (sscanf(status_line,
+                           "Threads: %d",
+                           &proc_threads) == 1) {
+
+                    break;
+                }
+            }
+
+            fclose(status_file);
+        }
 
         ////////////////// FORMAT RSS //////////////////
         char rss_str[64];
@@ -387,7 +430,9 @@ void process_list(FILE *json, long total_mem_kb) {
 
         ////////////////// FORMAT ETIME //////////////////
         long h = etimes / 3600;
+
         long m = (etimes % 3600) / 60;
+
         long s = etimes % 60;
 
         char etime_str[64];
@@ -395,25 +440,31 @@ void process_list(FILE *json, long total_mem_kb) {
         snprintf(etime_str,
                  sizeof(etime_str),
                  "%02ld:%02ld:%02ld",
-                 h, m, s);
+                 h,
+                 m,
+                 s);
 
         ////////////////// ESCAPE JSON //////////////////
-        char safe_args[1024];
+        char safe_args[2048];
 
         int j = 0;
 
         for (int i = 0;
-             args[i] != '\0' && j < 1000;
+             args[i] != '\0' && j < 2000;
              i++) {
 
             if (args[i] == '"') {
+
                 safe_args[j++] = '\\';
                 safe_args[j++] = '"';
             }
-            else if (args[i] == '\n') {
+            else if (args[i] == '\n' ||
+                     args[i] == '\r') {
+
                 safe_args[j++] = ' ';
             }
             else {
+
                 safe_args[j++] = args[i];
             }
         }
@@ -429,7 +480,7 @@ void process_list(FILE *json, long total_mem_kb) {
                 "      \"pid\": %d,\n"
                 "      \"name\": \"%s\",\n"
                 "      \"user\": \"%s\",\n"
-                "      \"threads\": 1,\n"
+                "      \"threads\": %d,\n"
                 "      \"state\": \"%s\",\n"
                 "      \"cpu\": %.1f,\n"
                 "      \"mem\": %.1f,\n"
@@ -440,12 +491,15 @@ void process_list(FILE *json, long total_mem_kb) {
                 pid,
                 comm,
                 user,
+                proc_threads,
                 state,
                 cpu,
                 mem,
                 rss_str,
                 etime_str,
-                safe_args[0] ? safe_args : comm);
+                safe_args[0]
+                    ? safe_args
+                    : comm);
 
         first = 0;
     }
@@ -477,6 +531,7 @@ int main() {
 
         ////////////////// CPU //////////////////
         long curr_idle;
+
         long curr_total;
 
         read_cpu(&curr_idle,
@@ -490,6 +545,7 @@ int main() {
 
         ////////////////// MEMORY //////////////////
         long total_mem = 0;
+
         long avail_mem = 0;
 
         memory(&total_mem,
@@ -497,8 +553,11 @@ int main() {
 
         ////////////////// DISK //////////////////
         char disk_total[32];
+
         char disk_used[32];
+
         char disk_available[32];
+
         char disk_percent[16];
 
         disk(disk_total,
@@ -508,6 +567,7 @@ int main() {
 
         ////////////////// NETWORK //////////////////
         long rx = 0;
+
         long tx = 0;
 
         network(&rx,
@@ -612,14 +672,15 @@ int main() {
                 tx - prev_tx);
 
         ////////////////// PROCESS LIST //////////////////
-        process_list(json, total_mem);
+        process_list(json);
 
         fprintf(json, "}\n");
 
         fclose(json);
 
         ////////////////// ATOMIC RENAME //////////////////
-        rename("dados.tmp", "dados.json");
+        rename("dados.tmp",
+               "dados.json");
 
         ////////////////// TERMINAL //////////////////
         system("clear");
