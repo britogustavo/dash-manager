@@ -4,6 +4,8 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
+#include <pwd.h>
+#include <sys/types.h>
 
 //////////////// CPU //////////////////
 void read_cpu(long *idle, long *total) {
@@ -157,12 +159,11 @@ void network(long *rx,
         char iface[50];
 
         sscanf(line,
-               " %[^:]: %ld %*s %*s %*s %*s %*s %*s %*s %ld",
+               " %49[^:]: %ld %*s %*s %*s %*s %*s %*s %*s %ld",
                iface,
                rx,
                tx);
 
-        ////////////////// IGNORA LOOPBACK //////////////////
         if (strcmp(iface, "lo") != 0)
             break;
     }
@@ -190,7 +191,7 @@ float temperature() {
                     "thermal_zone",
                     12) == 0) {
 
-            char path[256];
+            char path[512];
 
             snprintf(path,
                      sizeof(path),
@@ -280,7 +281,7 @@ int thread_count() {
         if (entry->d_name[0] >= '0' &&
             entry->d_name[0] <= '9') {
 
-            char path[256];
+            char path[512];
 
             snprintf(path,
                      sizeof(path),
@@ -319,210 +320,140 @@ int thread_count() {
 }
 
 //////////////// PROCESS LIST //////////////////
-void process_list(FILE *json) {
+void process_list(FILE *json, long total_mem_kb) {
 
-    DIR *dir = opendir("/proc");
+    FILE *ps =
+        popen("ps -eo pid,user,%cpu,%mem,rss,state,etimes,comm,args --sort=-%cpu", "r");
 
-    if (dir == NULL)
+    if (ps == NULL)
         return;
-
-    struct dirent *entry;
 
     fprintf(json,
             "  \"process_list\": [\n");
 
+    char line[2048];
+
+    fgets(line, sizeof(line), ps);
+
     int first = 1;
 
-    while ((entry = readdir(dir)) != NULL) {
+    while (fgets(line, sizeof(line), ps)) {
 
-        if (entry->d_name[0] >= '0' &&
-            entry->d_name[0] <= '9') {
+        int pid;
+        char user[64];
+        float cpu;
+        float mem;
+        long rss;
+        char state[16];
+        long etimes;
+        char comm[128];
+        char args[1024];
 
-            int pid = atoi(entry->d_name);
+        memset(args, 0, sizeof(args));
 
-            ////////////////// NAME //////////////////
-            char name_path[256];
+        int parsed =
+            sscanf(line,
+                   "%d %63s %f %f %ld %15s %ld %127s %[^\n]",
+                   &pid,
+                   user,
+                   &cpu,
+                   &mem,
+                   &rss,
+                   state,
+                   &etimes,
+                   comm,
+                   args);
 
-            snprintf(name_path,
-                     sizeof(name_path),
-                     "/proc/%s/comm",
-                     entry->d_name);
+        if (parsed < 8)
+            continue;
 
-            FILE *name_file =
-                fopen(name_path, "r");
+        ////////////////// FORMAT RSS //////////////////
+        char rss_str[64];
 
-            if (name_file == NULL)
-                continue;
+        if (rss >= 1024) {
 
-            char name[128];
+            snprintf(rss_str,
+                     sizeof(rss_str),
+                     "%.1f MB",
+                     rss / 1024.0);
 
-            fgets(name,
-                  sizeof(name),
-                  name_file);
+        } else {
 
-            name[strcspn(name, "\n")] = 0;
-
-            fclose(name_file);
-
-            ////////////////// STATUS //////////////////
-            char status_path[256];
-
-            snprintf(status_path,
-                     sizeof(status_path),
-                     "/proc/%s/status",
-                     entry->d_name);
-
-            FILE *status_file =
-                fopen(status_path, "r");
-
-            if (status_file == NULL)
-                continue;
-
-            int threads = 0;
-
-            char state[64] = "Unknown";
-            char user[64] = "root";
-
-            char line[256];
-
-            while (fgets(line,
-                         sizeof(line),
-                         status_file)) {
-
-                sscanf(line,
-                       "Threads: %d",
-                       &threads);
-
-                sscanf(line,
-                       "State: %63[^\n]",
-                       state);
-            }
-
-            fclose(status_file);
-
-            ////////////////// CMDLINE //////////////////
-            char cmd_path[256];
-
-            snprintf(cmd_path,
-                     sizeof(cmd_path),
-                     "/proc/%s/cmdline",
-                     entry->d_name);
-
-            FILE *cmd_file =
-                fopen(cmd_path, "r");
-
-            char cmdline[512] = "--";
-
-            if (cmd_file != NULL) {
-
-                size_t len =
-                    fread(cmdline,
-                          1,
-                          sizeof(cmdline) - 1,
-                          cmd_file);
-
-                fclose(cmd_file);
-
-                if (len > 0) {
-
-                    for (size_t i = 0; i < len; i++) {
-
-                        if (cmdline[i] == '\0') {
-                            cmdline[i] = ' ';
-                        }
-                    }
-
-                    cmdline[len] = '\0';
-                }
-            }
-
-            ////////////////// PROCESS UPTIME //////////////////
-            char stat_path[256];
-
-            snprintf(stat_path,
-                     sizeof(stat_path),
-                     "/proc/%s/stat",
-                     entry->d_name);
-
-            FILE *stat_file =
-                fopen(stat_path, "r");
-
-            long unsigned starttime = 0;
-
-            if (stat_file != NULL) {
-
-                char buffer[2048];
-
-                fgets(buffer,
-                      sizeof(buffer),
-                      stat_file);
-
-                fclose(stat_file);
-
-                char *token =
-                    strtok(buffer, " ");
-
-                int field = 1;
-
-                while (token != NULL) {
-
-                    if (field == 22) {
-
-                        starttime =
-                            strtoul(token,
-                                    NULL,
-                                    10);
-
-                        break;
-                    }
-
-                    token = strtok(NULL, " ");
-                    field++;
-                }
-            }
-
-            long hz =
-                sysconf(_SC_CLK_TCK);
-
-            long process_seconds =
-                uptime() - (starttime / hz);
-
-            if (process_seconds < 0)
-                process_seconds = 0;
-
-            ////////////////// JSON //////////////////
-            if (!first)
-                fprintf(json, ",\n");
-
-            fprintf(json,
-                    "    {\n"
-                    "      \"pid\": %d,\n"
-                    "      \"name\": \"%s\",\n"
-                    "      \"user\": \"%s\",\n"
-                    "      \"threads\": %d,\n"
-                    "      \"state\": \"%s\",\n"
-                    "      \"cpu\": 0,\n"
-                    "      \"mem\": 0,\n"
-                    "      \"rss\": \"--\",\n"
-                    "      \"etime\": \"%lds\",\n"
-                    "      \"cmd\": \"%s\"\n"
-                    "    }",
-                    pid,
-                    name,
-                    user,
-                    threads,
-                    state,
-                    process_seconds,
-                    cmdline);
-
-            first = 0;
+            snprintf(rss_str,
+                     sizeof(rss_str),
+                     "%ld KB",
+                     rss);
         }
+
+        ////////////////// FORMAT ETIME //////////////////
+        long h = etimes / 3600;
+        long m = (etimes % 3600) / 60;
+        long s = etimes % 60;
+
+        char etime_str[64];
+
+        snprintf(etime_str,
+                 sizeof(etime_str),
+                 "%02ld:%02ld:%02ld",
+                 h, m, s);
+
+        ////////////////// ESCAPE JSON //////////////////
+        char safe_args[1024];
+
+        int j = 0;
+
+        for (int i = 0;
+             args[i] != '\0' && j < 1000;
+             i++) {
+
+            if (args[i] == '"') {
+                safe_args[j++] = '\\';
+                safe_args[j++] = '"';
+            }
+            else if (args[i] == '\n') {
+                safe_args[j++] = ' ';
+            }
+            else {
+                safe_args[j++] = args[i];
+            }
+        }
+
+        safe_args[j] = '\0';
+
+        ////////////////// JSON //////////////////
+        if (!first)
+            fprintf(json, ",\n");
+
+        fprintf(json,
+                "    {\n"
+                "      \"pid\": %d,\n"
+                "      \"name\": \"%s\",\n"
+                "      \"user\": \"%s\",\n"
+                "      \"threads\": 1,\n"
+                "      \"state\": \"%s\",\n"
+                "      \"cpu\": %.1f,\n"
+                "      \"mem\": %.1f,\n"
+                "      \"rss\": \"%s\",\n"
+                "      \"etime\": \"%s\",\n"
+                "      \"cmd\": \"%s\"\n"
+                "    }",
+                pid,
+                comm,
+                user,
+                state,
+                cpu,
+                mem,
+                rss_str,
+                etime_str,
+                safe_args[0] ? safe_args : comm);
+
+        first = 0;
     }
 
     fprintf(json,
             "\n  ]\n");
 
-    closedir(dir);
+    pclose(ps);
 }
 
 //////////////// MAIN //////////////////
@@ -600,7 +531,7 @@ int main() {
         int threads =
             thread_count();
 
-        ////////////////// JSON TEMPORÁRIO //////////////////
+        ////////////////// JSON TEMP //////////////////
         FILE *json =
             fopen("dados.tmp", "w");
 
@@ -681,13 +612,13 @@ int main() {
                 tx - prev_tx);
 
         ////////////////// PROCESS LIST //////////////////
-        process_list(json);
+        process_list(json, total_mem);
 
         fprintf(json, "}\n");
 
         fclose(json);
 
-        ////////////////// RENOMEAÇÃO ATÔMICA //////////////////
+        ////////////////// ATOMIC RENAME //////////////////
         rename("dados.tmp", "dados.json");
 
         ////////////////// TERMINAL //////////////////
@@ -695,7 +626,7 @@ int main() {
 
         printf("JSON atualizado com sucesso.\n");
 
-        ////////////////// UPDATE VALUES //////////////////
+        ////////////////// UPDATE //////////////////
         prev_idle = curr_idle;
         prev_total = curr_total;
 
