@@ -9,7 +9,7 @@
 /* ================================
    CONFIGURAÇÕES
    ================================ */
-const DADOS_URL = "../../../Backend/dados.json";
+const DADOS_URL = "http://54.233.247.111:8000/metricas";
 const INTERVALO_ATUALIZACAO = 5000;
 
 /* ================================

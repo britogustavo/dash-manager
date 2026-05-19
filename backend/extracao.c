@@ -14,27 +14,32 @@ void read_cpu(long *idle, long *total) {
         return;
     }
 
-    long user, nice, system, iowait, irq, softirq;
+    long user, nice, system;
+    long idle_time, iowait;
+    long irq, softirq, steal;
 
     fscanf(fp,
-           "cpu %ld %ld %ld %ld %ld %ld %ld",
+           "cpu %ld %ld %ld %ld %ld %ld %ld %ld",
            &user,
            &nice,
            &system,
-           idle,
+           &idle_time,
            &iowait,
            &irq,
-           &softirq);
+           &softirq,
+           &steal);
 
-    *idle += iowait;
+    *idle = idle_time + iowait;
 
     *total =
         user +
         nice +
         system +
-        *idle +
+        idle_time +
+        iowait +
         irq +
-        softirq;
+        softirq +
+        steal;
 
     fclose(fp);
 }
@@ -157,6 +162,7 @@ void network(long *rx,
                rx,
                tx);
 
+        ////////////////// IGNORA LOOPBACK //////////////////
         if (strcmp(iface, "lo") != 0)
             break;
     }
@@ -465,9 +471,9 @@ int main() {
         char disk_percent[16];
 
         disk(disk_total,
-            disk_used,
-            disk_available,
-            disk_percent);
+             disk_used,
+             disk_available,
+             disk_percent);
 
         ////////////////// NETWORK //////////////////
         long rx = 0;
@@ -482,7 +488,7 @@ int main() {
         ////////////////// UPTIME //////////////////
         long up = uptime();
 
-        //////////////// CURRENT TIME //////////////////
+        ////////////////// CURRENT TIME //////////////////
         char currentTime[64];
 
         current_time(currentTime);
@@ -494,9 +500,9 @@ int main() {
         int threads =
             thread_count();
 
-        ////////////////// JSON //////////////////
+        ////////////////// JSON TEMPORÁRIO //////////////////
         FILE *json =
-            fopen("dados.json", "w");
+            fopen("dados.tmp", "w");
 
         if (json == NULL) {
 
@@ -525,16 +531,16 @@ int main() {
 
         ////////////////// DISK //////////////////
         fprintf(json,
-        "  \"disk\": {\n"
-        "    \"total\": \"%s\",\n"
-        "    \"used\": \"%s\",\n"
-        "    \"available\": \"%s\",\n"
-        "    \"usage_percent\": \"%s\"\n"
-        "  },\n",
-        disk_total,
-        disk_used,
-        disk_available,
-        disk_percent);
+                "  \"disk\": {\n"
+                "    \"total\": \"%s\",\n"
+                "    \"used\": \"%s\",\n"
+                "    \"available\": \"%s\",\n"
+                "    \"usage_percent\": \"%s\"\n"
+                "  },\n",
+                disk_total,
+                disk_used,
+                disk_available,
+                disk_percent);
 
         ////////////////// TEMPERATURE //////////////////
         fprintf(json,
@@ -551,8 +557,7 @@ int main() {
                 "  \"processes\": %d,\n",
                 processes);
 
-
-        //////////////// CURRENT TIME //////////////////
+        ////////////////// CURRENT TIME //////////////////
         fprintf(json,
                 "  \"current_time\": \"%s\",\n",
                 currentTime);
@@ -581,6 +586,9 @@ int main() {
         fprintf(json, "}\n");
 
         fclose(json);
+
+        ////////////////// RENOMEAÇÃO ATÔMICA //////////////////
+        rename("dados.tmp", "dados.json");
 
         ////////////////// TERMINAL //////////////////
         system("clear");

@@ -1,6 +1,6 @@
 async function atualizarProcessos() {
   try {
-    const resposta = await fetch("../../../Backend/dados.json?ts=" + new Date().getTime());
+    const resposta = await fetch("http://54.233.247.111:8000/metricas" + new Date().getTime());
 
     if (!resposta.ok) {
       throw new Error("Erro HTTP: " + resposta.status);

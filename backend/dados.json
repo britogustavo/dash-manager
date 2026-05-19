@@ -1,9 +1,9 @@
 {
-  "cpu": 6.21,
+  "cpu": 0.09,
   "memory": {
-    "total": 7794764,
-    "used": 646544,
-    "available": 7148220
+    "total": 7794768,
+    "used": 543812,
+    "available": 7250956
   },
   "disk": {
     "total": "1007G",
@@ -12,13 +12,13 @@
     "usage_percent": "1%"
   },
   "temperature": -1.00,
-  "uptime": 290,
-  "processes": 31,
-  "current_time": "13:27:44",
-  "threads": 54,
+  "uptime": 95,
+  "processes": 22,
+  "current_time": "18:28:20",
+  "threads": 36,
   "network": {
-    "rx": 32792,
-    "tx": 7028,
+    "rx": 23237,
+    "tx": 6134,
     "rx_rate": 0,
     "tx_rate": 0
   },
@@ -42,13 +42,19 @@
       "state": "S (sleeping)"
     },
     {
-      "pid": 91,
+      "pid": 42,
+      "name": "systemd-journal",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 92,
       "name": "systemd-udevd",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 172,
+      "pid": 166,
       "name": "systemd-resolve",
       "threads": 1,
       "state": "S (sleeping)"
@@ -60,152 +66,92 @@
       "state": "S (sleeping)"
     },
     {
-      "pid": 185,
+      "pid": 182,
       "name": "cron",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 186,
+      "pid": 183,
       "name": "dbus-daemon",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 199,
+      "pid": 200,
       "name": "systemd-logind",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 202,
+      "pid": 208,
       "name": "wsl-pro-service",
       "threads": 8,
       "state": "S (sleeping)"
     },
     {
-      "pid": 217,
+      "pid": 216,
       "name": "rsyslogd",
       "threads": 4,
       "state": "S (sleeping)"
     },
     {
-      "pid": 224,
+      "pid": 241,
       "name": "agetty",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 230,
+      "pid": 247,
       "name": "unattended-upgr",
       "threads": 2,
       "state": "S (sleeping)"
     },
     {
-      "pid": 333,
-      "name": "SessionLeader",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 334,
-      "name": "Relay(335)",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 335,
-      "name": "bash",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 336,
+      "pid": 390,
       "name": "login",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 385,
+      "pid": 438,
       "name": "systemd",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 387,
+      "pid": 441,
       "name": "(sd-pam)",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 411,
+      "pid": 467,
       "name": "bash",
       "threads": 1,
       "state": "S (sleeping)"
     },
     {
-      "pid": 510,
+      "pid": 612,
+      "name": "SessionLeader",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 613,
+      "name": "Relay(614)",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 614,
+      "name": "bash",
+      "threads": 1,
+      "state": "S (sleeping)"
+    },
+    {
+      "pid": 638,
       "name": "monitor",
-      "threads": 1,
-      "state": "R (running)"
-    },
-    {
-      "pid": 606,
-      "name": "apt.systemd.dai",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 610,
-      "name": "apt.systemd.dai",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 634,
-      "name": "unattended-upgr",
-      "threads": 4,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 851,
-      "name": "packagekitd",
-      "threads": 4,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 856,
-      "name": "polkitd",
-      "threads": 4,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 1588,
-      "name": "unattended-upgr",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 1762,
-      "name": "dpkg",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 1818,
-      "name": "systemd-journal",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 1822,
-      "name": "systemd-timesyn",
-      "threads": 1,
-      "state": "S (sleeping)"
-    },
-    {
-      "pid": 1826,
-      "name": "deb-systemd-hel",
       "threads": 1,
       "state": "R (running)"
     }
