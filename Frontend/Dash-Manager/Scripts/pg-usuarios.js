@@ -95,47 +95,39 @@ function getAvatarColor(id) {
    ================================ */
 function normalizarUsuarios(dados) {
 
-  const lista =
-    Array.isArray(dados?.users)
-      ? dados.users
-      : [];
+  const lista = Array.isArray(dados?.connected_users)
+    ? dados.connected_users
+    : [];
 
-  return lista.map((user, index) => {
+  return lista.map((usuario, index) => {
 
     const ip =
-      user.ip || "Desconhecido";
-
-    const porta =
-      user.porta || "--";
+      usuario.ip || "Desconhecido";
 
     const protocolo =
-      user.protocolo || "tcp";
+      usuario.protocol || "--";
 
-    const processo =
-      user.processo || "Desconhecido";
+    const statusOriginal =
+      usuario.status || "--";
 
-    const estado =
-      user.estado || "--";
-
-    const status =
-      user.status || "offline";
+    const porta =
+      usuario.porta || "--";
 
     return {
-
-      id: index,
+      id: index + 1,
 
       nome: ip,
 
-      email:
-        protocolo.toUpperCase()
-        + " • Porta "
-        + porta,
+      email: protocolo.toUpperCase(),
 
-      cargo: processo,
+      cargo: porta,
 
-      status: status,
+      status:
+        statusOriginal === "ESTAB"
+          ? "online"
+          : "offline",
 
-      ultimo: estado
+      ultimo: statusOriginal
     };
   });
 }
