@@ -1,7 +1,6 @@
 /* =========================================
    PG-USUARIOS.JS — DashManager
-   Corrigido e padronizado
-   Mantém origem dos dados em Backend/dados.json
+   Monitoramento de conexões/IPs
    ========================================= */
 
 "use strict";
@@ -61,28 +60,11 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 }
 
-function stateLetter(state) {
-  const value = String(state || "").trim();
+function getInitials(ip) {
 
-  return value
-    ? value.charAt(0).toUpperCase()
-    : "-";
-}
+  const texto = String(ip || "--");
 
-function getInitials(nome) {
-  const cleanName = String(nome || "NA").trim();
-
-  if (!cleanName) {
-    return "NA";
-  }
-
-  const parts = cleanName.split(/\s+/);
-
-  if (parts.length >= 2) {
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-  }
-
-  return cleanName.slice(0, 2).toUpperCase();
+  return texto.slice(0, 2).toUpperCase();
 }
 
 const avatarColors = [
@@ -97,36 +79,63 @@ const avatarColors = [
 ];
 
 function getAvatarColor(id) {
+
   const numericId = Number(id) || 0;
-  const index = Math.abs(numericId) % avatarColors.length;
+
+  const index =
+    Math.abs(numericId) % avatarColors.length;
 
   return avatarColors[index];
 }
 
 /* ================================
-   TRANSFORMAÇÃO DOS DADOS
-   Mantém a origem atual:
-   dados.process_list
+   NORMALIZAÇÃO DOS DADOS
+   AGORA USA:
+   dados.users
    ================================ */
 function normalizarUsuarios(dados) {
-  const lista = Array.isArray(dados?.process_list)
-    ? dados.process_list
-    : [];
 
-  return lista.map((processo, index) => {
-    const pid = processo.pid ?? index;
-    const nome = processo.name ?? "Processo desconhecido";
-    const threads = processo.threads ?? 0;
-    const estadoOriginal = processo.state ?? "--";
-    const estado = stateLetter(estadoOriginal);
+  const lista =
+    Array.isArray(dados?.users)
+      ? dados.users
+      : [];
+
+  return lista.map((user, index) => {
+
+    const ip =
+      user.ip || "Desconhecido";
+
+    const porta =
+      user.porta || "--";
+
+    const protocolo =
+      user.protocolo || "tcp";
+
+    const processo =
+      user.processo || "Desconhecido";
+
+    const estado =
+      user.estado || "--";
+
+    const status =
+      user.status || "offline";
 
     return {
-      id: pid,
-      nome: nome,
-      email: "PID " + pid,
-      cargo: threads + " Threads",
-      status: estado === "R" ? "online" : "offline",
-      ultimo: estadoOriginal
+
+      id: index,
+
+      nome: ip,
+
+      email:
+        protocolo.toUpperCase()
+        + " • Porta "
+        + porta,
+
+      cargo: processo,
+
+      status: status,
+
+      ultimo: estado
     };
   });
 }
@@ -135,22 +144,42 @@ function normalizarUsuarios(dados) {
    FILTROS
    ================================ */
 function obterUsuariosFiltrados() {
-  const searchInput = getEl("searchInput");
-  const filterStatus = getEl("filterStatus");
 
-  const texto = searchInput
-    ? searchInput.value.toLowerCase().trim()
-    : "";
+  const searchInput =
+    getEl("searchInput");
 
-  const status = filterStatus
-    ? filterStatus.value
-    : "todos";
+  const filterStatus =
+    getEl("filterStatus");
+
+  const texto =
+    searchInput
+      ? searchInput.value
+          .toLowerCase()
+          .trim()
+      : "";
+
+  const status =
+    filterStatus
+      ? filterStatus.value
+      : "todos";
 
   return usuariosData.filter(usuario => {
-    const nome = String(usuario.nome || "").toLowerCase();
-    const email = String(usuario.email || "").toLowerCase();
-    const cargo = String(usuario.cargo || "").toLowerCase();
-    const ultimo = String(usuario.ultimo || "").toLowerCase();
+
+    const nome =
+      String(usuario.nome || "")
+        .toLowerCase();
+
+    const email =
+      String(usuario.email || "")
+        .toLowerCase();
+
+    const cargo =
+      String(usuario.cargo || "")
+        .toLowerCase();
+
+    const ultimo =
+      String(usuario.ultimo || "")
+        .toLowerCase();
 
     const matchTexto =
       !texto ||
@@ -163,214 +192,416 @@ function obterUsuariosFiltrados() {
       status === "todos" ||
       usuario.status === status;
 
-    return matchTexto && matchStatus;
+    return (
+      matchTexto &&
+      matchStatus
+    );
   });
 }
 
 function aplicarFiltros() {
-  const filtrados = obterUsuariosFiltrados();
+
+  const filtrados =
+    obterUsuariosFiltrados();
 
   renderTable(filtrados);
 }
 
 /* ================================
-   CARDS DE RESUMO
+   KPIs
    ================================ */
 function atualizarCards(dados) {
-  const total = dados.length;
-  const online = dados.filter(usuario => usuario.status === "online").length;
-  const offline = dados.filter(usuario => usuario.status === "offline").length;
 
-  /*
-    Mantém a lógica visual de "Administradores".
-    Como a origem atual vem de process_list, normalmente será 0.
-    Caso futuramente venha cargo real com "admin", já funciona.
-  */
-  const admins = dados.filter(usuario =>
-    String(usuario.cargo || "").toLowerCase().includes("admin")
-  ).length;
+  const total =
+    dados.length;
 
-  setText("totalUsuarios", total);
-  setText("usuariosOnline", online);
-  setText("usuariosOffline", offline);
-  setText("totalAdmins", admins);
+  const online =
+    dados.filter(usuario =>
+      usuario.status === "online"
+    ).length;
 
-  const onlinePercent = total > 0
-    ? (online / total) * 100
-    : 0;
+  const offline =
+    dados.filter(usuario =>
+      usuario.status === "offline"
+    ).length;
 
-  const offlinePercent = total > 0
-    ? (offline / total) * 100
-    : 0;
+  const ssh =
+    dados.filter(usuario =>
+      String(usuario.cargo)
+        .toLowerCase()
+        .includes("ssh")
+    ).length;
 
-  const adminsPercent = total > 0
-    ? (admins / total) * 100
-    : 0;
+  setText(
+    "totalUsuarios",
+    total
+  );
 
-  setBarWidth("barTotalUsuarios", Math.min(100, (total / 100) * 100));
-  setBarWidth("barUsuariosOnline", onlinePercent);
-  setBarWidth("barUsuariosOffline", offlinePercent);
-  setBarWidth("barTotalAdmins", adminsPercent);
+  setText(
+    "usuariosOnline",
+    online
+  );
+
+  setText(
+    "usuariosOffline",
+    offline
+  );
+
+  setText(
+    "totalAdmins",
+    ssh
+  );
+
+  const onlinePercent =
+    total > 0
+      ? (online / total) * 100
+      : 0;
+
+  const offlinePercent =
+    total > 0
+      ? (offline / total) * 100
+      : 0;
+
+  const sshPercent =
+    total > 0
+      ? (ssh / total) * 100
+      : 0;
+
+  setBarWidth(
+    "barTotalUsuarios",
+    Math.min(100, total)
+  );
+
+  setBarWidth(
+    "barUsuariosOnline",
+    onlinePercent
+  );
+
+  setBarWidth(
+    "barUsuariosOffline",
+    offlinePercent
+  );
+
+  setBarWidth(
+    "barTotalAdmins",
+    sshPercent
+  );
 }
 
 /* ================================
-   RENDERIZAÇÃO DA TABELA
+   RENDERIZAÇÃO TABELA
    ================================ */
 function renderTable(dados) {
-  const tbody = getEl("usersTableBody");
+
+  const tbody =
+    getEl("usersTableBody");
 
   if (!tbody) {
     return;
   }
 
   if (!dados.length) {
+
     tbody.innerHTML = `
       <tr>
         <td colspan="6" class="loading">
-          <i class="fa-solid fa-users-slash" style="display:block; font-size:22px; margin-bottom:8px;"></i>
-          Nenhum usuário encontrado.
+
+          <i class="fa-solid fa-users-slash"
+             style="
+               display:block;
+               font-size:22px;
+               margin-bottom:8px;
+             ">
+          </i>
+
+          Nenhuma conexão encontrada.
+
         </td>
       </tr>
     `;
 
-    setText("tableInfo", "0 registros encontrados");
+    setText(
+      "tableInfo",
+      "0 conexões encontradas"
+    );
+
     return;
   }
 
-  tbody.innerHTML = dados.map(usuario => {
-    const id = escapeHTML(usuario.id);
-    const nome = escapeHTML(usuario.nome);
-    const email = escapeHTML(usuario.email);
-    const cargo = escapeHTML(usuario.cargo);
-    const status = usuario.status === "online" ? "online" : "offline";
-    const statusTexto = status === "online" ? "Online" : "Offline";
-    const ultimo = escapeHTML(usuario.ultimo);
-    const initials = escapeHTML(getInitials(usuario.nome));
-    const avatarColor = getAvatarColor(usuario.id);
+  tbody.innerHTML =
+    dados.map(usuario => {
 
-    return `
-      <tr>
-        <td>
-          <div class="td-user">
-            <div class="td-avatar" style="background:${avatarColor};">
-              ${initials}
+      const id =
+        escapeHTML(usuario.id);
+
+      const nome =
+        escapeHTML(usuario.nome);
+
+      const email =
+        escapeHTML(usuario.email);
+
+      const cargo =
+        escapeHTML(usuario.cargo);
+
+      const status =
+        usuario.status === "online"
+          ? "online"
+          : "offline";
+
+      const statusTexto =
+        status === "online"
+          ? "Online"
+          : "Offline";
+
+      const ultimo =
+        escapeHTML(usuario.ultimo);
+
+      const initials =
+        escapeHTML(
+          getInitials(usuario.nome)
+        );
+
+      const avatarColor =
+        getAvatarColor(usuario.id);
+
+      return `
+        <tr>
+
+          <td>
+            <div class="td-user">
+
+              <div
+                class="td-avatar"
+                style="background:${avatarColor};"
+              >
+                ${initials}
+              </div>
+
+              <span
+                class="td-name"
+                title="${nome}"
+              >
+                ${nome}
+              </span>
+
             </div>
-            <span class="td-name" title="${nome}">
-              ${nome}
+          </td>
+
+          <td
+            style="
+              color:
+              var(--text-secondary);
+            "
+          >
+            ${email}
+          </td>
+
+          <td>
+            ${cargo}
+          </td>
+
+          <td>
+
+            <span
+              class="
+                status-badge
+                ${status}
+              "
+            >
+              ${statusTexto}
             </span>
-          </div>
-        </td>
 
-        <td style="color: var(--text-secondary);">
-          ${email}
-        </td>
+          </td>
 
-        <td>
-          ${cargo}
-        </td>
+          <td
+            style="
+              color:
+              var(--text-secondary);
+            "
+          >
+            ${ultimo}
+          </td>
 
-        <td>
-          <span class="status-badge ${status}">
-            ${statusTexto}
-          </span>
-        </td>
+          <td>
 
-        <td style="color: var(--text-secondary);">
-          ${ultimo}
-        </td>
+            <div class="td-actions">
 
-        <td>
-          <div class="td-actions">
-            <button class="action-btn" type="button" title="Ver detalhes" data-id="${id}">
-              <i class="fa-solid fa-eye"></i>
-            </button>
+              <button
+                class="action-btn"
+                type="button"
+                title="Ver detalhes"
+                data-id="${id}"
+              >
+                <i class="fa-solid fa-eye"></i>
+              </button>
 
-            <button class="action-btn" type="button" title="Editar" data-id="${id}">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
+              <button
+                class="action-btn"
+                type="button"
+                title="Monitorar IP"
+                data-id="${id}"
+              >
+                <i class="fa-solid fa-satellite-dish"></i>
+              </button>
 
-            <button class="action-btn del" type="button" title="Remover" data-id="${id}">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    `;
-  }).join("");
+              <button
+                class="action-btn del"
+                type="button"
+                title="Bloquear"
+                data-id="${id}"
+              >
+                <i class="fa-solid fa-ban"></i>
+              </button>
 
-  const total = usuariosData.length;
-  const exibindo = dados.length;
+            </div>
+
+          </td>
+
+        </tr>
+      `;
+    }).join("");
+
+  const total =
+    usuariosData.length;
+
+  const exibindo =
+    dados.length;
 
   setText(
     "tableInfo",
-    `Exibindo ${exibindo} de ${total} registro${total !== 1 ? "s" : ""}`
+    `Exibindo ${exibindo} de ${total} conexão${total !== 1 ? "ões" : ""}`
   );
 }
 
 /* ================================
-   ÚLTIMA ATUALIZAÇÃO
+   HORÁRIO
    ================================ */
 function atualizarHorario() {
-  const agora = new Date();
+
+  const agora =
+    new Date();
 
   setText(
     "lastUpdate",
-    agora.toLocaleTimeString("pt-BR", {
-      hour12: false
-    })
+
+    agora.toLocaleTimeString(
+      "pt-BR",
+      {
+        hour12: false
+      }
+    )
   );
 }
 
 /* ================================
-   CARREGAMENTO DOS DADOS
+   CARREGAMENTO
    ================================ */
 async function carregarUsuarios() {
+
   try {
-    const resposta = await fetch(
-      DADOS_URL + "?ts=" + new Date().getTime(),
-      {
-        cache: "no-store"
-      }
-    );
+
+    const resposta =
+      await fetch(
+        DADOS_URL
+        + "?ts="
+        + new Date().getTime(),
+
+        {
+          cache: "no-store"
+        }
+      );
 
     if (!resposta.ok) {
-      throw new Error("Erro HTTP: " + resposta.status);
+
+      throw new Error(
+        "Erro HTTP: "
+        + resposta.status
+      );
     }
 
-    const dados = await resposta.json();
+    const dados =
+      await resposta.json();
 
-    usuariosData = normalizarUsuarios(dados);
+    usuariosData =
+      normalizarUsuarios(dados);
 
-    atualizarCards(usuariosData);
+    atualizarCards(
+      usuariosData
+    );
+
     aplicarFiltros();
+
     atualizarHorario();
 
   } catch (erro) {
-    console.error("Erro ao carregar usuários:", erro);
 
-    const tbody = getEl("usersTableBody");
+    console.error(
+      "Erro ao carregar usuários:",
+      erro
+    );
+
+    const tbody =
+      getEl("usersTableBody");
 
     if (tbody) {
+
       tbody.innerHTML = `
         <tr>
+
           <td colspan="6" class="loading">
-            Não foi possível carregar ../../../Backend/dados.json.
-            Verifique o servidor local e o caminho do arquivo.
+
+            Não foi possível carregar dados da API.
+
           </td>
+
         </tr>
       `;
     }
 
-    setText("tableInfo", "Erro ao carregar registros");
-    setText("totalUsuarios", "--");
-    setText("usuariosOnline", "--");
-    setText("usuariosOffline", "--");
-    setText("totalAdmins", "--");
+    setText(
+      "tableInfo",
+      "Erro ao carregar conexões"
+    );
 
-    setBarWidth("barTotalUsuarios", 0);
-    setBarWidth("barUsuariosOnline", 0);
-    setBarWidth("barUsuariosOffline", 0);
-    setBarWidth("barTotalAdmins", 0);
+    setText(
+      "totalUsuarios",
+      "--"
+    );
+
+    setText(
+      "usuariosOnline",
+      "--"
+    );
+
+    setText(
+      "usuariosOffline",
+      "--"
+    );
+
+    setText(
+      "totalAdmins",
+      "--"
+    );
+
+    setBarWidth(
+      "barTotalUsuarios",
+      0
+    );
+
+    setBarWidth(
+      "barUsuariosOnline",
+      0
+    );
+
+    setBarWidth(
+      "barUsuariosOffline",
+      0
+    );
+
+    setBarWidth(
+      "barTotalAdmins",
+      0
+    );
   }
 }
 
@@ -378,25 +609,44 @@ async function carregarUsuarios() {
    EVENTOS
    ================================ */
 function configurarEventos() {
-  const searchInput = getEl("searchInput");
-  const filterStatus = getEl("filterStatus");
+
+  const searchInput =
+    getEl("searchInput");
+
+  const filterStatus =
+    getEl("filterStatus");
 
   if (searchInput) {
-    searchInput.addEventListener("input", aplicarFiltros);
+
+    searchInput.addEventListener(
+      "input",
+      aplicarFiltros
+    );
   }
 
   if (filterStatus) {
-    filterStatus.addEventListener("change", aplicarFiltros);
+
+    filterStatus.addEventListener(
+      "change",
+      aplicarFiltros
+    );
   }
 }
 
 /* ================================
    INIT
    ================================ */
-document.addEventListener("DOMContentLoaded", () => {
-  configurarEventos();
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  carregarUsuarios();
+    configurarEventos();
 
-  setInterval(carregarUsuarios, INTERVALO_ATUALIZACAO);
-});
+    carregarUsuarios();
+
+    setInterval(
+      carregarUsuarios,
+      INTERVALO_ATUALIZACAO
+    );
+  }
+);

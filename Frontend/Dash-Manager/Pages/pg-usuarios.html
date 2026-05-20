@@ -1,248 +1,505 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Usuários | DashManager</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
 
-  <link rel="stylesheet" href="../Styles/pg-usuarios.css" />
-  <link rel="icon" type="image/x-icon" href="../Images/icondashmanager.ico" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../Styles/pg-usuarios.css"
+  />
+
+  <link
+    rel="icon"
+    type="image/x-icon"
+    href="../Images/icondashmanager.ico"
+  />
 </head>
 
 <body>
+
   <!-- SIDEBAR -->
   <aside class="sidebar">
+
     <div class="logo-container">
+
       <div class="logo-icon">
-        <img src="../Images/dash-manager-logo.png" alt="Logo DashManager" />
+        <img
+          src="../Images/dash-manager-logo.png"
+          alt="Logo DashManager"
+        />
       </div>
 
       <div class="logo-text">
         <h1>DashManager</h1>
         <p>Monitoramento Inteligente</p>
       </div>
+
     </div>
 
     <nav class="nav-menu">
-      <a href="pg-inicial.html" class="nav-item">
+
+      <a
+        href="pg-inicial.html"
+        class="nav-item"
+      >
         <i class="fa-solid fa-border-all"></i>
         Dashboard
       </a>
 
-      <a href="pg-recursos.html" class="nav-item">
+      <a
+        href="pg-recursos.html"
+        class="nav-item"
+      >
         <i class="fa-regular fa-square-check"></i>
         Recursos
       </a>
 
-      <a href="pg-processos.html" class="nav-item">
+      <a
+        href="pg-processos.html"
+        class="nav-item"
+      >
         <i class="fa-solid fa-microchip"></i>
         Processos
       </a>
 
-      <a href="pg-usuarios.html" class="nav-item active">
+      <a
+        href="pg-usuarios.html"
+        class="nav-item active"
+      >
         <i class="fa-regular fa-user"></i>
         Usuários
       </a>
 
-      <a href="pg-alertas.html" class="nav-item">
+      <a
+        href="pg-alertas.html"
+        class="nav-item"
+      >
         <i class="fa-regular fa-bell"></i>
         Alertas
       </a>
+
     </nav>
+
   </aside>
 
   <!-- MAIN -->
   <main class="main-content">
+
     <header class="header">
+
       <div class="page-title">
-        <h1>Usuários</h1>
-        <p>Monitoramento de usuários, sessões e processos relacionados ao servidor.</p>
+
+        <h1>Conexões</h1>
+
+        <p>
+          Monitoramento de IPs,
+          conexões TCP/UDP
+          e sessões ativas
+          do servidor.
+        </p>
+
       </div>
+
     </header>
 
+    <!-- LAST UPDATE -->
     <div class="last-update">
+
       <span class="dot"></span>
-      <span>Última atualização:</span>
-      <strong id="lastUpdate">--:--:--</strong>
+
+      <span>
+        Última atualização:
+      </span>
+
+      <strong id="lastUpdate">
+        --:--:--
+      </strong>
+
       <span class="sep">•</span>
-      <span>Fonte: ../../../Backend/dados.json</span>
+
+      <span>
+        Fonte: API FastAPI
+      </span>
+
     </div>
 
     <!-- KPI CARDS -->
-    <section class="kpi-grid" aria-label="Indicadores principais de usuários">
+    <section
+      class="kpi-grid"
+      aria-label="Indicadores principais"
+    >
+
+      <!-- TOTAL -->
       <article class="kpi-card">
+
         <div class="kpi-top">
+
           <div class="kpi-icon blue">
-            <i class="fa-solid fa-users"></i>
+            <i class="fa-solid fa-network-wired"></i>
           </div>
 
           <div class="kpi-meta">
-            <h3>Total de registros</h3>
-            <p>Itens monitorados</p>
+            <h3>Total de conexões</h3>
+            <p>IPs monitorados</p>
           </div>
+
         </div>
 
         <div class="kpi-value">
-          <span id="totalUsuarios">—</span>
-          <small class="kpi-sub">baseado na lista carregada</small>
+
+          <span id="totalUsuarios">
+            —
+          </span>
+
+          <small class="kpi-sub">
+            conexões detectadas
+          </small>
+
         </div>
 
         <div class="kpi-progress">
+
           <div class="bar">
-            <div class="fill blue" id="barTotalUsuarios" style="width:0%"></div>
+            <div
+              class="fill blue"
+              id="barTotalUsuarios"
+              style="width:0%"
+            ></div>
           </div>
-          <span class="hint">Atualizado automaticamente</span>
+
+          <span class="hint">
+            Atualização automática
+          </span>
+
         </div>
+
       </article>
 
+      <!-- ONLINE -->
       <article class="kpi-card">
+
         <div class="kpi-top">
+
           <div class="kpi-icon green">
             <i class="fa-solid fa-circle-check"></i>
           </div>
 
           <div class="kpi-meta">
-            <h3>Online agora</h3>
-            <p>Estado em execução</p>
+            <h3>Online</h3>
+            <p>Conexões ativas</p>
           </div>
+
         </div>
 
         <div class="kpi-value">
-          <span id="usuariosOnline">—</span>
-          <small class="kpi-sub">status online</small>
+
+          <span id="usuariosOnline">
+            —
+          </span>
+
+          <small class="kpi-sub">
+            sessões estabelecidas
+          </small>
+
         </div>
 
         <div class="kpi-progress">
+
           <div class="bar">
-            <div class="fill green" id="barUsuariosOnline" style="width:0%"></div>
+            <div
+              class="fill green"
+              id="barUsuariosOnline"
+              style="width:0%"
+            ></div>
           </div>
-          <span class="hint">Processos em estado ativo</span>
+
+          <span class="hint">
+            Estado ESTAB
+          </span>
+
         </div>
+
       </article>
 
+      <!-- OFFLINE -->
       <article class="kpi-card">
+
         <div class="kpi-top">
+
           <div class="kpi-icon danger">
-            <i class="fa-solid fa-circle-xmark"></i>
+            <i class="fa-solid fa-plug-circle-xmark"></i>
           </div>
 
           <div class="kpi-meta">
             <h3>Offline</h3>
-            <p>Estado inativo ou aguardando</p>
+            <p>Conexões encerradas</p>
           </div>
+
         </div>
 
         <div class="kpi-value">
-          <span id="usuariosOffline">—</span>
-          <small class="kpi-sub">status offline</small>
+
+          <span id="usuariosOffline">
+            —
+          </span>
+
+          <small class="kpi-sub">
+            conexões inativas
+          </small>
+
         </div>
 
         <div class="kpi-progress">
+
           <div class="bar">
-            <div class="fill danger" id="barUsuariosOffline" style="width:0%"></div>
+            <div
+              class="fill danger"
+              id="barUsuariosOffline"
+              style="width:0%"
+            ></div>
           </div>
-          <span class="hint">Registros fora do estado ativo</span>
+
+          <span class="hint">
+            Estados inativos
+          </span>
+
         </div>
+
       </article>
 
+      <!-- SSH -->
       <article class="kpi-card">
+
         <div class="kpi-top">
+
           <div class="kpi-icon yellow">
-            <i class="fa-solid fa-user-shield"></i>
+            <i class="fa-solid fa-terminal"></i>
           </div>
 
           <div class="kpi-meta">
-            <h3>Administradores</h3>
-            <p>Perfis administrativos</p>
+            <h3>SSH</h3>
+            <p>Sessões remotas</p>
           </div>
+
         </div>
 
         <div class="kpi-value">
-          <span id="totalAdmins">—</span>
-          <small class="kpi-sub">registros com perfil admin</small>
+
+          <span id="totalAdmins">
+            —
+          </span>
+
+          <small class="kpi-sub">
+            conexões sshd
+          </small>
+
         </div>
 
         <div class="kpi-progress">
+
           <div class="bar">
-            <div class="fill yellow" id="barTotalAdmins" style="width:0%"></div>
+            <div
+              class="fill yellow"
+              id="barTotalAdmins"
+              style="width:0%"
+            ></div>
           </div>
-          <span class="hint">Permissões administrativas</span>
+
+          <span class="hint">
+            Acesso remoto
+          </span>
+
         </div>
+
       </article>
+
     </section>
 
-    <!-- TABELA DE USUÁRIOS -->
+    <!-- TABELA -->
     <section class="table-wrap">
+
       <div class="table-header">
+
         <div class="table-title">
-          <h3>Lista de usuários</h3>
-          <p>Busca e filtro por status dos registros monitorados.</p>
+
+          <h3>
+            Conexões do servidor
+          </h3>
+
+          <p>
+            Lista de IPs,
+            protocolos e
+            processos conectados.
+          </p>
+
         </div>
 
         <div class="table-controls">
+
+          <!-- SEARCH -->
           <div class="control">
+
             <i class="fa-solid fa-magnifying-glass"></i>
+
             <input
               type="text"
               id="searchInput"
-              placeholder="Buscar usuário, e-mail, cargo ou status..."
+              placeholder="Buscar IP, porta, processo ou protocolo..."
             />
+
           </div>
 
-          <select id="filterStatus" class="select">
-            <option value="todos">Todos os status</option>
-            <option value="online">Online</option>
-            <option value="offline">Offline</option>
+          <!-- FILTER -->
+          <select
+            id="filterStatus"
+            class="select"
+          >
+
+            <option value="todos">
+              Todos os status
+            </option>
+
+            <option value="online">
+              Online
+            </option>
+
+            <option value="offline">
+              Offline
+            </option>
+
           </select>
+
         </div>
+
       </div>
 
+      <!-- TABLE -->
       <div class="table-card">
+
         <div class="table-scroll">
-          <table class="data-table" id="usersTable">
+
+          <table
+            class="data-table"
+            id="usersTable"
+          >
+
             <thead>
+
               <tr>
-                <th>Usuário</th>
-                <th>E-mail / Identificador</th>
-                <th>Cargo / Detalhe</th>
-                <th>Status</th>
-                <th>Último acesso</th>
-                <th>Ações</th>
+
+                <th>IP</th>
+
+                <th>
+                  Conexão
+                </th>
+
+                <th>
+                  Processo
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Estado
+                </th>
+
+                <th>
+                  Ações
+                </th>
+
               </tr>
+
             </thead>
 
             <tbody id="usersTableBody">
+
               <tr>
-                <td colspan="6" class="loading">
-                  Carregando usuários...
+
+                <td
+                  colspan="6"
+                  class="loading"
+                >
+
+                  Carregando conexões...
+
                 </td>
+
               </tr>
+
             </tbody>
+
           </table>
+
         </div>
 
         <div class="table-footer">
+
           <div class="rows-info">
-            <span id="tableInfo">Carregando...</span>
+
+            <span id="tableInfo">
+              Carregando...
+            </span>
+
             <span class="sep">•</span>
-            <span>Atualiza automaticamente</span>
+
+            <span>
+              Atualiza automaticamente
+            </span>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
-      <span>© 2026 DashManager. Todos os direitos reservados.</span>
+
+      <span>
+        © 2026 DashManager.
+        Todos os direitos reservados.
+      </span>
+
     </footer>
+
   </main>
 
-  <script defer src="../Scripts/pg-usuarios.js"></script>
+  <script
+    defer
+    src="../Scripts/pg-usuarios.js"
+  ></script>
+
 </body>
 </html>
