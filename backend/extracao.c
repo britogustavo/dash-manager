@@ -6,6 +6,7 @@
 #include <time.h>
 #include <pwd.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 
 //////////////// CPU //////////////////
 void read_cpu(long *idle, long *total) {
@@ -319,6 +320,106 @@ int thread_count() {
     return total_threads;
 }
 
+//////////////// USUÁRIOS CONECTADOS //////////////////
+void connected_users(FILE *json) {
+
+    FILE *fp =
+        popen("ss -tunp 2>/dev/null", "r");
+
+    if (fp == NULL) {
+
+        fprintf(json,
+                "  \"connected_users\": []\n");
+
+        return;
+    }
+
+    fprintf(json,
+            "  \"connected_users\": [\n");
+
+    char line[4096];
+
+    int first = 1;
+
+    fgets(line, sizeof(line), fp);
+
+    while (fgets(line,
+                 sizeof(line),
+                 fp)) {
+
+        if (
+            strstr(line, "127.0.0.1") ||
+            strstr(line, "::1")
+        ) {
+            continue;
+        }
+
+        char protocol[32];
+        char state[64];
+        char recvq[32];
+        char sendq[32];
+        char local[128];
+        char remote[128];
+
+        int parsed =
+            sscanf(line,
+                   "%31s %63s %31s %31s %127s %127s",
+                   protocol,
+                   state,
+                   recvq,
+                   sendq,
+                   local,
+                   remote);
+
+        if (parsed < 6) {
+            continue;
+        }
+
+        char remote_ip[128];
+
+        strncpy(remote_ip,
+                remote,
+                sizeof(remote_ip));
+
+        char *last_colon =
+            strrchr(remote_ip, ':');
+
+        if (last_colon != NULL) {
+            *last_colon = '\0';
+        }
+
+        if (
+            strlen(remote_ip) == 0 ||
+            strcmp(remote_ip, "*") == 0
+        ) {
+            continue;
+        }
+
+        if (!first) {
+            fprintf(json, ",\n");
+        }
+
+        fprintf(json,
+                "    {\n"
+                "      \"ip\": \"%s\",\n"
+                "      \"protocol\": \"%s\",\n"
+                "      \"status\": \"%s\",\n"
+                "      \"porta\": \"%s\"\n"
+                "    }",
+                remote_ip,
+                protocol,
+                state,
+                local);
+
+        first = 0;
+    }
+
+    fprintf(json,
+            "\n  ]\n");
+
+    pclose(fp);
+}
+
 //////////////// PROCESS LIST //////////////////
 void process_list(FILE *json) {
 
@@ -378,7 +479,6 @@ void process_list(FILE *json) {
         if (parsed < 8)
             continue;
 
-        ////////////////// THREADS //////////////////
         int proc_threads = 1;
 
         char status_path[512];
@@ -410,7 +510,6 @@ void process_list(FILE *json) {
             fclose(status_file);
         }
 
-        ////////////////// FORMAT RSS //////////////////
         char rss_str[64];
 
         if (rss >= 1024) {
@@ -428,7 +527,6 @@ void process_list(FILE *json) {
                      rss);
         }
 
-        ////////////////// FORMAT ETIME //////////////////
         long h = etimes / 3600;
 
         long m = (etimes % 3600) / 60;
@@ -444,7 +542,6 @@ void process_list(FILE *json) {
                  m,
                  s);
 
-        ////////////////// ESCAPE JSON //////////////////
         char safe_args[2048];
 
         int j = 0;
@@ -471,7 +568,6 @@ void process_list(FILE *json) {
 
         safe_args[j] = '\0';
 
-        ////////////////// JSON //////////////////
         if (!first)
             fprintf(json, ",\n");
 
@@ -505,7 +601,7 @@ void process_list(FILE *json) {
     }
 
     fprintf(json,
-            "\n  ]\n");
+            "\n  ],\n");
 
     pclose(ps);
 }
@@ -529,9 +625,7 @@ int main() {
 
         sleep(5);
 
-        ////////////////// CPU //////////////////
         long curr_idle;
-
         long curr_total;
 
         read_cpu(&curr_idle,
@@ -543,21 +637,15 @@ int main() {
                       curr_idle,
                       curr_total);
 
-        ////////////////// MEMORY //////////////////
         long total_mem = 0;
-
         long avail_mem = 0;
 
         memory(&total_mem,
                &avail_mem);
 
-        ////////////////// DISK //////////////////
         char disk_total[32];
-
         char disk_used[32];
-
         char disk_available[32];
-
         char disk_percent[16];
 
         disk(disk_total,
@@ -565,33 +653,26 @@ int main() {
              disk_available,
              disk_percent);
 
-        ////////////////// NETWORK //////////////////
         long rx = 0;
-
         long tx = 0;
 
         network(&rx,
                 &tx);
 
-        ////////////////// TEMPERATURE //////////////////
         float temp = temperature();
 
-        ////////////////// UPTIME //////////////////
         long up = uptime();
 
-        ////////////////// CURRENT TIME //////////////////
         char currentTime[64];
 
         current_time(currentTime);
 
-        ////////////////// PROCESS / THREADS //////////////////
         int processes =
             process_count();
 
         int threads =
             thread_count();
 
-        ////////////////// JSON TEMP //////////////////
         FILE *json =
             fopen("dados.tmp", "w");
 
@@ -604,12 +685,10 @@ int main() {
 
         fprintf(json, "{\n");
 
-        ////////////////// CPU //////////////////
         fprintf(json,
                 "  \"cpu\": %.2f,\n",
                 cpu);
 
-        ////////////////// MEMORY //////////////////
         fprintf(json,
                 "  \"memory\": {\n"
                 "    \"total\": %ld,\n"
@@ -620,7 +699,6 @@ int main() {
                 total_mem - avail_mem,
                 avail_mem);
 
-        ////////////////// DISK //////////////////
         fprintf(json,
                 "  \"disk\": {\n"
                 "    \"total\": \"%s\",\n"
@@ -633,32 +711,26 @@ int main() {
                 disk_available,
                 disk_percent);
 
-        ////////////////// TEMPERATURE //////////////////
         fprintf(json,
                 "  \"temperature\": %.2f,\n",
                 temp);
 
-        ////////////////// UPTIME //////////////////
         fprintf(json,
                 "  \"uptime\": %ld,\n",
                 up);
 
-        ////////////////// PROCESS COUNT //////////////////
         fprintf(json,
                 "  \"processes\": %d,\n",
                 processes);
 
-        ////////////////// CURRENT TIME //////////////////
         fprintf(json,
                 "  \"current_time\": \"%s\",\n",
                 currentTime);
 
-        ////////////////// THREAD COUNT //////////////////
         fprintf(json,
                 "  \"threads\": %d,\n",
                 threads);
 
-        ////////////////// NETWORK //////////////////
         fprintf(json,
                 "  \"network\": {\n"
                 "    \"rx\": %ld,\n"
@@ -671,23 +743,21 @@ int main() {
                 rx - prev_rx,
                 tx - prev_tx);
 
-        ////////////////// PROCESS LIST //////////////////
         process_list(json);
+
+        connected_users(json);
 
         fprintf(json, "}\n");
 
         fclose(json);
 
-        ////////////////// ATOMIC RENAME //////////////////
         rename("dados.tmp",
                "dados.json");
 
-        ////////////////// TERMINAL //////////////////
         system("clear");
 
         printf("JSON atualizado com sucesso.\n");
 
-        ////////////////// UPDATE //////////////////
         prev_idle = curr_idle;
         prev_total = curr_total;
 
