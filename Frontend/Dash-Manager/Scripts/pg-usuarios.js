@@ -217,12 +217,14 @@ function atualizarCards(dados) {
       usuario.status === "offline"
     ).length;
 
-  const ssh =
-    dados.filter(usuario =>
-      String(usuario.cargo)
-        .toLowerCase()
-        .includes("ssh")
-    ).length;
+  const ssh = usuariosData.filter(usuario => {
+
+  const porta =
+    String(usuario.cargo || "");
+
+  return porta.endsWith(":22");
+
+}).length;
 
   setText(
     "totalUsuarios",
